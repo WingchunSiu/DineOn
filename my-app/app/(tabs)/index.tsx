@@ -1,13 +1,15 @@
 import { View, TouchableOpacity, StyleSheet, ActivityIndicator} from "react-native";
 import { useRouter } from "expo-router";
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Card, Image, Icon, Text} from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 import { DiningOption, dummyDiningOptions } from "@/types";
+import { getStatus } from "@/util";
 
 export default function Homepage() {
   const router = useRouter();
+  const [statuses, setStatuses] = useState<{ [key: string]: { text: string; color: string } }>({});
   
   const handleSelect = (option: DiningOption) => {
     router.push({
@@ -15,6 +17,18 @@ export default function Homepage() {
       params: { data: JSON.stringify(option) }
     })
   };
+
+  useEffect(() => {
+    const newStatuses: Record<string, { text: string; color: string }> = {};  
+  
+    dummyDiningOptions.forEach((diningOption) => {
+      newStatuses[diningOption.id] = getStatus(diningOption); 
+    });
+  
+    setStatuses(newStatuses);
+  }, []);
+
+
 
   return (
     <ParallaxScrollView
@@ -40,7 +54,9 @@ export default function Homepage() {
               />
               <Card.Title style={styles.cardTitle}>{option.name}</Card.Title>
               <Card.Divider />
-              <Text style={styles.cardText}>⏰ {option.openTime}</Text>
+              <Text style={[styles.status, { color: statuses[option.id]?.color }]}>
+                {statuses[option.id]?.text || "Loading..."}
+              </Text>
             </Card>
           </TouchableOpacity>
         ))}
@@ -102,5 +118,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'left',
+  },
+  status: {
+    fontStyle:"italic",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 15,
   },
 });

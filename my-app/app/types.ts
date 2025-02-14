@@ -4,7 +4,7 @@ export interface DiningOption {
   name: string;
   type: "dining_hall" | "cafe";
   image_url: string;
-  openTime: string;
+  openTime: {[key: string]: { open: string; close: string };};
 }
 
 export interface MenuItemType {
@@ -19,28 +19,60 @@ export const dummyDiningOptions: DiningOption[] = [
     name: "Parkside Restaurant & Grill",
     type: "dining_hall",
     image_url: "https://dailytrojan.com/wp-content/uploads/2021/10/ParksideDining_090321_SarahCortina_E003-scaled.jpg",
-    openTime: "7:00 AM - 11:00 PM"
+    openTime: {
+      Monday: { open: "07:00", close: "22:00" },
+      Tuesday: { open: "07:00", close: "22:00" },
+      Wednesday: { open: "07:00", close: "22:00" },
+      Thursday: { open: "07:00", close: "22:00" },
+      Friday: { open: "07:00", close: "22:00" },
+      Saturday: { open: "09:00", close: "22:00" },
+      Sunday: { open: "09:00", close: "22:00" },
+    },
   },
   {
     id: "village",
     name: "Village Dining Hall",
     type: "dining_hall",
     image_url: "https://hospitality.usc.edu/wp-content/uploads/2017/07/01_usc_village_dining_hall.jpg",
-    openTime: "7:00 AM - 11:00 PM"
+    openTime: {
+      Monday: { open: "07:00", close: "22:00" },
+      Tuesday: { open: "07:00", close: "22:00" },
+      Wednesday: { open: "07:00", close: "22:00" },
+      Thursday: { open: "07:00", close: "22:00" },
+      Friday: { open: "07:00", close: "22:00" },
+      Saturday: { open: "09:00", close: "22:00" },
+      Sunday: { open: "09:00", close: "22:00" },
+    },
   },
   {
     id: "evk",
     name: "Everybody's Kitchen",
     type: "dining_hall",
     image_url: "https://hospitality.usc.edu/wp-content/uploads/2015/06/03_evk_slider.jpg",
-    openTime: "7:00 AM - 11:00 PM"
+    openTime: {
+      Monday: { open: "07:00", close: "22:00" },
+      Tuesday: { open: "07:00", close: "22:00" },
+      Wednesday: { open: "07:00", close: "22:00" },
+      Thursday: { open: "07:00", close: "22:00" },
+      Friday: { open: "01:00", close: "03:10" },
+      Saturday: { open: "09:00", close: "22:00" },
+      Sunday: { open: "09:00", close: "22:00" },
+    },
   },
   {
     id: "tgc",
     name: "Trojan Grounds Cafe",
     type: "cafe",
     image_url: "https://example.com/trojan-grounds.jpg",
-    openTime: "7:00 AM - 11:00 PM"
+    openTime: {
+      Monday: { open: "07:00", close: "22:00" },
+      Tuesday: { open: "07:00", close: "22:00" },
+      Wednesday: { open: "07:00", close: "22:00" },
+      Thursday: { open: "07:00", close: "22:00" },
+      Friday: { open: "00:00", close: "22:00" },
+      Saturday: { open: "09:00", close: "22:00" },
+      Sunday: { open: "09:00", close: "22:00" },
+    },
   },
 ];
 
