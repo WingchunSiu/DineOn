@@ -1,47 +1,19 @@
-import { View, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator} from "react-native";
-import { router } from "expo-router";
+import { View, TouchableOpacity, StyleSheet, ActivityIndicator} from "react-native";
+import { useRouter } from "expo-router";
 import React from 'react';
 import { Card, Image, Icon, Text} from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
-
-
-
-const foodPlaces = [
-  {
-    id: "hall1",
-    name: "Parkside Restaurant & Grill",
-    type: "dining_hall",
-    image: "https://dailytrojan.com/wp-content/uploads/2021/10/ParksideDining_090321_SarahCortina_E003-scaled.jpg",
-    openTime: "7:00 AM - 11:00 PM"
-  },
-  {
-    id: "hall2",
-    name: "Village Dining Hall",
-    type: "dining_hall",
-    image: "https://hospitality.usc.edu/wp-content/uploads/2017/07/01_usc_village_dining_hall.jpg",
-    openTime: "7:00 AM - 11:00 PM"
-  },
-  {
-    id: "hall3",
-    name: "Everybody's Kitchen",
-    type: "dining_hall",
-    image: "https://hospitality.usc.edu/wp-content/uploads/2015/06/03_evk_slider.jpg",
-    openTime: "7:00 AM - 11:00 PM"
-  },
-  {
-    id: "cafe1",
-    name: "Trojan Grounds Cafe",
-    type: "cafe",
-    image: "https://example.com/trojan-grounds.jpg",
-    openTime: "7:00 AM - 11:00 PM"
-  },
-];
+import { DiningOption, dummyDiningOptions } from "@/types";
 
 export default function Homepage() {
-  const handlePress = (id: string, type: string) => {
-    console.log(`Navigating to menu: id=${id}, type=${type}`);
-    // Placeholder: Replace with router.push() later
+  const router = useRouter();
+  
+  const handleSelect = (option: DiningOption) => {
+    router.push({
+      pathname: "../menu",
+      params: { data: JSON.stringify(option) }
+    })
   };
 
   return (
@@ -56,19 +28,19 @@ export default function Homepage() {
       <View style={styles.container}>
       <Text style={styles.title}>Pick Your Food Place!</Text>
 
-      {foodPlaces.map((place) => (
-          <TouchableOpacity key={place.id} onPress={() => handlePress(place.id, place.type)}>
+      {dummyDiningOptions.map((option) => (
+          <TouchableOpacity key={option.id} onPress={() => handleSelect(option)}>
             <Card containerStyle={styles.card}>
               {/* ✅ Updated to use RNE Image component with a loading placeholder */}
               <Image
-                source={{ uri: place.image }}
+                source={{ uri: option.image_url }}
                 containerStyle={styles.image}
                 resizeMode="cover"
                 PlaceholderContent={<ActivityIndicator />}
               />
-              <Card.Title style={styles.cardTitle}>{place.name}</Card.Title>
+              <Card.Title style={styles.cardTitle}>{option.name}</Card.Title>
               <Card.Divider />
-              <Text style={styles.cardText}>⏰ {place.openTime}</Text>
+              <Text style={styles.cardText}>⏰ {option.openTime}</Text>
             </Card>
           </TouchableOpacity>
         ))}
