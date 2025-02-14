@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, StyleSheet, ActivityIndicator} from "react-native";
-import { useRouter, Stack } from "expo-router";
+import { useRouter } from "expo-router";
 import React from 'react';
 import { Card, Image, Icon, Text} from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -25,7 +25,6 @@ export default function Homepage() {
         </View>
       }
     >
-      <Stack.Screen options={{ headerShown: false }} />      
       <View style={styles.container}>
       <Text style={styles.title}>Pick Your Food Place!</Text>
 
