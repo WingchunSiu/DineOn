@@ -1,16 +1,17 @@
-import { View, TouchableOpacity, StyleSheet, ActivityIndicator} from "react-native";
+import { View, TouchableOpacity, StyleSheet, ActivityIndicator, Animated } from "react-native";
 import { useRouter } from "expo-router";
-import React, { useState,useEffect } from 'react';
-import { Card, Image, Icon, Text} from '@rneui/themed';
+import React, { useState, useEffect } from 'react';
+import { Card, Image, Icon, Text } from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
-import { DiningOption, dummyDiningOptions } from "@/types";
-import { getStatus } from "@/util";
+import { DiningOption, dummyDiningOptions } from "@/utils/types";
+import { getStatus } from "@/utils/util";
 
 export default function Homepage() {
   const router = useRouter();
   const [statuses, setStatuses] = useState<{ [key: string]: { text: string; color: string } }>({});
-  
+  const fadeAnim = useState(new Animated.Value(1))[0];
+
   const handleSelect = (option: DiningOption) => {
     router.push({
       pathname: "../menu",
@@ -19,20 +20,22 @@ export default function Homepage() {
   };
 
   useEffect(() => {
-    const newStatuses: Record<string, { text: string; color: string }> = {};  
-  
+    const newStatuses: Record<string, { text: string; color: string }> = {};
+
     dummyDiningOptions.forEach((diningOption) => {
-      newStatuses[diningOption.id] = getStatus(diningOption); 
+      newStatuses[diningOption.id] = getStatus(diningOption);
     });
-  
+
     setStatuses(newStatuses);
   }, []);
 
-
+  const openNow = dummyDiningOptions.filter((option) => statuses[option.id]?.text === "Open");
+  const closedNow = dummyDiningOptions.filter((option) => statuses[option.id]?.text === "Closed");
+  const closingSoon = dummyDiningOptions.filter((option) => statuses[option.id]?.text === "Closing Soon");
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#990000', dark: '#800000' }}
+      headerBackgroundColor={{ light: "#990000", dark: "#800000" }}
       headerImage={
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>DineOn!</Text>
@@ -40,12 +43,18 @@ export default function Homepage() {
       }
     >
       <View style={styles.container}>
-      <Text style={styles.title}>Pick Your Food Place!</Text>
 
-      {dummyDiningOptions.map((option) => (
+
+        {/* 🟢 Section for Open Now with Animated Dot */}
+        {openNow.length > 0 && (
+          <View style={styles.sectionHeader}>
+            <Animated.View style={[styles.dot, { backgroundColor: "green", opacity: fadeAnim }]} />
+            <Text style={styles.sectionText}>Open Now</Text>
+          </View>
+        )}
+        {openNow.map((option) => (
           <TouchableOpacity key={option.id} onPress={() => handleSelect(option)}>
             <Card containerStyle={styles.card}>
-              {/* ✅ Updated to use RNE Image component with a loading placeholder */}
               <Image
                 source={{ uri: option.image_url }}
                 containerStyle={styles.image}
@@ -60,6 +69,58 @@ export default function Homepage() {
             </Card>
           </TouchableOpacity>
         ))}
+
+        {/* 🟡 Section for Closing Soon with Animated Dot */}
+        {closingSoon.length > 0 && (
+          <View style={styles.sectionHeader}>
+            <Animated.View style={[styles.dot, { backgroundColor: "orange", opacity: fadeAnim }]} />
+            <Text style={styles.sectionText}>Closing Soon</Text>
+          </View>
+        )}
+        {closingSoon.map((option) => (
+          <TouchableOpacity key={option.id} onPress={() => handleSelect(option)}>
+            <Card containerStyle={styles.card}>
+              <Image
+                source={{ uri: option.image_url }}
+                containerStyle={styles.image}
+                resizeMode="cover"
+                PlaceholderContent={<ActivityIndicator />}
+              />
+              <Card.Title style={styles.cardTitle}>{option.name}</Card.Title>
+              <Card.Divider />
+              <Text style={[styles.status, { color: statuses[option.id]?.color }]}>
+                {statuses[option.id]?.text || "Loading..."}
+              </Text>
+            </Card>
+          </TouchableOpacity>
+        ))}
+
+        {/* 🔴 Section for Closed Locations with Animated Dot */}
+        {closedNow.length > 0 && (
+          <View style={styles.sectionHeader}>
+            <Animated.View style={[styles.dot, { backgroundColor: "red", opacity: fadeAnim }]} />
+            <Text style={styles.sectionText}>Closed</Text>
+          </View>
+        )}
+        {closedNow.map((option) => (
+          <TouchableOpacity key={option.id} onPress={() => handleSelect(option)}>
+            <Card containerStyle={styles.card}>
+              <Image
+                source={{ uri: option.image_url }}
+                containerStyle={styles.image}
+                resizeMode="cover"
+                PlaceholderContent={<ActivityIndicator />}
+              />
+              <Card.Title style={styles.cardTitle}>{option.name}</Card.Title>
+              <Card.Divider />
+              <Text style={[styles.status, { color: statuses[option.id]?.color }]}>
+                {statuses[option.id]?.text || "Loading..."}
+              </Text>
+            </Card>
+          </TouchableOpacity>
+        ))}
+
+
       </View>
     </ParallaxScrollView>
   );
@@ -106,6 +167,24 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
   },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    marginVertical: 15,
+    paddingLeft: 10,
+  },
+  dot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 8,
+  },
+  sectionText: {
+    fontSize: 28, // ✅ Bigger text
+    fontWeight: "bold",
+    textAlign: "left",
+  },
   headerContainer: {
     flex: 1,
     width: '100%',
@@ -120,7 +199,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   status: {
-    fontStyle:"italic",
+    fontStyle: "italic",
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",

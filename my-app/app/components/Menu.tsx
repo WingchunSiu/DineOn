@@ -1,6 +1,6 @@
 import { View, ScrollView, StyleSheet, Text } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { DiningOption, menuData } from "@/types";
+import { DiningOption, menuData } from "@/utils/types";
 import MenuItem from "./MenuItem";
 
 export default function Menu({ diningLocation }: { diningLocation: DiningOption | null }) {

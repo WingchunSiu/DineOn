@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { Text } from "@rneui/themed";
 import Menu from "@/components/Menu";
 
-import { DiningOption } from "../types";
+import { DiningOption } from "../../utils/types";
 
 export default function MenuPage() {
   const { data } = useLocalSearchParams();  

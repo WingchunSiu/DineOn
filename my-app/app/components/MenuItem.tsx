@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
-import { MenuItemType } from "@/types";
+import { MenuItemType } from "@/utils/types";
 import { Image, Text } from "@rneui/themed";
 
 export default function MenuItem({ item }: { item: MenuItemType }) {
