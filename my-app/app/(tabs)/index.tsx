@@ -6,16 +6,20 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 import { DiningOption, dummyDiningOptions } from "@/types";
 import { getStatus } from "@/util";
+import { useSelectedDiningHall } from "@/providers/DiningOptionProvider";
 
 export default function Homepage() {
-  const router = useRouter();
+  const router = useRouter();  
+
   const [statuses, setStatuses] = useState<{ [key: string]: { text: string; color: string } }>({});
-  
+  const { setSelectedDiningHall } = useSelectedDiningHall();
+
   const handleSelect = (option: DiningOption) => {
+    setSelectedDiningHall(option);
     router.push({
-      pathname: "../menu",
+      pathname: "../menu/breakfast",
       params: { data: JSON.stringify(option) }
-    })
+    });
   };
 
   useEffect(() => {
