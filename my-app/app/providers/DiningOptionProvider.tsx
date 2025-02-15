@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-import { DiningOption } from '@/types';
+import { DiningOption } from '@/utils/types';
 
 interface SelectedDiningHallContextType {
   selectedDiningHall: DiningOption | null;

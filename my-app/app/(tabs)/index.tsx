@@ -4,8 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Image, Icon, Text } from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 
-import { DiningOption, dummyDiningOptions } from "@/types";
-import { getStatus } from "@/util";
+
 import { useSelectedDiningHall } from "@/providers/DiningOptionProvider";
 import { DiningOption, dummyDiningOptions } from "@/utils/types";
 import { getStatus } from "@/utils/util";

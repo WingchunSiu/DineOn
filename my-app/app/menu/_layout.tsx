@@ -7,7 +7,7 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-import { DiningOption } from '@/types';
+import { DiningOption } from '@/utils/types';
 import BreakfastTab from './breakfast';
 
 export default function MenuTabsLayout() {
