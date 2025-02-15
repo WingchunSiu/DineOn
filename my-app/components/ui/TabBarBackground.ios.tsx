@@ -16,8 +16,13 @@ export default function BlurTabBarBackground() {
 }
 
 export function useBottomTabOverflow() {
-   const tabHeight = useBottomTabBarHeight();
-   const { bottom } = useSafeAreaInsets();
-   return tabHeight - bottom;
-  //return 0;
+   try {
+     const tabHeight = useBottomTabBarHeight();
+     const { bottom } = useSafeAreaInsets();
+     return tabHeight - bottom;
+   } catch (error) {
+     // Return 0 when tab bar height is not available
+     // (i.e., when not in tab navigation)
+     return 0;
+   }
 }
