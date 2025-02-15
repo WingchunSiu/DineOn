@@ -3,10 +3,15 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { DiningOption, menuData } from "@/utils/types";
 import MenuItem from "./MenuItem";
 
-export default function Menu({ diningLocation }: { diningLocation: DiningOption | null }) {
+export interface MenuProps {
+  timeOfDay: "Breakfast" | "Lunch" | "Dinner";
+  diningLocation: DiningOption | null;
+}
+
+export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
   if (!diningLocation) return <Text style={styles.errorText}>No menu available</Text>;
 
-  const menuItems = menuData[diningLocation.id] || [];
+  const menuItems = menuData[diningLocation.id][timeOfDay] || [];
 
   return (
     <ParallaxScrollView      
@@ -16,7 +21,7 @@ export default function Menu({ diningLocation }: { diningLocation: DiningOption 
           <Text style={styles.headerTitle}>{diningLocation.name}</Text>
         </View>
       }
-    >
+    >      
       <View style={styles.container}>
         {menuItems.map((item, index) => (
           <MenuItem key={index} item={item} />

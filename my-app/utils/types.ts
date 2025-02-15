@@ -76,222 +76,207 @@ export const dummyDiningOptions: DiningOption[] = [
   },
 ];
 
-export const menuData: Record<string, MenuItemType[]> = {
-  parkside: [
-    {
-      name: "Grilled Chicken Bowl",
-      description: "Grilled chicken with rice, beans, and vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegan Buddha Bowl",
-      description: "Quinoa, chickpeas, avocado, and roasted vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "BBQ Pulled Pork Sandwich",
-      description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Spaghetti Carbonara",
-      description: "Classic Italian pasta with pancetta, egg, and parmesan.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Margherita Pizza",
-      description: "Tomato sauce, mozzarella, and fresh basil on a thin crust.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Caesar Salad",
-      description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Teriyaki Chicken Bowl",
-      description: "Grilled chicken with steamed rice and teriyaki sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegetable Stir Fry",
-      description: "A mix of fresh vegetables sautéed with soy sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Cheeseburger",
-      description: "Beef patty with melted cheese, lettuce, and tomato.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Grilled Chicken Bowl",
-      description: "Grilled chicken with rice, beans, and vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegan Buddha Bowl",
-      description: "Quinoa, chickpeas, avocado, and roasted vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "BBQ Pulled Pork Sandwich",
-      description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Spaghetti Carbonara",
-      description: "Classic Italian pasta with pancetta, egg, and parmesan.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Margherita Pizza",
-      description: "Tomato sauce, mozzarella, and fresh basil on a thin crust.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Caesar Salad",
-      description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Teriyaki Chicken Bowl",
-      description: "Grilled chicken with steamed rice and teriyaki sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegetable Stir Fry",
-      description: "A mix of fresh vegetables sautéed with soy sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Cheeseburger",
-      description: "Beef patty with melted cheese, lettuce, and tomato.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-  ],
-  village: [
-    {
-      name: "Grilled Chicken Bowl",
-      description: "Grilled chicken with rice, beans, and vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegan Buddha Bowl",
-      description: "Quinoa, chickpeas, avocado, and roasted vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "BBQ Pulled Pork Sandwich",
-      description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Spaghetti Carbonara",
-      description: "Classic Italian pasta with pancetta, egg, and parmesan.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Margherita Pizza",
-      description: "Tomato sauce, mozzarella, and fresh basil on a thin crust.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Caesar Salad",
-      description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Teriyaki Chicken Bowl",
-      description: "Grilled chicken with steamed rice and teriyaki sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegetable Stir Fry",
-      description: "A mix of fresh vegetables sautéed with soy sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Cheeseburger",
-      description: "Beef patty with melted cheese, lettuce, and tomato.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },{
-      name: "Grilled Chicken Bowl",
-      description: "Grilled chicken with rice, beans, and vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegan Buddha Bowl",
-      description: "Quinoa, chickpeas, avocado, and roasted vegetables.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "BBQ Pulled Pork Sandwich",
-      description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Spaghetti Carbonara",
-      description: "Classic Italian pasta with pancetta, egg, and parmesan.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Margherita Pizza",
-      description: "Tomato sauce, mozzarella, and fresh basil on a thin crust.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Caesar Salad",
-      description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Teriyaki Chicken Bowl",
-      description: "Grilled chicken with steamed rice and teriyaki sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegetable Stir Fry",
-      description: "A mix of fresh vegetables sautéed with soy sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Cheeseburger",
-      description: "Beef patty with melted cheese, lettuce, and tomato.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-  ],
-  evk: [
-    {
-      name: "Teriyaki Chicken Bowl",
-      description: "Grilled chicken with steamed rice and teriyaki sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Vegetable Stir Fry",
-      description: "A mix of fresh vegetables sautéed with soy sauce.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Cheeseburger",
-      description: "Beef patty with melted cheese, lettuce, and tomato.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-  ],
-  tgc: [
-    {
-      name: "Latte",
-      description: "Espresso with steamed milk and a light foam topping.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Blueberry Muffin",
-      description: "Soft, fluffy muffin with fresh blueberries.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-    {
-      name: "Avocado Toast",
-      description: "Smashed avocado on toasted sourdough with chili flakes.",
-      image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-    },
-  ],
+export const menuData: Record<string, Record<string, MenuItemType[]>> = {
+  parkside: {
+    Breakfast: [
+      {
+        name: "Avocado Toast",
+        description: "Smashed avocado on toasted sourdough with chili flakes.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Breakfast",
+        description: "Some breakfast.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      }
+    ],
+    Lunch: [
+      {
+        name: "Grilled Chicken Bowl",
+        description: "Grilled chicken with rice, beans, and vegetables.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Vegan Buddha Bowl",
+        description: "Quinoa, chickpeas, avocado, and roasted vegetables.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+    Dinner: [
+      {
+        name: "BBQ Pulled Pork Sandwich",
+        description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Spaghetti Carbonara",
+        description: "Classic Italian pasta with pancetta, egg, and parmesan.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "BBQ Pulled Pork Sandwich",
+        description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Spaghetti Carbonara",
+        description: "Classic Italian pasta with pancetta, egg, and parmesan.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "BBQ Pulled Pork Sandwich",
+        description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Spaghetti Carbonara",
+        description: "Classic Italian pasta with pancetta, egg, and parmesan.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "BBQ Pulled Pork Sandwich",
+        description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Spaghetti Carbonara",
+        description: "Classic Italian pasta with pancetta, egg, and parmesan.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+  },
+  village: {
+    Breakfast: [
+      {
+        name: "Latte",
+        description: "Espresso with steamed milk and a light foam topping.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Avocado Toast",
+        description: "Smashed avocado on toasted sourdough with chili flakes.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+    Lunch: [
+      {
+        name: "Caesar Salad",
+        description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Teriyaki Chicken Bowl",
+        description: "Grilled chicken with steamed rice and teriyaki sauce.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+    Dinner: [
+      {
+        name: "Margherita Pizza",
+        description: "Tomato sauce, mozzarella, and fresh basil on a thin crust.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+      {
+        name: "Cheeseburger",
+        description: "Beef patty with melted cheese, lettuce, and tomato.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+  },
+  evk: {
+    Breakfast: [
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+    Lunch: [
+      {
+        name: "Vegetable Stir Fry",
+        description: "A mix of fresh vegetables sautéed with soy sauce.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+    Dinner: [
+      {
+        name: "Teriyaki Chicken Bowl",
+        description: "Grilled chicken with steamed rice and teriyaki sauce.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+  },
+  tgc: {
+    Breakfast: [
+      {
+        name: "Latte",
+        description: "Espresso with steamed milk and a light foam topping.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+    Lunch: [
+      {
+        name: "Avocado Toast",
+        description: "Smashed avocado on toasted sourdough with chili flakes.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+    Dinner: [
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+      },
+    ],
+  },
 };
