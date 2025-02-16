@@ -9,11 +9,18 @@ interface MenuSectionProps {
 }
 
 export default function MenuSection({ category, items }: MenuSectionProps) {
+
+  const featuredItems = items.filter(item => item.featured);
+  const regularItems = items.filter(item => !item.featured);
+
   return (
     <View style={styles.categorySection}>
       <Text style={styles.categoryTitle}>{category}</Text>
-      {items.map((item, index) => (
-        <MenuItem key={index} item={item} />
+      {featuredItems.map((item, index) => (
+        <MenuItem key={`featured-${index}`} item={item} />
+      ))}      
+      {regularItems.map((item, index) => (
+        <MenuItem key={`regular-${index}`} item={item} />
       ))}
     </View>
   );

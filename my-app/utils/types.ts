@@ -13,6 +13,7 @@ export interface MenuItemType {
   description: string;
   image_url: string;
   category: string;
+  featured: boolean;
 }
 
 export const dummyDiningOptions: DiningOption[] = [
@@ -90,55 +91,71 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Smashed avocado on toasted sourdough with chili flakes.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Americana",
+        featured: false,
       },
       {
         name: "Blueberry Muffin",
         description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Americana",
+        featured: false,
       },
       {
         name: "Omelete Bar",
         description: "Make your own omelete",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Bistro",
+        featured: true,
       },
       {
-        name: "Omelete Bar",
-        description: "Make your own omelete",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-        category: "Bistro",
-      },
-      {
-        name: "Omelete Bar",
-        description: "Make your own omelete",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-        category: "Bistro",
-      },
-      {
-        name: "Omelete Bar",
-        description: "Make your own omelete",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-        category: "Bistro",
-      },
-      {
-        name: "Omelete Bar",
-        description: "Make your own omelete",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-        category: "Bistro",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Americana",
+        featured: false,
       },
       {
-        name: "Breakfast",
-        description: "Some breakfast.",
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Americana",
-      }
+        featured: false,
+      },
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
+        featured: false,
+      },
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
+        featured: false,
+      },
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
+        featured: false,
+      },
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
+        featured: false,
+      },
+      {
+        name: "Blueberry Muffin",
+        description: "Soft, fluffy muffin with fresh blueberries.",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
+        featured: false,
+      },
     ],
     Lunch: [
       {
@@ -146,12 +163,14 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Grilled chicken with rice, beans, and vegetables.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Americana",
+        featured: false,
       },
       {
         name: "Vegan Buddha Bowl",
         description: "Quinoa, chickpeas, avocado, and roasted vegetables.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Eurasia",
+        featured: false,
       },
     ],
     Dinner: [
@@ -160,18 +179,21 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Americana",
+        featured: false,
       },
       {
         name: "Spaghetti Carbonara",
         description: "Classic Italian pasta with pancetta, egg, and parmesan.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Eurasia",
+        featured: false,
       },
       {
         name: "BBQ Pulled Pork Sandwich",
         description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Pizza/Salad Bar",
+        featured: false,
       }
     ],
   },
@@ -182,12 +204,14 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Espresso with steamed milk and a light foam topping.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Expo",
+        featured: false,
       },
       {
         name: "Avocado Toast",
         description: "Smashed avocado on toasted sourdough with chili flakes.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Deli Bar",
+        featured: false,
       },
     ],
     Lunch: [
@@ -196,12 +220,14 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Plant Based",
+        featured: false,
       },
       {
         name: "Teriyaki Chicken Bowl",
         description: "Grilled chicken with steamed rice and teriyaki sauce.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Flexitarian",
+        featured: true,
       },
     ],
     Dinner: [
@@ -210,12 +236,14 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Make your own crepe.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Crepes",
+        featured: true,
       },
       {
         name: "Cheeseburger",
         description: "Beef patty with melted cheese, lettuce, and tomato.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Expo",
+        featured: false,
       },
     ],
   },
@@ -226,6 +254,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Fresh From The Farm",
+        featured: false,
       },
     ],
     Lunch: [
@@ -234,6 +263,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "A mix of fresh vegetables sautéed with soy sauce.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Hot Line",
+        featured: false,
       },
     ],
     Dinner: [
@@ -242,6 +272,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Grilled chicken with steamed rice and teriyaki sauce.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Hot Line",
+        featured: false,
       },
     ],
   },
@@ -252,6 +283,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Espresso with steamed milk and a light foam topping.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Cafe",
+        featured: false,
       },
     ],
     Lunch: [
@@ -260,6 +292,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Smashed avocado on toasted sourdough with chili flakes.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Cafe",
+        featured: false,
       },
     ],
     Dinner: [
@@ -268,6 +301,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
         category: "Cafe",
+        featured: false,
       },
     ],
   },
