@@ -7,7 +7,7 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 
 import { useSelectedDiningHall } from "@/providers/DiningOptionProvider";
 import { DiningOption, dummyDiningOptions } from "@/utils/types";
-import { getStatus } from "@/utils/util";
+import { getStatus, getTimeOfDay } from "@/utils/util";
 
 export default function Homepage() {
   const router = useRouter();  

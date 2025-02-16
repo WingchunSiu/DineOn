@@ -22,4 +22,15 @@ export const getStatus = (diningOption: DiningOption) => {
 };
 
 // Breakfast 7 to 11, Lunch 11 to 4, Dinner 4 to 10
+export const getTimeOfDay = () => {
+  const now = new Date();
+  const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes
 
+  if (currentTime < 11 * 60) {
+    return "Breakfast";
+  } else if (currentTime < 16 * 60) {
+    return "Lunch";
+  } else {
+    return "Dinner";
+  }
+};
