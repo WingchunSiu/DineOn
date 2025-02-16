@@ -14,7 +14,8 @@ export default function MenuTabsLayout() {
 
   return (
     <Tab.Navigator
-      screenOptions={{        
+      screenOptions={{ 
+        swipeEnabled: true,       
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         tabBarIndicatorStyle: { backgroundColor: "#990000" },
         tabBarLabelStyle: { color: 'black' },
