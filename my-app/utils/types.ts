@@ -104,6 +104,30 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         category: "Bistro",
       },
       {
+        name: "Omelete Bar",
+        description: "Make your own omelete",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Bistro",
+      },
+      {
+        name: "Omelete Bar",
+        description: "Make your own omelete",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Bistro",
+      },
+      {
+        name: "Omelete Bar",
+        description: "Make your own omelete",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Bistro",
+      },
+      {
+        name: "Omelete Bar",
+        description: "Make your own omelete",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Bistro",
+      },
+      {
         name: "Breakfast",
         description: "Some breakfast.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
@@ -201,7 +225,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Blueberry Muffin",
         description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-        category: "Hot Line",
+        category: "Fresh From The Farm",
       },
     ],
     Lunch: [

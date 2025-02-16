@@ -1,7 +1,7 @@
 import { View, ScrollView, StyleSheet, Text } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { DiningOption, menuData } from "@/utils/types";
-import MenuItem from "./MenuItem";
+import { DiningOption, menuData, MenuItemType } from "@/utils/types";
+import MenuSection from "./MenuSection";
 
 export interface MenuProps {
   timeOfDay: "Breakfast" | "Lunch" | "Dinner";
@@ -11,6 +11,7 @@ export interface MenuProps {
 export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
   if (!diningLocation) return <Text style={styles.errorText}>No menu available</Text>;
 
+  const categories = diningLocation.categories || [];
   const menuItems = menuData[diningLocation.id][timeOfDay] || [];
 
   return (
@@ -22,10 +23,18 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
         </View>
       }
     >
-      <View style={styles.container}>
-        {menuItems.map((item, index) => (
-          <MenuItem key={index} item={item} />
-        ))}
+      <View style={styles.container}>        
+        {categories.map((category, index) => {
+          const itemsByCategory = menuItems.filter((item: MenuItemType) => item.category === category);                    
+          
+          if (itemsByCategory.length > 0) {
+            return (
+              <MenuSection key={index} category={category} items={itemsByCategory} />
+            );
+          }
+
+          return null;          
+        })}
       </View>
     </ParallaxScrollView>
   );
