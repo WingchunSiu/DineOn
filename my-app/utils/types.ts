@@ -5,12 +5,14 @@ export interface DiningOption {
   type: "dining_hall" | "cafe";
   image_url: string;
   openTime: {[key: string]: { open: string; close: string };};
+  categories: string[];
 }
 
 export interface MenuItemType {
   name: string;
   description: string;
   image_url: string;
+  category: string;
 }
 
 export const dummyDiningOptions: DiningOption[] = [
@@ -28,6 +30,7 @@ export const dummyDiningOptions: DiningOption[] = [
       Saturday: { open: "09:00", close: "22:00" },
       Sunday: { open: "09:00", close: "22:00" },
     },
+    categories: ["Bistro", "Pizza/Salad Bar", "Americana", "Eurasia", "Allergen Awareness Zone (Must Register)"],
   },
   {
     id: "village",
@@ -43,6 +46,7 @@ export const dummyDiningOptions: DiningOption[] = [
       Saturday: { open: "09:00", close: "22:00" },
       Sunday: { open: "09:00", close: "22:00" },
     },
+    categories: ["Flexitarian", "Salad Bar", "Deli Bar", "Expo", "Plant Based", "Breakfast/Dessert/Fruit", "Mezze Bar", "Crepes"],
   },
   {
     id: "evk",
@@ -58,6 +62,7 @@ export const dummyDiningOptions: DiningOption[] = [
       Saturday: { open: "09:00", close: "22:00" },
       Sunday: { open: "09:00", close: "22:00" },
     },
+    categories: ["Fresh From The Farm", "Hot Line"],
   },
   {
     id: "tgc",
@@ -73,6 +78,7 @@ export const dummyDiningOptions: DiningOption[] = [
       Saturday: { open: "00:00", close: "22:00" },
       Sunday: { open: "09:00", close: "22:00" },
     },
+    categories: ["Cafe"],
   },
 ];
 
@@ -83,61 +89,31 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Avocado Toast",
         description: "Smashed avocado on toasted sourdough with chili flakes.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
       },
       {
         name: "Blueberry Muffin",
         description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
+      },
+      {
+        name: "Omelete Bar",
+        description: "Make your own omelete",
+        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Bistro",
       },
       {
         name: "Breakfast",
         description: "Some breakfast.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
       },
       {
         name: "Breakfast",
         description: "Some breakfast.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Breakfast",
-        description: "Some breakfast.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
       }
     ],
     Lunch: [
@@ -145,11 +121,13 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Grilled Chicken Bowl",
         description: "Grilled chicken with rice, beans, and vegetables.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
       },
       {
         name: "Vegan Buddha Bowl",
         description: "Quinoa, chickpeas, avocado, and roasted vegetables.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Eurasia",
       },
     ],
     Dinner: [
@@ -157,42 +135,20 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "BBQ Pulled Pork Sandwich",
         description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Americana",
       },
       {
         name: "Spaghetti Carbonara",
         description: "Classic Italian pasta with pancetta, egg, and parmesan.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Eurasia",
       },
       {
         name: "BBQ Pulled Pork Sandwich",
         description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Spaghetti Carbonara",
-        description: "Classic Italian pasta with pancetta, egg, and parmesan.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "BBQ Pulled Pork Sandwich",
-        description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Spaghetti Carbonara",
-        description: "Classic Italian pasta with pancetta, egg, and parmesan.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "BBQ Pulled Pork Sandwich",
-        description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
-      {
-        name: "Spaghetti Carbonara",
-        description: "Classic Italian pasta with pancetta, egg, and parmesan.",
-        image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
-      },
+        category: "Pizza/Salad Bar",
+      }
     ],
   },
   village: {
@@ -201,11 +157,13 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Latte",
         description: "Espresso with steamed milk and a light foam topping.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Expo",
       },
       {
         name: "Avocado Toast",
         description: "Smashed avocado on toasted sourdough with chili flakes.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Deli Bar",
       },
     ],
     Lunch: [
@@ -213,23 +171,27 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Caesar Salad",
         description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Plant Based",
       },
       {
         name: "Teriyaki Chicken Bowl",
         description: "Grilled chicken with steamed rice and teriyaki sauce.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Flexitarian",
       },
     ],
     Dinner: [
       {
-        name: "Margherita Pizza",
-        description: "Tomato sauce, mozzarella, and fresh basil on a thin crust.",
+        name: "Crepes",
+        description: "Make your own crepe.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Crepes",
       },
       {
         name: "Cheeseburger",
         description: "Beef patty with melted cheese, lettuce, and tomato.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Expo",
       },
     ],
   },
@@ -239,6 +201,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Blueberry Muffin",
         description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Hot Line",
       },
     ],
     Lunch: [
@@ -246,6 +209,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Vegetable Stir Fry",
         description: "A mix of fresh vegetables sautéed with soy sauce.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Hot Line",
       },
     ],
     Dinner: [
@@ -253,6 +217,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Teriyaki Chicken Bowl",
         description: "Grilled chicken with steamed rice and teriyaki sauce.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Hot Line",
       },
     ],
   },
@@ -262,6 +227,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Latte",
         description: "Espresso with steamed milk and a light foam topping.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Cafe",
       },
     ],
     Lunch: [
@@ -269,6 +235,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Avocado Toast",
         description: "Smashed avocado on toasted sourdough with chili flakes.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Cafe",
       },
     ],
     Dinner: [
@@ -276,6 +243,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         name: "Blueberry Muffin",
         description: "Soft, fluffy muffin with fresh blueberries.",
         image_url: "https://www.shutterstock.com/image-photo/fried-salmon-steak-cooked-green-600nw-2489026949.jpg",
+        category: "Cafe",
       },
     ],
   },

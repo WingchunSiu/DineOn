@@ -16,8 +16,9 @@ export default function MenuTabsLayout() {
     <Tab.Navigator
       screenOptions={{        
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        tabBarIndicatorStyle: { backgroundColor: Colors[colorScheme ?? 'light'].tint },
-        tabBarStyle: { backgroundColor: Colors[colorScheme ?? 'light'].background },        
+        tabBarIndicatorStyle: { backgroundColor: "#990000" },
+        tabBarLabelStyle: { color: 'black' },
+        tabBarStyle: { backgroundColor: Colors[colorScheme ?? 'light'].background },                
       }}
     >
       <Tab.Screen name="Breakfast" component={BreakfastTab} />
