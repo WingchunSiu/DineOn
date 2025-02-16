@@ -3,10 +3,12 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 
 import BreakfastTab from './breakfast';
 import LunchTab from './lunch';
 import DinnerTab from './dinner';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -14,8 +16,8 @@ export default function MenuTabsLayout() {
   const colorScheme = useColorScheme();  
 
   return (
-    <>
-      <Stack.Screen name="Menu" options={{ headerShown: false }} />        
+    <SafeAreaView style={{ flex: 1, backgroundColor: Colors[colorScheme ?? "light"].background }}>
+      <Stack.Screen name="Menu" options={{ headerShown: false }} />              
       <Tab.Navigator
         screenOptions={{   
           swipeEnabled: true,       
@@ -29,6 +31,6 @@ export default function MenuTabsLayout() {
         <Tab.Screen name="Lunch" component={LunchTab} />
         <Tab.Screen name="Dinner" component={DinnerTab} />
       </Tab.Navigator>
-    </>
+    </SafeAreaView>
   );
 }
