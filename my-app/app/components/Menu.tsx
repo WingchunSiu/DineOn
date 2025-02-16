@@ -21,7 +21,7 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
           <Text style={styles.headerTitle}>{diningLocation.name}</Text>
         </View>
       }
-    >      
+    >
       <View style={styles.container}>
         {menuItems.map((item, index) => (
           <MenuItem key={index} item={item} />

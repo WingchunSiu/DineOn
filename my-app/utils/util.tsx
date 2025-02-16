@@ -20,3 +20,6 @@ export const getStatus = (diningOption: DiningOption) => {
     return { text: "Open", color: "green" };
   }
 };
+
+// Breakfast 7 to 11, Lunch 11 to 4, Dinner 4 to 10
+

@@ -20,7 +20,7 @@ export default function Homepage() {
   const handleSelect = (option: DiningOption) => {
     setSelectedDiningHall(option);
     router.push({
-      pathname: "../menu/breakfast",
+      pathname: "../Menu/breakfast",
       params: { data: JSON.stringify(option) }
     });
   };
