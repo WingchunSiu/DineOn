@@ -85,7 +85,7 @@ export const dummyDiningOptions: DiningOption[] = [
 
 export const menuData: Record<string, Record<string, MenuItemType[]>> = {
   parkside: {
-    Breakfast: [
+    breakfast: [
       {
         name: "Avocado Toast",
         description: "Smashed avocado on toasted sourdough with chili flakes.",
@@ -157,7 +157,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: false,
       },
     ],
-    Lunch: [
+    lunch: [
       {
         name: "Grilled Chicken Bowl",
         description: "Grilled chicken with rice, beans, and vegetables.",
@@ -173,7 +173,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: false,
       },
     ],
-    Dinner: [
+    dinner: [
       {
         name: "BBQ Pulled Pork Sandwich",
         description: "Slow-cooked pulled pork with BBQ sauce on a brioche bun.",
@@ -198,7 +198,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
     ],
   },
   village: {
-    Breakfast: [
+    breakfast: [
       {
         name: "Latte",
         description: "Espresso with steamed milk and a light foam topping.",
@@ -214,7 +214,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: false,
       },
     ],
-    Lunch: [
+    lunch: [
       {
         name: "Caesar Salad",
         description: "Crisp romaine, parmesan, croutons, and Caesar dressing.",
@@ -230,7 +230,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: true,
       },
     ],
-    Dinner: [
+    dinner: [
       {
         name: "Crepes",
         description: "Make your own crepe.",
@@ -248,7 +248,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
     ],
   },
   evk: {
-    Breakfast: [
+    breakfast: [
       {
         name: "Blueberry Muffin",
         description: "Soft, fluffy muffin with fresh blueberries.",
@@ -257,7 +257,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: false,
       },
     ],
-    Lunch: [
+    lunch: [
       {
         name: "Vegetable Stir Fry",
         description: "A mix of fresh vegetables sautéed with soy sauce.",
@@ -266,7 +266,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: false,
       },
     ],
-    Dinner: [
+    dinner: [
       {
         name: "Teriyaki Chicken Bowl",
         description: "Grilled chicken with steamed rice and teriyaki sauce.",
@@ -277,7 +277,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
     ],
   },
   tgc: {
-    Breakfast: [
+    breakfast: [
       {
         name: "Latte",
         description: "Espresso with steamed milk and a light foam topping.",
@@ -286,7 +286,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: false,
       },
     ],
-    Lunch: [
+    lunch: [
       {
         name: "Avocado Toast",
         description: "Smashed avocado on toasted sourdough with chili flakes.",
@@ -295,7 +295,7 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
         featured: false,
       },
     ],
-    Dinner: [
+    dinner: [
       {
         name: "Blueberry Muffin",
         description: "Soft, fluffy muffin with fresh blueberries.",

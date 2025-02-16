@@ -27,10 +27,10 @@ export const getTimeOfDay = () => {
   const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes
 
   if (currentTime < 11 * 60) {
-    return "Breakfast";
+    return "breakfast";
   } else if (currentTime < 16 * 60) {
-    return "Lunch";
+    return "lunch";
   } else {
-    return "Dinner";
+    return "dinner";
   }
 };

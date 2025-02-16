@@ -13,7 +13,7 @@ export default function BreakfastTab() {
   
   return (
     <>      
-      <Menu timeOfDay="Breakfast" diningLocation={selectedDiningHall} />
+      <Menu timeOfDay="breakfast" diningLocation={selectedDiningHall} />
     </>
   );
 }

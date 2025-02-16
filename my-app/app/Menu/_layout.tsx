@@ -3,12 +3,12 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import BreakfastTab from './breakfast';
 import LunchTab from './lunch';
 import DinnerTab from './dinner';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { getTimeOfDay } from '@/utils/util';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -17,8 +17,9 @@ export default function MenuTabsLayout() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors[colorScheme ?? "light"].background }}>
-      <Stack.Screen name="Menu" options={{ headerShown: false }} />              
+      <Stack.Screen name="Menu" options={{ headerShown: false }} />      
       <Tab.Navigator
+        initialRouteName={getTimeOfDay()}
         screenOptions={{   
           swipeEnabled: true,       
           tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -27,9 +28,9 @@ export default function MenuTabsLayout() {
           tabBarStyle: { backgroundColor: Colors[colorScheme ?? 'light'].background },
         }}
       >      
-        <Tab.Screen name="Breakfast" component={BreakfastTab} />
-        <Tab.Screen name="Lunch" component={LunchTab} />
-        <Tab.Screen name="Dinner" component={DinnerTab} />
+        <Tab.Screen name="breakfast" component={BreakfastTab} />
+        <Tab.Screen name="lunch" component={LunchTab} />
+        <Tab.Screen name="dinner" component={DinnerTab} />
       </Tab.Navigator>
     </SafeAreaView>
   );

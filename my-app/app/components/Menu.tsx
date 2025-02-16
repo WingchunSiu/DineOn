@@ -4,7 +4,7 @@ import { DiningOption, menuData, MenuItemType } from "@/utils/types";
 import MenuSection from "./MenuSection";
 
 export interface MenuProps {
-  timeOfDay: "Breakfast" | "Lunch" | "Dinner";
+  timeOfDay: "breakfast" | "lunch" | "dinner";
   diningLocation: DiningOption | null;
 }
 

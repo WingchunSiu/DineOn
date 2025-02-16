@@ -11,6 +11,6 @@ export default function DinnerTab() {
   }
   
   return (    
-    <Menu timeOfDay="Dinner" diningLocation={selectedDiningHall} />    
+    <Menu timeOfDay="dinner" diningLocation={selectedDiningHall} />    
   );
 }
