@@ -53,13 +53,11 @@ def scrape_menu(dining_hall_id, url):
                         classes = icon.get("class", [])
                         for cls in classes:
                             if cls.startswith("allergen-") and cls != "allergen-tooltip":
-                                allergens.append(cls.replace("allergen-", "").replace("-", " ").title())
-
-                    description = ", ".join(allergens) if allergens else ""
+                                allergens.append(cls.replace("allergen-", "").replace("-", " ").title())                    
 
                     menu_item = {
                         "name": name,
-                        "description": description,
+                        "labels": allergens,
                         "image_url": "",
                         "category": section_name,
                         "featured": False
@@ -80,21 +78,24 @@ def scrape_multiple_days():
     days_to_scrape = 3
 
     for i in range(days_to_scrape):
-        date = (start_date + datetime.timedelta(days=i)).strftime("%B+%-d%%2C+%Y")  # Convert to format: March+4%2C+2025
-        print(f"Scraping menus for {date}")
+
+        date = start_date + datetime.timedelta(days=i)
+        day_of_week = date.weekday()
+        date_str = date.strftime("%B+%-d%%2C+%Y")  # Convert to format: March+4%2C+2025
+        print(f"Scraping menus for {date_str}")
 
         for hall in DINING_HALLS:
             dining_hall_id = hall["id"]
-            menu_url = hall["menu_url"].replace("{date}", date)
+            menu_url = hall["menu_url"].replace("{date}", date_str)
 
-            print(f"Scraping {hall['name']} for {date}...")
+            print(f"Scraping {hall['name']} for {date_str}...")
             menu_data = scrape_menu(dining_hall_id, menu_url)
 
             # Store the data by date
-            if date not in all_data:
-                all_data[date] = {}
+            if day_of_week not in all_data:
+                all_data[day_of_week] = {}
 
-            all_data[date].update(menu_data)
+            all_data[day_of_week].update(menu_data)
 
     return all_data
 
