@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import MenuItem from './MenuItem';
 import { MenuItemType } from "@/utils/types";
+import supabase from '../../../config/supabaseClient';
 
 interface MenuSectionProps {
   category: string;

@@ -3,6 +3,7 @@ import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { MenuItemType } from "@/utils/types";
 import { Image, Text } from "@rneui/themed";
 
+
 export default function MenuItem({ item }: { item: MenuItemType }) {
   return (
     <View style={[styles.container, item.featured && styles.featuredContainer]}>
