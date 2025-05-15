@@ -21,6 +21,7 @@
     "@react-navigation/native": "^7.0.14",
     "@rneui/base": "^0.0.0-edge.2",
     "@rneui/themed": "^0.0.0-edge.2",
+    "@supabase/supabase-js": "^2.49.4",
     "expo": "^53.0.0",
     "expo-blur": "~14.1.4",
     "expo-constants": "~17.1.6",

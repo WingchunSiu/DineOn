@@ -1,4 +1,6 @@
 import { DiningOption } from "./types";
+import supabase from './supabaseClient';
+import { MenuItemType } from './types';
 
 
 export const getStatus = (diningOption: DiningOption) => {
@@ -34,3 +36,62 @@ export const getTimeOfDay = () => {
     return "dinner";
   }
 };
+
+/**
+ * Fetch menu items for a given dining option, meal type, and day of week from Supabase.
+ * @param diningOptionStringId - The string_id of the dining location
+ * @param mealType - One of 'Breakfast', 'Lunch', 'Dinner'
+ * @param dayOfWeek - Day of week, e.g., 'Monday', 'Tuesday', etc.
+ * @returns Array of MenuItemType
+ */
+export async function fetchMenuItemsFromSupabase(
+  diningOptionStringId: string,
+  mealType: string,
+  dayOfWeek: string
+): Promise<MenuItemType[]> {
+  console.log('Fetching menu items with params:', { diningOptionStringId, mealType, dayOfWeek });
+  // Step 1: Get menu_item_uuids for this dining option, meal, and day
+  const { data: linkData, error: linkError } = await supabase
+    .from('dining_option_menu_items')
+    .select('menu_item_uuid')
+    .eq('dining_option_string_id', diningOptionStringId)
+    .eq('meal_type', mealType)
+    .eq('day_of_week', dayOfWeek);
+
+  console.log('Link data:', linkData);
+  if (linkError) {
+    console.error('Error fetching menu item links:', linkError);
+    return [];
+  }
+  if (!linkData || linkData.length === 0) {
+    return [];
+  }
+
+  const menuItemUuids = linkData.map((row: any) => row.menu_item_uuid);
+  console.log('Menu item UUIDs:', menuItemUuids);
+
+  // Step 2: Fetch menu item details
+  const { data: menuItems, error: menuError } = await supabase
+    .from('menu_items')
+    .select('*')
+    .in('menu_item_uuid', menuItemUuids);
+
+  console.log('Menu items:', menuItems);
+  if (menuError) {
+    console.error('Error fetching menu items:', menuError);
+    return [];
+  }
+  if (!menuItems) {
+    return [];
+  }
+
+  // Step 3: Map to MenuItemType (add description as empty string for compatibility)
+  return menuItems.map((item: any) => ({
+    name: item.name,
+    description: '', // No description in schema, so leave blank
+    image_url: item.image_url,
+    category: item.category,
+    featured: item.featured,
+    // Optionally, add labels if needed
+  }));
+}
