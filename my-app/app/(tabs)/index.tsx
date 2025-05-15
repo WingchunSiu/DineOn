@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useState, useEffect } from 'react';
 import { Card, Image, Icon, Text } from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-
+import { colors } from '../../styles';
 
 import { useSelectedDiningHall } from "@/providers/DiningOptionProvider";
 import { DiningOption, dummyDiningOptions } from "@/utils/types";
@@ -41,7 +41,7 @@ export default function Homepage() {
 
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: "#990000", dark: "#800000" }}
+      headerBackgroundColor={colors.primary.main}
       headerImage={
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>DineOn!</Text>

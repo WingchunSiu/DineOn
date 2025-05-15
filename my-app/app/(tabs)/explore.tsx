@@ -6,11 +6,12 @@ import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { colors } from '../../styles';
 
 export default function TabTwoScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+      headerBackgroundColor={colors.background.secondary}
       headerImage={
         <IconSymbol
           size={310}
@@ -67,12 +68,11 @@ export default function TabTwoScreen() {
       </Collapsible>
       <Collapsible title="Light and dark mode components">
         <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
+          This app uses a light theme for consistent and clean styling. The theme configuration
+          can be found in the styles directory.
         </ThemedText>
         <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
+          <ThemedText type="link">Learn more about theming</ThemedText>
         </ExternalLink>
       </Collapsible>
       <Collapsible title="Animations">

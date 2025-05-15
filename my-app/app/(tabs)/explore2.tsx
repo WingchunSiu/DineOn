@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { theme, colors } from '../../styles';
 
 
 // Dummy cafes data
@@ -75,23 +76,23 @@ const Explore2 = () => {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#fff",  // Removed undefined `Colors[colorScheme]`
+        backgroundColor: theme.background,
     },
     container: {
         flex: 1,
         padding: 16,
-        backgroundColor: '#fff',
+        backgroundColor: theme.background,
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 16,
-        color: '#C41E3A', // Cardinal red
+        color: colors.primary.main,
     },
     item: {
         padding: 16,
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: colors.border.medium,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

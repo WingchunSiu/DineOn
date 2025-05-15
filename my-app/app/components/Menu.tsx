@@ -2,6 +2,7 @@ import { View, ScrollView, StyleSheet, Text } from "react-native";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { DiningOption, menuData, MenuItemType } from "@/utils/types";
 import MenuSection from "./MenuSection";
+import { colors } from '../../styles';
 
 export interface MenuProps {
   timeOfDay: "breakfast" | "lunch" | "dinner";
@@ -16,7 +17,7 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
 
   return (
     <ParallaxScrollView      
-      headerBackgroundColor={{ light: "#990000", dark: "#990000" }}
+      headerBackgroundColor={colors.primary.main}
       headerImage={
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>{diningLocation.name}</Text>
