@@ -1,8 +1,10 @@
-import { View, ScrollView, StyleSheet, Text } from "react-native";
+import { View, ScrollView, StyleSheet, Text, ActivityIndicator } from "react-native";
+import { useEffect, useState } from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { DiningOption, menuData, MenuItemType } from "@/utils/types";
+import { DiningOption, MenuItemType } from "@/utils/types";
 import MenuSection from "./MenuSection";
 import { colors } from '../../styles';
+import { fetchMenuItemsFromSupabase } from '@/utils/util';
 
 export interface MenuProps {
   timeOfDay: "breakfast" | "lunch" | "dinner";
@@ -10,10 +12,50 @@ export interface MenuProps {
 }
 
 export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
+  const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      if (!diningLocation) return;
+      
+      try {
+        setIsLoading(true);
+        setError(null);
+        const items = await fetchMenuItemsFromSupabase(
+          diningLocation.id,
+          timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1),
+          'Friday' // Hardcoded for testing
+        );
+        setMenuItems(items);
+      } catch (err) {
+        setError('Failed to fetch menu items');
+        console.error('Error fetching menu:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMenu();
+  }, [diningLocation, timeOfDay]);
+
   if (!diningLocation) return <Text style={styles.errorText}>No menu available</Text>;
 
+  if (error) {
+    return <Text style={styles.errorText}>{error}</Text>;
+  }
+
   const categories = diningLocation.categories || [];
-  const menuItems = menuData[diningLocation.id][timeOfDay] || [];
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={colors.primary.main} />
+        <Text style={styles.loadingText}>Loading menu...</Text>
+      </View>
+    );
+  }
 
   return (
     <ParallaxScrollView      
@@ -36,6 +78,9 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
 
           return null;          
         })}
+        {menuItems.length === 0 && !isLoading && (
+          <Text style={styles.noItemsText}>No menu items available for this time</Text>
+        )}
       </View>
     </ParallaxScrollView>
   );
@@ -48,7 +93,23 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 18,
     textAlign: "center",
-    color: "red",
+    color: colors.status.error,
+    marginTop: 20,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: colors.text.secondary,
+  },
+  noItemsText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: colors.text.secondary,
     marginTop: 20,
   },
   headerContainer: {
