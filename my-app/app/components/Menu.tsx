@@ -68,7 +68,9 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
     >
       <View style={styles.container}>        
         {categories.map((category, index) => {
-          const itemsByCategory = menuItems.filter((item: MenuItemType) => item.category === category);                    
+          const itemsByCategory = menuItems
+            .filter((item: MenuItemType) => item.category === category)
+            .sort((a, b) => a.name.localeCompare(b.name)); // Sort items alphabetically by name
           
           if (itemsByCategory.length > 0) {
             return (
