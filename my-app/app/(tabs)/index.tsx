@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import React, { useState, useEffect } from 'react';
 import { Card, Image, Icon, Text } from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
+import MealPlanCalculator from '@/components/MealPlanCalculator';
 import { colors } from '../../styles';
 
 import { useSelectedDiningHall } from "@/providers/DiningOptionProvider";
@@ -11,7 +12,7 @@ import { getStatus } from "@/utils/util";
 
 export default function Homepage() {
   const router = useRouter();  
-
+  const [calculatorVisible, setCalculatorVisible] = useState(false);
   const [statuses, setStatuses] = useState<{ [key: string]: { text: string; color: string } }>({});
   const { setSelectedDiningHall } = useSelectedDiningHall();
 
@@ -53,7 +54,20 @@ export default function Homepage() {
       }
     >
       <View style={styles.container}>
-        
+        {/* Meal Plan Calculator Button */}
+        <TouchableOpacity 
+          style={styles.calculatorButton}
+          onPress={() => setCalculatorVisible(true)}
+        >
+          <Icon name="calculator" type="ionicon" color="white" size={24} />
+          <Text style={styles.calculatorButtonText}>Meal Plan Calculator</Text>
+        </TouchableOpacity>
+
+        {/* Meal Plan Calculator Modal */}
+        <MealPlanCalculator 
+          visible={calculatorVisible}
+          onClose={() => setCalculatorVisible(false)}
+        />
 
         {/* 🟢 Section for Open Now */}
         {openNow.length > 0 && (
@@ -115,6 +129,51 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 20,
+  },
+  calculatorButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.primary.main,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 25,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  calculatorButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  calculatorSection: {
+    width: '100%',
+    marginBottom: 30,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    padding: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  calculatorTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    textAlign: 'center',
+    color: colors.primary.main,
   },
   title: {
     fontSize: 26,

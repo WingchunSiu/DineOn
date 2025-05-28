@@ -27,6 +27,15 @@ export interface MenuItemType {
   labels?: string[];
 }
 
+export interface MealPlan {
+  id: string;
+  name: string;
+  totalCost: number;
+  swipes?: number;
+  diningDollars?: number;
+  description: string;
+}
+
 export const dummyFoodTrucks: FoodTruck[] = [
   {
     id: "kogi",
@@ -359,4 +368,65 @@ export const menuData: Record<string, Record<string, MenuItemType[]>> = {
       },
     ],
   },
+};
+
+export const mealPlans: MealPlan[] = [
+  {
+    id: "cardinal",
+    name: "Cardinal Plan",
+    totalCost: 4014,
+    swipes: 0, // 0 indicates unlimited swipes
+    description: "Unlimited Residential + 2 Campus Center swipes/week"
+  },
+  {
+    id: "trojan", 
+    name: "Trojan Plan",
+    totalCost: 4605,
+    diningDollars: 4605,
+    description: "Dining Dollars Only"
+  },
+  {
+    id: "flex120",
+    name: "Flex120 Plan", 
+    totalCost: 1975,
+    swipes: 120,
+    diningDollars: 150,
+    description: "120 Swipes + $150 Dining Dollars"
+  },
+  {
+    id: "community25",
+    name: "Community 25",
+    totalCost: 525,
+    swipes: 25, 
+    diningDollars: 50,
+    description: "25 Swipes + $50 Dining Dollars"
+  },
+  {
+    id: "community50", 
+    name: "Community 50",
+    totalCost: 975,
+    swipes: 50,
+    diningDollars: 100, 
+    description: "50 Swipes + $100 Dining Dollars"
+  },
+  {
+    id: "dining_block_250",
+    name: "Dining Dollar Block $250",
+    totalCost: 225, // 10% discount
+    diningDollars: 250,
+    description: "$250 Dining Dollars (10% off)"
+  },
+  {
+    id: "dining_block_500", 
+    name: "Dining Dollar Block $500",
+    totalCost: 450, // 10% discount
+    diningDollars: 500,
+    description: "$500 Dining Dollars (10% off)"
+  }
+];
+
+export const standardPrices = {
+  breakfast: 15.99,
+  lunch: 18.99, 
+  dinner: 19.99
 };
