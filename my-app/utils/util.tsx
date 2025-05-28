@@ -12,14 +12,40 @@ export const getStatus = (diningOption: DiningOption) => {
   const openTime = parseInt(open.split(":")[0]) * 60 + parseInt(open.split(":")[1]); // Convert to minutes
   const closeTime = parseInt(close.split(":")[0]) * 60 + parseInt(close.split(":")[1]); // Convert to minutes
 
+  // Helper function to format time
+  const formatTime = (timeString: string) => {
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+    return `${displayHour}:${minutes} ${ampm}`;
+  };
+
   if (currentTime < openTime) {
-    return { text: "Closed", color: "red" };
+    // Closed, will open later today
+    return { 
+      text: `Opens at ${formatTime(open)}`, 
+      color: "#666666" 
+    };
   } else if (currentTime >= closeTime) {
-    return { text: "Closed", color: "red" };
+    // Closed for the day
+    return { 
+      text: `Closed • Opens ${formatTime(open)}`, 
+      color: "#666666" 
+    };
   } else if (currentTime >= closeTime - 30) {
-    return { text: "Closing Soon", color: "#FFA500" };
+    // Closing soon (within 30 minutes)
+    const minutesLeft = closeTime - currentTime;
+    return { 
+      text: `Closing in ${minutesLeft} min`, 
+      color: "#FF6B35" 
+    };
   } else {
-    return { text: "Open", color: "green" };
+    // Open
+    return { 
+      text: `Open until ${formatTime(close)}`, 
+      color: "#4CAF50" 
+    };
   }
 };
 
@@ -92,6 +118,6 @@ export async function fetchMenuItemsFromSupabase(
     image_url: item.image_url,
     category: item.category,
     featured: item.featured,
-    // Optionally, add labels if needed
+    labels: item.labels || [],
   }));
 }

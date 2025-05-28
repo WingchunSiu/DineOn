@@ -1,109 +1,225 @@
-import { StyleSheet, Image, Platform } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { Card, Image, Text } from '@rneui/themed';
+import { Ionicons } from '@expo/vector-icons';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import { colors } from '../../styles';
+import { dummyFoodTrucks, FoodTruck } from '@/utils/types';
 
-export default function TabTwoScreen() {
+export default function FoodTrucksScreen() {
+  const [expandedTruck, setExpandedTruck] = useState<string | null>(null);
+
+  const handleTruckPress = (truck: FoodTruck) => {
+    console.log(`Selected truck: ${truck.name}`);
+    // TODO: Navigate to truck details or show more info
+  };
+
+  const toggleInfo = (truckId: string) => {
+    setExpandedTruck(expandedTruck === truckId ? null : truckId);
+  };
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={colors.background.secondary}
+      headerBackgroundColor={colors.primary.main}
       headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/home/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/home/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/home/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This app uses a light theme for consistent and clean styling. The theme configuration
-          can be found in the styles directory.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more about theming</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerTitle}>🚚 Food Trucks</Text>
+        </View>
+      }
+    >
+      <View style={styles.container}>
+        <Text style={styles.subtitle}>Mobile eats around campus</Text>
+
+        {dummyFoodTrucks.map((truck) => (
+          <View key={truck.id}>
+            <Card containerStyle={styles.card}>
+              <View style={styles.cardHeader}>
+                <TouchableOpacity 
+                  style={styles.mainContent}
+                  onPress={() => handleTruckPress(truck)}
+                >
+                  <Image
+                    source={{ uri: truck.image_url }}
+                    containerStyle={styles.image}
+                    resizeMode="cover"
+                    PlaceholderContent={<ActivityIndicator />}
+                  />
+                  <View style={styles.titleSection}>
+                    <Text style={styles.cardTitle}>{truck.name}</Text>
+                    <Text style={styles.locationText}>📍 {truck.location}</Text>
+                  </View>
+                </TouchableOpacity>
+                
+                <TouchableOpacity 
+                  style={styles.infoButton}
+                  onPress={() => toggleInfo(truck.id)}
+                >
+                  <Ionicons 
+                    name={expandedTruck === truck.id ? "information-circle" : "information-circle-outline"} 
+                    size={24} 
+                    color={colors.primary.main} 
+                  />
+                </TouchableOpacity>
+              </View>
+
+              {expandedTruck === truck.id && (
+                <View style={styles.expandedInfo}>
+                  <Card.Divider style={styles.divider} />
+                  
+                  <View style={styles.infoSection}>
+                    <Text style={styles.scheduleText}>⏰ {truck.schedule}</Text>
+                    {truck.description && (
+                      <Text style={styles.descriptionText}>{truck.description}</Text>
+                    )}
+                  </View>
+
+                  <View style={styles.menuSection}>
+                    <Text style={styles.menuTitle}>Popular Items:</Text>
+                    <View style={styles.menuItems}>
+                      {truck.menu.slice(0, 3).map((item, index) => (
+                        <Text key={index} style={styles.menuItem}>• {item}</Text>
+                      ))}
+                      {truck.menu.length > 3 && (
+                        <Text style={styles.moreItems}>+{truck.menu.length - 3} more items</Text>
+                      )}
+                    </View>
+                  </View>
+                </View>
+              )}
+            </Card>
+          </View>
+        ))}
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            💡 Tip: Food truck schedules can vary. Check social media for updates!
+          </Text>
+        </View>
+      </View>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
+    alignItems: "center",
+    padding: 20,
   },
-  titleContainer: {
+  subtitle: {
+    fontSize: 16,
+    color: "#666",
+    textAlign: "center",
+    marginBottom: 20,
+    fontStyle: "italic",
+  },
+  card: {
+    width: 320,
+    alignSelf: "center",
+    borderRadius: 15,
+    backgroundColor: "white",
+    padding: 15,
+    marginBottom: 15,
+  },
+  cardHeader: {
     flexDirection: 'row',
-    gap: 8,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  mainContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  image: {
+    height: 60,
+    width: 60,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  titleSection: {
+    flex: 1,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 4,
+  },
+  locationText: {
+    fontSize: 14,
+    color: "#666",
+  },
+  infoButton: {
+    padding: 8,
+    marginLeft: 8,
+  },
+  divider: {
+    marginVertical: 12,
+  },
+  expandedInfo: {
+    marginTop: 8,
+  },
+  infoSection: {
+    marginBottom: 12,
+  },
+  scheduleText: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 6,
+  },
+  descriptionText: {
+    fontSize: 14,
+    color: "#888",
+    fontStyle: "italic",
+  },
+  menuSection: {
+    marginTop: 8,
+  },
+  menuTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#333",
+  },
+  menuItems: {
+    paddingLeft: 10,
+  },
+  menuItem: {
+    fontSize: 14,
+    color: "#555",
+    marginBottom: 3,
+  },
+  moreItems: {
+    fontSize: 12,
+    color: "#999",
+    fontStyle: "italic",
+    marginTop: 5,
+  },
+  headerContainer: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'flex-end',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+  },
+  headerTitle: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'left',
+  },
+  footer: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: "#f8f9fa",
+    borderRadius: 10,
+    width: "100%",
+  },
+  footerText: {
+    fontSize: 14,
+    color: "#666",
+    textAlign: "center",
+    lineHeight: 20,
   },
 });

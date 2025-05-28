@@ -35,9 +35,13 @@ export default function Homepage() {
     setStatuses(newStatuses);
   }, []);
 
-  const openNow = dummyDiningOptions.filter((option) => statuses[option.id]?.text === "Open");
-  const closedNow = dummyDiningOptions.filter((option) => statuses[option.id]?.text === "Closed");
-  const closingSoon = dummyDiningOptions.filter((option) => statuses[option.id]?.text === "Closing Soon");
+  // Group dining options by status type
+  const openNow = dummyDiningOptions.filter((option) => 
+    statuses[option.id]?.text?.includes("Open until") || statuses[option.id]?.text?.includes("Closing in")
+  );
+  const closedNow = dummyDiningOptions.filter((option) => 
+    statuses[option.id]?.text?.includes("Closed") || statuses[option.id]?.text?.includes("Opens at")
+  );
 
   return (
     <ParallaxScrollView
@@ -49,9 +53,9 @@ export default function Homepage() {
       }
     >
       <View style={styles.container}>
+        
 
-
-        {/* 🟢 Section for Open Now with Animated Dot */}
+        {/* 🟢 Section for Open Now */}
         {openNow.length > 0 && (
           <View style={styles.sectionHeader}>
             <Animated.View style={[styles.dot, { backgroundColor: "green", opacity: fadeAnim }]} />
@@ -76,35 +80,10 @@ export default function Homepage() {
           </TouchableOpacity>
         ))}
 
-        {/* 🟡 Section for Closing Soon with Animated Dot */}
-        {closingSoon.length > 0 && (
-          <View style={styles.sectionHeader}>
-            <Animated.View style={[styles.dot, { backgroundColor: "orange", opacity: fadeAnim }]} />
-            <Text style={styles.sectionText}>Closing Soon</Text>
-          </View>
-        )}
-        {closingSoon.map((option) => (
-          <TouchableOpacity key={option.id} onPress={() => handleSelect(option)}>
-            <Card containerStyle={styles.card}>
-              <Image
-                source={{ uri: option.image_url }}
-                containerStyle={styles.image}
-                resizeMode="cover"
-                PlaceholderContent={<ActivityIndicator />}
-              />
-              <Card.Title style={styles.cardTitle}>{option.name}</Card.Title>
-              <Card.Divider />
-              <Text style={[styles.status, { color: statuses[option.id]?.color }]}>
-                {statuses[option.id]?.text || "Loading..."}
-              </Text>
-            </Card>
-          </TouchableOpacity>
-        ))}
-
-        {/* 🔴 Section for Closed Locations with Animated Dot */}
+        {/* 🔴 Section for Closed Locations */}
         {closedNow.length > 0 && (
           <View style={styles.sectionHeader}>
-            <Animated.View style={[styles.dot, { backgroundColor: "red", opacity: fadeAnim }]} />
+            <Animated.View style={[styles.dot, { backgroundColor: "gray", opacity: fadeAnim }]} />
             <Text style={styles.sectionText}>Closed</Text>
           </View>
         )}
@@ -125,7 +104,6 @@ export default function Homepage() {
             </Card>
           </TouchableOpacity>
         ))}
-
 
       </View>
     </ParallaxScrollView>

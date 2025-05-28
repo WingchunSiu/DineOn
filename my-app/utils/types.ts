@@ -1,3 +1,13 @@
+export interface FoodTruck {
+  id: string;
+  name: string;
+  type: "food_truck";
+  location: string; // "Outside Leavey Library"
+  schedule: string; // "Usually here 11:00 AM - 3:00 PM"
+  menu: string[]; // Simple array for now
+  image_url: string;
+  description?: string;
+}
 
 export interface DiningOption {
   id: string;
@@ -14,7 +24,51 @@ export interface MenuItemType {
   image_url: string;
   category: string;
   featured: boolean;
+  labels?: string[];
 }
+
+export const dummyFoodTrucks: FoodTruck[] = [
+  {
+    id: "kogi",
+    name: "Kogi BBQ Truck",
+    type: "food_truck",
+    location: "Outside Leavey Library",
+    schedule: "Usually here 11:00 AM - 3:00 PM",
+    menu: ["Korean BBQ Tacos", "Kimchi Quesadilla", "Short Rib Sliders", "Spicy Pork Burrito"],
+    image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
+    description: "Korean-Mexican fusion favorites"
+  },
+  {
+    id: "grilled_cheese",
+    name: "The Grilled Cheese Truck",
+    type: "food_truck",
+    location: "Near Trousdale Parkway",
+    schedule: "Usually here 12:00 PM - 4:00 PM",
+    menu: ["Classic Grilled Cheese", "Mac & Cheese Melt", "BBQ Pulled Pork Melt", "Tomato Soup"],
+    image_url: "https://images.unsplash.com/photo-1528736235302-52922df5c122?w=500",
+    description: "Gourmet grilled cheese sandwiches"
+  },
+  {
+    id: "lobos_truck",
+    name: "Lobos Truck",
+    type: "food_truck",
+    location: "Alumni Park",
+    schedule: "Usually here 10:30 AM - 2:30 PM",
+    menu: ["Carne Asada Burrito", "Fish Tacos", "Quesadillas", "Nachos", "Horchata"],
+    image_url: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=500",
+    description: "Authentic Mexican street food"
+  },
+  {
+    id: "crepe_truck",
+    name: "Sweet & Savory Crepes",
+    type: "food_truck",
+    location: "Outside Doheny Library",
+    schedule: "Usually here 9:00 AM - 2:00 PM",
+    menu: ["Nutella Banana Crepe", "Ham & Cheese Crepe", "Strawberry Cream", "Chicken Caesar Crepe"],
+    image_url: "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=500",
+    description: "Fresh made-to-order crepes"
+  }
+];
 
 export const dummyDiningOptions: DiningOption[] = [
   {
@@ -72,7 +126,7 @@ export const dummyDiningOptions: DiningOption[] = [
     image_url: "https://dailytrojan.com/wp-content/uploads/2025/01/01_17_TrojanGrounds_Mallory_Snyder_5-scaled.jpg",
     openTime: {
       Monday: { open: "07:00", close: "22:00" },
-      Tuesday: { open: "07:00", close: "22:00" },
+      Tuesday: { open: "07:00", close: "21:00" },
       Wednesday: { open: "07:00", close: "22:00" },
       Thursday: { open: "07:00", close: "22:00" },
       Friday: { open: "00:00", close: "24:00" },
