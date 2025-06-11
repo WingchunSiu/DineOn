@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
+import CampusMap from '@/components/CampusMap';
 import { theme, colors } from '../../styles';
 
 
@@ -11,28 +12,28 @@ const cafes = [
         id: '1', 
         name: 'Burger Crush (TCC)',
         url: 'https://hospitality.usc.edu/dining_locations/burger-crush/',
-        coordinates: '37.7749,-122.4194',
+        coordinates: '34.0222,-118.2845', // Trojan Campus Center
         description: 'Gourmet burgers & shakes'
     },
     { 
         id: '2', 
         name: 'Café Annenberg (ANN)',
         url: 'https://hospitality.usc.edu/dining_locations/the-cafe/',
-        coordinates: '37.7750,-122.4180',
+        coordinates: '34.0214,-118.2871', // Annenberg School for Communication
         description: 'Coffee, pastries & light meals'
     },
     { 
         id: '3', 
         name: 'Coffee Bean & Tea Leaf (SCA)',
         url: 'https://hospitality.usc.edu/dining_locations/coffee-bean-tea-leaf-cinema/',
-        coordinates: '37.7748,-122.4170',
+        coordinates: '34.0235,-118.2873', // School of Cinematic Arts
         description: 'Premium coffee & tea'
     },
     { 
         id: '4', 
         name: 'Law School Café (LAW)',
         url: 'https://hospitality.usc.edu/dining_locations/law-school-cafe/',
-        coordinates: '34.018650018873714,-118.28438046071506',
+        coordinates: '34.0186,-118.2844', // Gould School of Law
         description: 'Quick bites & beverages'
     },
 ];
@@ -47,7 +48,6 @@ const CampusFoodScreen = () => {
         Linking.openURL(url);
     };
     
-
     return (
         <ParallaxScrollView
             headerBackgroundColor={colors.primary.main}
@@ -59,6 +59,8 @@ const CampusFoodScreen = () => {
         >
             <View style={styles.container}>
                 <Text style={styles.subtitle}>Cafes, retail dining & quick bites</Text>
+                
+                <CampusMap locations={cafes} />
                 
                 <FlatList
                     data={cafes}
