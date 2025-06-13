@@ -1,0 +1,46 @@
+name: DineOn Menu Automation
+
+on:
+  schedule:
+    # Run daily at 6 AM UTC (adjust timezone as needed)
+    - cron: '0 6 * * *'
+  
+  # Allow manual triggering of the workflow
+  workflow_dispatch:
+
+jobs:
+  update-menu:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        cd backend
+        pip install -r requirements.txt
+        
+    - name: Create .env file
+      run: |
+        cd backend
+        echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
+        echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> .env
+        
+    - name: Run menu automation
+      run: |
+        cd backend
+        python automated_menu_updater.py --run-once
+        
+    - name: Upload logs as artifacts (optional)
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: automation-logs
+        path: backend/*.log
+        retention-days: 30 
