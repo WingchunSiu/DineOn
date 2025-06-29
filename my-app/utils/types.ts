@@ -9,6 +9,18 @@ export interface FoodTruck {
   description?: string;
 }
 
+export interface Cafe {
+  id: string;
+  name: string;
+  type: "cafe";
+  coordinates: string;
+  description: string;
+  fullDescription: string;
+  hours: string;
+  accepts: string;
+  image_url?: string;
+}
+
 export interface DiningOption {
   id: string;
   name: string;
@@ -77,6 +89,49 @@ export const dummyFoodTrucks: FoodTruck[] = [
     image_url: "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=500",
     description: "Fresh made-to-order crepes"
   }
+];
+
+export const dummyCafes: Cafe[] = [
+  { 
+    id: '1', 
+    name: 'Burger Crush (TCC)',
+    type: 'cafe',
+    coordinates: '34.0222,-118.2845', // Trojan Campus Center
+    description: 'Gourmet burgers & shakes',
+    fullDescription: 'Located in the Trojan Campus Center, Burger Crush serves up gourmet burgers, crispy fries, and hand-spun milkshakes. Perfect for a quick lunch between classes.',
+    hours: 'Mon-Fri: 10:00 AM - 8:00 PM',
+    accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
+  },
+  { 
+    id: '2', 
+    name: 'Café Annenberg (ANN)',
+    type: 'cafe',
+    coordinates: '34.0214,-118.2871', // Annenberg School for Communication
+    description: 'Coffee, pastries & light meals',
+    fullDescription: 'A cozy café in the Annenberg School offering specialty coffee, fresh pastries, and light meals. Great study spot with plenty of seating.',
+    hours: 'Mon-Fri: 7:30 AM - 6:00 PM',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '3', 
+    name: 'Coffee Bean & Tea Leaf (SCA)',
+    type: 'cafe',
+    coordinates: '34.0235,-118.2873', // School of Cinematic Arts
+    description: 'Premium coffee & tea',
+    fullDescription: 'Premium coffee and tea selection at the School of Cinematic Arts. Features seasonal drinks and a variety of pastries.',
+    hours: 'Mon-Fri: 7:00 AM - 7:00 PM',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '4', 
+    name: 'Law School Café (LAW)',
+    type: 'cafe',
+    coordinates: '34.0186,-118.2844', // Gould School of Law
+    description: 'Quick bites & beverages',
+    fullDescription: 'Convenient café in the Law School building offering quick meals, snacks, and beverages for busy law students.',
+    hours: 'Mon-Fri: 8:00 AM - 5:00 PM',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
 ];
 
 export const dummyDiningOptions: DiningOption[] = [

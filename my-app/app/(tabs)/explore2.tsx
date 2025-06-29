@@ -1,89 +1,123 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Linking } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Linking, Modal, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import CampusMap from '@/components/CampusMap';
 import { theme, colors } from '../../styles';
-
-
-// Campus cafes and retail dining data
-const cafes = [
-    { 
-        id: '1', 
-        name: 'Burger Crush (TCC)',
-        url: 'https://hospitality.usc.edu/dining_locations/burger-crush/',
-        coordinates: '34.0222,-118.2845', // Trojan Campus Center
-        description: 'Gourmet burgers & shakes'
-    },
-    { 
-        id: '2', 
-        name: 'Café Annenberg (ANN)',
-        url: 'https://hospitality.usc.edu/dining_locations/the-cafe/',
-        coordinates: '34.0214,-118.2871', // Annenberg School for Communication
-        description: 'Coffee, pastries & light meals'
-    },
-    { 
-        id: '3', 
-        name: 'Coffee Bean & Tea Leaf (SCA)',
-        url: 'https://hospitality.usc.edu/dining_locations/coffee-bean-tea-leaf-cinema/',
-        coordinates: '34.0235,-118.2873', // School of Cinematic Arts
-        description: 'Premium coffee & tea'
-    },
-    { 
-        id: '4', 
-        name: 'Law School Café (LAW)',
-        url: 'https://hospitality.usc.edu/dining_locations/law-school-cafe/',
-        coordinates: '34.0186,-118.2844', // Gould School of Law
-        description: 'Quick bites & beverages'
-    },
-];
+import { dummyFoodTrucks, dummyCafes, FoodTruck, Cafe } from '@/utils/types';
 
 const CampusFoodScreen = () => {
+    const [selectedCafe, setSelectedCafe] = useState<Cafe | null>(null);
+    const [cafeModalVisible, setCafeModalVisible] = useState(false);
+
     const openMap = (coordinates: string) => {
         const url = `https://www.google.com/maps/search/?api=1&query=${coordinates}`;
         Linking.openURL(url);
     };
 
-    const openCafeWebsite = (url: string) => {
-        Linking.openURL(url);
+    const showCafeInfo = (cafe: Cafe) => {
+        setSelectedCafe(cafe);
+        setCafeModalVisible(true);
     };
+
+    const closeCafeModal = () => {
+        setCafeModalVisible(false);
+        setSelectedCafe(null);
+    };
+
+    // Combine cafes and food trucks for the map
+    const allLocations = [
+        ...dummyCafes.map(cafe => ({
+            id: cafe.id,
+            name: cafe.name,
+            coordinates: cafe.coordinates,
+            description: cafe.description
+        })),
+        ...dummyFoodTrucks.map(truck => ({
+            id: truck.id,
+            name: truck.name,
+            coordinates: getCoordinatesForLocation(truck.location),
+            description: truck.description || truck.name
+        }))
+    ];
+
+    // Helper function to get coordinates for food truck locations
+    function getCoordinatesForLocation(location: string): string {
+        const locationMap: { [key: string]: string } = {
+            'Outside Leavey Library': '34.0216,-118.2828',
+            'Near Trousdale Parkway': '34.0205,-118.2851',
+            'Alumni Park': '34.0202,-118.2847',
+            'Outside Doheny Library': '34.0201,-118.2837'
+        };
+        return locationMap[location] || '34.0205,-118.2851'; // Default to campus center
+    }
     
     return (
         <ParallaxScrollView
             headerBackgroundColor={colors.primary.main}
             headerImage={
                 <View style={styles.headerContainer}>
-                    <Text style={styles.headerTitle}>☕ Campus Food</Text>
+                    <Text style={styles.headerTitle}>🍽️ Campus Eats</Text>
                 </View>
             }
         >
             <View style={styles.container}>
-                <Text style={styles.subtitle}>Cafes, retail dining & quick bites</Text>
+                <Text style={styles.subtitle}>Food trucks, cafes & quick bites around campus</Text>
                 
-                <CampusMap locations={cafes} />
+                <CampusMap locations={allLocations} />
                 
-                <FlatList
-                    data={cafes}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => (
-                        <View style={styles.item}>
-                            <TouchableOpacity 
-                                style={styles.cafeButton}
-                                onPress={() => openCafeWebsite(item.url)}
-                            >
-                                <Text style={styles.itemText}>{item.name}</Text>
-                                <Text style={styles.descriptionText}>{item.description}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.mapButton}
-                                onPress={() => openMap(item.coordinates)}
-                            >
-                                <Ionicons name="location" size={24} color="#C41E3A" />
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                    scrollEnabled={false}
-                />
+                {/* Food Trucks Section */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>🚚 Food Trucks</Text>
+                    <FlatList
+                        data={dummyFoodTrucks}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => (
+                            <View style={styles.item}>
+                                <View style={styles.itemContent}>
+                                    <Text style={styles.itemText}>{item.name}</Text>
+                                    <Text style={styles.descriptionText}>{item.description}</Text>
+                                    <Text style={styles.locationText}>📍 {item.location}</Text>
+                                    <Text style={styles.scheduleText}>⏰ {item.schedule}</Text>
+                                </View>
+                                <TouchableOpacity
+                                    style={styles.mapButton}
+                                    onPress={() => openMap(getCoordinatesForLocation(item.location))}
+                                >
+                                    <Ionicons name="location" size={24} color="#C41E3A" />
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                        scrollEnabled={false}
+                    />
+                </View>
+
+                {/* Cafes Section */}
+                <View style={styles.section}>
+                    <Text style={styles.sectionTitle}>☕ Cafes & Retail</Text>
+                    <FlatList
+                        data={dummyCafes}
+                        keyExtractor={(item) => item.id}
+                        renderItem={({ item }) => (
+                            <View style={styles.item}>
+                                <TouchableOpacity 
+                                    style={styles.itemContent}
+                                    onPress={() => showCafeInfo(item)}
+                                >
+                                    <Text style={styles.itemText}>{item.name}</Text>
+                                    <Text style={styles.descriptionText}>{item.description}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.mapButton}
+                                    onPress={() => openMap(item.coordinates)}
+                                >
+                                    <Ionicons name="location" size={24} color="#C41E3A" />
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                        scrollEnabled={false}
+                    />
+                </View>
                 
                 <View style={styles.footer}>
                     <Text style={styles.footerText}>
@@ -91,6 +125,50 @@ const CampusFoodScreen = () => {
                     </Text>
                 </View>
             </View>
+
+            {/* Cafe Info Modal */}
+            <Modal
+                visible={cafeModalVisible}
+                animationType="slide"
+                presentationStyle="pageSheet"
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalHeader}>
+                        <TouchableOpacity onPress={closeCafeModal}>
+                            <Ionicons name="close" size={28} color="#333" />
+                        </TouchableOpacity>
+                        <Text style={styles.modalTitle}>{selectedCafe?.name}</Text>
+                        <View style={{ width: 28 }} />
+                    </View>
+                    
+                    <ScrollView style={styles.modalContent}>
+                        <Text style={styles.modalDescription}>{selectedCafe?.fullDescription}</Text>
+                        
+                        <View style={styles.infoSection}>
+                            <Text style={styles.infoLabel}>🕒 Hours:</Text>
+                            <Text style={styles.infoText}>{selectedCafe?.hours}</Text>
+                        </View>
+                        
+                        <View style={styles.infoSection}>
+                            <Text style={styles.infoLabel}>💳 Payment:</Text>
+                            <Text style={styles.infoText}>{selectedCafe?.accepts}</Text>
+                        </View>
+                        
+                        <TouchableOpacity
+                            style={styles.mapButtonLarge}
+                            onPress={() => {
+                                closeCafeModal();
+                                if (selectedCafe?.coordinates) {
+                                    openMap(selectedCafe.coordinates);
+                                }
+                            }}
+                        >
+                            <Ionicons name="location" size={20} color="white" />
+                            <Text style={styles.mapButtonText}>Open in Maps</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
+                </View>
+            </Modal>
         </ParallaxScrollView>
     );
 };
@@ -121,6 +199,17 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'left',
     },
+    section: {
+        width: '100%',
+        marginBottom: 25,
+    },
+    sectionTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 15,
+        textAlign: 'center',
+    },
     item: {
         padding: 16,
         borderBottomWidth: 1,
@@ -138,6 +227,9 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3,
     },
+    itemContent: {
+        flex: 1,
+    },
     itemText: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -148,8 +240,15 @@ const styles = StyleSheet.create({
         color: '#666',
         marginTop: 4,
     },
-    cafeButton: {
-        flex: 1,
+    locationText: {
+        fontSize: 12,
+        color: '#888',
+        marginTop: 2,
+    },
+    scheduleText: {
+        fontSize: 12,
+        color: '#888',
+        marginTop: 2,
     },
     mapButton: {
         padding: 8,
@@ -166,6 +265,66 @@ const styles = StyleSheet.create({
         color: "#666",
         textAlign: "center",
         lineHeight: 20,
+    },
+    // Modal styles
+    modalContainer: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    modalHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#e0e0e0',
+        backgroundColor: '#f8f9fa',
+    },
+    modalTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    modalContent: {
+        flex: 1,
+        padding: 20,
+    },
+    modalDescription: {
+        fontSize: 16,
+        color: '#333',
+        lineHeight: 24,
+        marginBottom: 20,
+    },
+    infoSection: {
+        marginBottom: 15,
+    },
+    infoLabel: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 5,
+    },
+    infoText: {
+        fontSize: 14,
+        color: '#666',
+        lineHeight: 20,
+    },
+    mapButtonLarge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#C41E3A',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 8,
+        marginTop: 20,
+    },
+    mapButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginLeft: 8,
     },
 });
 
