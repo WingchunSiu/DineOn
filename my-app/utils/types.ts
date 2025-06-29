@@ -128,22 +128,6 @@ export const dummyDiningOptions: DiningOption[] = [
     },
     categories: ["Fresh From The Farm", "Hot Line"],
   },
-  {
-    id: "tgc",
-    name: "Trojan Grounds Cafe",
-    type: "cafe",
-    image_url: "https://dailytrojan.com/wp-content/uploads/2025/01/01_17_TrojanGrounds_Mallory_Snyder_5-scaled.jpg",
-    openTime: {
-      Monday: { open: "07:00", close: "22:00" },
-      Tuesday: { open: "07:00", close: "21:00" },
-      Wednesday: { open: "07:00", close: "22:00" },
-      Thursday: { open: "07:00", close: "22:00" },
-      Friday: { open: "00:00", close: "24:00" },
-      Saturday: { open: "00:00", close: "22:00" },
-      Sunday: { open: "09:00", close: "22:00" },
-    },
-    categories: ["Cafe"],
-  },
 ];
 
 export const menuData: Record<string, Record<string, MenuItemType[]>> = {

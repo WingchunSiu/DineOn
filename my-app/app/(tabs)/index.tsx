@@ -54,21 +54,6 @@ export default function Homepage() {
       }
     >
       <View style={styles.container}>
-        {/* Meal Plan Calculator Button */}
-        <TouchableOpacity 
-          style={styles.calculatorButton}
-          onPress={() => setCalculatorVisible(true)}
-        >
-          <Icon name="calculator" type="ionicon" color="white" size={24} />
-          <Text style={styles.calculatorButtonText}>Meal Plan Calculator</Text>
-        </TouchableOpacity>
-
-        {/* Meal Plan Calculator Modal */}
-        <MealPlanCalculator 
-          visible={calculatorVisible}
-          onClose={() => setCalculatorVisible(false)}
-        />
-
         {/* 🟢 Section for Open Now */}
         {openNow.length > 0 && (
           <View style={styles.sectionHeader}>
@@ -119,6 +104,21 @@ export default function Homepage() {
           </TouchableOpacity>
         ))}
 
+        {/* Meal Plan Calculator Button */}
+        <TouchableOpacity 
+          style={styles.calculatorButton}
+          onPress={() => setCalculatorVisible(true)}
+        >
+          <Icon name="calculator" type="ionicon" color="white" size={24} />
+          <Text style={styles.calculatorButtonText}>Meal Plan Calculator</Text>
+        </TouchableOpacity>
+
+        {/* Meal Plan Calculator Modal */}
+        <MealPlanCalculator 
+          visible={calculatorVisible}
+          onClose={() => setCalculatorVisible(false)}
+        />
+
       </View>
     </ParallaxScrollView>
   );
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 25,
+    marginTop: 25,
     marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: {
@@ -182,30 +183,31 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   card: {
-    width: 320,
-    height: 280,
+    width: 280,
+    height: 220,
     alignSelf: "center",
     borderRadius: 15,
     backgroundColor: "white",
     padding: 0,
-    marginBottom: 10,
+    marginBottom: 15,
   },
   cardTitle: {
     fontFamily: 'Nunito-Regular',
     width: "100%",
     textAlign: "center",
-    fontSize: 18,
-    marginTop: 10,
+    fontSize: 16,
+    marginTop: 6,
+    marginBottom: 4,
   },
   cardText: {
-    fontSize: 16,
+    fontSize: 14,
     color: "gray",
     textAlign: "center",
     width: "100%",
-    marginBottom: 10,
+    marginBottom: 8,
   },
   image: {
-    height: 180,
+    height: 140,
     width: "100%",
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
@@ -243,9 +245,10 @@ const styles = StyleSheet.create({
   },
   status: {
     fontStyle: "italic",
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 15,
+    marginBottom: 8,
+    paddingHorizontal: 8,
   },
 });

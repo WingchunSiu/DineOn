@@ -27,12 +27,14 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
   };
 
   const getBreakEvenMealsPerWeek = (plan: MealPlan) => {
-    if (!plan.swipes) return 0;
-    // For unlimited plans, calculate based on average meal price
+    // For unlimited plans (Cardinal), calculate based on average meal price
     if (plan.swipes === 0) {
       const avgMealPrice = (standardPrices.breakfast + standardPrices.lunch + standardPrices.dinner) / 3;
       return Math.round((plan.totalCost / (avgMealPrice * 16)) * 10) / 10; // 16 week semester
     }
+    // For plans with no swipes (Trojan plan), return 0
+    if (!plan.swipes) return 0;
+    // For plans with specific number of swipes
     return Math.round((plan.swipes / 16) * 10) / 10; // 16 week semester
   };
 
@@ -160,6 +162,159 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
     return Math.round((remainingSwipes / weeksRemaining) * 10) / 10;
   };
 
+  const renderPlanDescription = () => {
+    if (!selectedPlan) return null;
+    
+    const planInfo = getPlanDescription(selectedPlan);
+    return (
+      <View style={styles.descriptionBox}>
+        <Text style={styles.descriptionTitle}>{planInfo.title}</Text>
+        <Text style={styles.descriptionText}>{planInfo.description}</Text>
+        {planInfo.features.map((feature, index) => (
+          <Text key={index} style={styles.featureText}>• {feature}</Text>
+        ))}
+      </View>
+    );
+  };
+
+  const renderCardinalPlanSummary = () => {
+    if (!selectedPlan) return null;
+    return (
+      <View>
+        <Text style={styles.summaryText}>🍽️ Unlimited Residential Meal Swipes</Text>
+        <Text style={styles.summaryText}>
+          💡 Average value per meal: ${(() => {
+            const breakEvenMeals = getBreakEvenMealsPerWeek(selectedPlan);
+            if (breakEvenMeals > 0) {
+              return (selectedPlan.totalCost / (breakEvenMeals * 16)).toFixed(2);
+            }
+            return "18.32";
+          })()}
+        </Text>
+      </View>
+    );
+  };
+
+  const renderSwipesPlanSummary = () => {
+    if (!selectedPlan) return null;
+    return (
+      <View>
+        <Text style={styles.summaryText}>
+          🍽️ {selectedPlan.swipes} Meal Swipes → Effective value per swipe: ${getSwipeValue(selectedPlan).toFixed(2)}
+        </Text>
+        {selectedPlan.diningDollars && (
+          <Text style={styles.summaryText}>💵 + ${selectedPlan.diningDollars} Dining Dollars</Text>
+        )}
+      </View>
+    );
+  };
+
+  const renderDiningDollarsOnlySummary = () => {
+    if (!selectedPlan) return null;
+    return (
+      <Text style={styles.summaryText}>💵 ${selectedPlan.diningDollars} Dining Dollars</Text>
+    );
+  };
+
+  const renderCardinalValueBox = () => {
+    if (!selectedPlan) return null;
+    return (
+      <View style={styles.valueBox}>
+        <Text style={styles.valueText}>
+          ✅ Good value if you eat more than {getBreakEvenMealsPerWeek(selectedPlan)} times per week.
+        </Text>
+        <Text style={styles.valueText}>
+          ❌ You lose money if you eat less than {getBreakEvenMealsPerWeek(selectedPlan)} times per week.
+        </Text>
+      </View>
+    );
+  };
+
+  const renderSwipesValueBox = () => {
+    if (!selectedPlan) return null;
+    return (
+      <View style={styles.valueBox}>
+        <Text style={styles.valueText}>✅ Good value if you use all swipes.</Text>
+        <Text style={styles.valueText}>
+          ❌ You lose money if you eat less than {getBreakEvenMealsPerWeek(selectedPlan)} times per week.
+        </Text>
+      </View>
+    );
+  };
+
+  const renderDiningDollarsValueBox = () => (
+    <View style={styles.valueBox}>
+      <Text style={styles.valueText}>✅ Great flexibility - use at any USC Hospitality location.</Text>
+      <Text style={styles.valueText}>💡 Perfect for students who prefer to choose when and where to eat.</Text>
+    </View>
+  );
+
+  const renderCardinalTracking = () => {
+    if (!selectedPlan) return null;
+    return (
+      <View>
+        <View style={styles.inputRow}>
+          <Text style={styles.inputLabel}>Residential meals used:</Text>
+          <TextInput
+            style={styles.input}
+            value={usedSwipes}
+            onChangeText={setUsedSwipes}
+            placeholder="45"
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={styles.inputRow}>
+          <Text style={styles.inputLabel}>Campus Center swipes used this week:</Text>
+          <TextInput
+            style={styles.input}
+            value={usedCampusCenterSwipes}
+            onChangeText={setUsedCampusCenterSwipes}
+            placeholder="1"
+            keyboardType="numeric"
+          />
+        </View>
+        {weeksLeft && usedSwipes && (
+          <View style={styles.trackingResults}>
+            <Text style={styles.trackingText}>
+              📈 You need to eat {getRecommendedWeeklyEating()} times per week to get full value.
+            </Text>
+            <Text style={styles.trackingText}>
+              💰 Remaining value: ~${(selectedPlan.totalCost - (parseInt(usedSwipes) * ((standardPrices.breakfast + standardPrices.lunch + standardPrices.dinner) / 3))).toFixed(0)}
+            </Text>
+            <Text style={styles.trackingText}>
+              🎫 Campus Center swipes remaining this week: {2 - (parseInt(usedCampusCenterSwipes) || 0)}
+            </Text>
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  const renderSwipesTracking = () => (
+    <View>
+      <View style={styles.inputRow}>
+        <Text style={styles.inputLabel}>Swipes used so far:</Text>
+        <TextInput
+          style={styles.input}
+          value={usedSwipes}
+          onChangeText={setUsedSwipes}
+          placeholder="78"
+          keyboardType="numeric"
+        />
+      </View>
+      {usedSwipes && weeksLeft && (
+        <View style={styles.trackingResults}>
+          <Text style={styles.trackingText}>
+            📈 You need to eat {getRecommendedWeeklyEating()} times per week to use all swipes.
+          </Text>
+          <Text style={styles.trackingText}>
+            💰 Remaining swipe value: ~${getRemainingValue().swipes.toFixed(0)}
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+
   return (
     <Modal
       visible={visible}
@@ -220,31 +375,11 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
               <View style={styles.summaryBox}>
                 <Text style={styles.summaryText}>🟢 Total Paid: ${selectedPlan.totalCost}</Text>
                 
-                {selectedPlan.swipes === 0 && (
-                  <>
-                    <Text style={styles.summaryText}>
-                      🍽️ Unlimited Residential Meal Swipes
-                    </Text>
-                    <Text style={styles.summaryText}>
-                      💡 Average value per meal: ${((selectedPlan.totalCost / (getBreakEvenMealsPerWeek(selectedPlan) * 16)).toFixed(2))}
-                    </Text>
-                  </>
-                )}
+                {selectedPlan.swipes === 0 && renderCardinalPlanSummary()}
                 
-                {selectedPlan.swipes && selectedPlan.swipes > 0 && (
-                  <>
-                    <Text style={styles.summaryText}>
-                      🍽️ {selectedPlan.swipes} Meal Swipes → Effective value per swipe: ${getSwipeValue(selectedPlan).toFixed(2)}
-                    </Text>
-                    {selectedPlan.diningDollars && (
-                      <Text style={styles.summaryText}>💵 + ${selectedPlan.diningDollars} Dining Dollars</Text>
-                    )}
-                  </>
-                )}
+                {selectedPlan.swipes && selectedPlan.swipes > 0 && renderSwipesPlanSummary()}
                 
-                {!selectedPlan.swipes && selectedPlan.diningDollars && (
-                  <Text style={styles.summaryText}>💵 ${selectedPlan.diningDollars} Dining Dollars</Text>
-                )}
+                {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsOnlySummary()}
               </View>
 
               <View style={styles.pricesBox}>
@@ -254,42 +389,13 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
                 <Text style={styles.priceText}>- Dinner: ${standardPrices.dinner}</Text>
               </View>
 
-              {selectedPlan.swipes === 0 && (
-                <View style={styles.valueBox}>
-                  <Text style={styles.valueText}>
-                    ✅ Good value if you eat more than {getBreakEvenMealsPerWeek(selectedPlan)} times per week.
-                  </Text>
-                  <Text style={styles.valueText}>
-                    ❌ You lose money if you eat less than {getBreakEvenMealsPerWeek(selectedPlan)} times per week.
-                  </Text>
-                </View>
-              )}
+              {selectedPlan.swipes === 0 && renderCardinalValueBox()}
 
-              {selectedPlan.swipes && selectedPlan.swipes > 0 && (
-                <View style={styles.valueBox}>
-                  <Text style={styles.valueText}>
-                    ✅ Good value if you use all swipes.
-                  </Text>
-                  <Text style={styles.valueText}>
-                    ❌ You lose money if you eat less than {getBreakEvenMealsPerWeek(selectedPlan)} times per week.
-                  </Text>
-                </View>
-              )}
+              {selectedPlan.swipes && selectedPlan.swipes > 0 && renderSwipesValueBox()}
 
-              <View style={styles.descriptionBox}>
-                {(() => {
-                  const planInfo = getPlanDescription(selectedPlan);
-                  return (
-                    <>
-                      <Text style={styles.descriptionTitle}>{planInfo.title}</Text>
-                      <Text style={styles.descriptionText}>{planInfo.description}</Text>
-                      {planInfo.features.map((feature, index) => (
-                        <Text key={index} style={styles.featureText}>• {feature}</Text>
-                      ))}
-                    </>
-                  );
-                })()}
-              </View>
+              {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsValueBox()}
+
+              {renderPlanDescription()}
             </View>
           )}
 
@@ -309,71 +415,9 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
                 />
               </View>
 
-              {selectedPlan.swipes === 0 && (
-                <>
-                  <View style={styles.inputRow}>
-                    <Text style={styles.inputLabel}>Residential meals used:</Text>
-                    <TextInput
-                      style={styles.input}
-                      value={usedSwipes}
-                      onChangeText={setUsedSwipes}
-                      placeholder="45"
-                      keyboardType="numeric"
-                    />
-                  </View>
+              {selectedPlan.swipes === 0 && renderCardinalTracking()}
 
-                  <View style={styles.inputRow}>
-                    <Text style={styles.inputLabel}>Campus Center swipes used this week:</Text>
-                    <TextInput
-                      style={styles.input}
-                      value={usedCampusCenterSwipes}
-                      onChangeText={setUsedCampusCenterSwipes}
-                      placeholder="1"
-                      keyboardType="numeric"
-                    />
-                  </View>
-
-                  {weeksLeft && usedSwipes && (
-                    <View style={styles.trackingResults}>
-                      <Text style={styles.trackingText}>
-                        📈 You need to eat {getRecommendedWeeklyEating()} times per week to get full value.
-                      </Text>
-                      <Text style={styles.trackingText}>
-                        💰 Remaining value: ~${(selectedPlan.totalCost - (parseInt(usedSwipes) * ((standardPrices.breakfast + standardPrices.lunch + standardPrices.dinner) / 3))).toFixed(0)}
-                      </Text>
-                      <Text style={styles.trackingText}>
-                        🎫 Campus Center swipes remaining this week: {2 - (parseInt(usedCampusCenterSwipes) || 0)}
-                      </Text>
-                    </View>
-                  )}
-                </>
-              )}
-
-              {selectedPlan.swipes && selectedPlan.swipes > 0 && (
-                <>
-                  <View style={styles.inputRow}>
-                    <Text style={styles.inputLabel}>Swipes used so far:</Text>
-                    <TextInput
-                      style={styles.input}
-                      value={usedSwipes}
-                      onChangeText={setUsedSwipes}
-                      placeholder="78"
-                      keyboardType="numeric"
-                    />
-                  </View>
-
-                  {usedSwipes && weeksLeft && (
-                    <View style={styles.trackingResults}>
-                      <Text style={styles.trackingText}>
-                        📈 You need to eat {getRecommendedWeeklyEating()} times per week to use all swipes.
-                      </Text>
-                      <Text style={styles.trackingText}>
-                        💰 Remaining swipe value: ~${getRemainingValue().swipes.toFixed(0)}
-                      </Text>
-                    </View>
-                  )}
-                </>
-              )}
+              {selectedPlan.swipes && selectedPlan.swipes > 0 && renderSwipesTracking()}
             </View>
           )}
 
@@ -410,8 +454,6 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
     </Modal>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   modalContainer: {
