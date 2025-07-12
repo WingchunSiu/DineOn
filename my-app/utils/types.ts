@@ -25,7 +25,7 @@ export interface DiningOption {
   id: string;
   name: string;
   type: "dining_hall" | "cafe";
-  image_url: string;
+  image_url: any; // Changed to support local images via require()
   openTime: {[key: string]: { open: string; close: string };};
   categories: string[];
 }
@@ -96,42 +96,192 @@ export const dummyCafes: Cafe[] = [
     id: '1', 
     name: 'Burger Crush (TCC)',
     type: 'cafe',
-    coordinates: '34.0222,-118.2845', // Trojan Campus Center
-    description: 'Gourmet burgers & shakes',
-    fullDescription: 'Located in the Trojan Campus Center, Burger Crush serves up gourmet burgers, crispy fries, and hand-spun milkshakes. Perfect for a quick lunch between classes.',
-    hours: 'Mon-Fri: 10:00 AM - 8:00 PM',
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Homegrown take-out spot with classic fast food',
+    fullDescription: 'Burger Crush is a homegrown take-out spot, offering classic fast food favorites like burgers, fries and crispy chicken tenders. Located in the Ronald Tutor Campus Center.',
+    hours: 'Summer: Closed', // Based on hours data showing closed during summer
     accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
   },
   { 
     id: '2', 
     name: 'Café Annenberg (ANN)',
     type: 'cafe',
-    coordinates: '34.0214,-118.2871', // Annenberg School for Communication
-    description: 'Coffee, pastries & light meals',
-    fullDescription: 'A cozy café in the Annenberg School offering specialty coffee, fresh pastries, and light meals. Great study spot with plenty of seating.',
-    hours: 'Mon-Fri: 7:30 AM - 6:00 PM',
+    coordinates: '34.0207761,-118.2870243', // Annenberg School for Communication
+    description: 'Italian inspired café with coffee, gelato & pastries',
+    fullDescription: 'Italian inspired café serving coffee, gelato, pastries and sandwiches. Located in the Annenberg School for Communication and Journalism building.',
+    hours: 'Mon-Fri: 7:00 AM - 2:30 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
     id: '3', 
-    name: 'Coffee Bean & Tea Leaf (SCA)',
+    name: 'C&G Juice Co. (TCC)',
     type: 'cafe',
-    coordinates: '34.0235,-118.2873', // School of Cinematic Arts
-    description: 'Premium coffee & tea',
-    fullDescription: 'Premium coffee and tea selection at the School of Cinematic Arts. Features seasonal drinks and a variety of pastries.',
-    hours: 'Mon-Fri: 7:00 AM - 7:00 PM',
-    accepts: 'Dining Dollars, Credit Cards'
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Smoothies, juices and acai bowls',
+    fullDescription: 'C&G Juice Co. features smoothies, juices and acai bowls located at the Ronald Tutor Campus Center. Perfect for healthy refreshments between classes.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
   },
   { 
     id: '4', 
-    name: 'Law School Café (LAW)',
+    name: 'Coffee Bean & Tea Leaf (SCA)',
     type: 'cafe',
-    coordinates: '34.0186,-118.2844', // Gould School of Law
-    description: 'Quick bites & beverages',
-    fullDescription: 'Convenient café in the Law School building offering quick meals, snacks, and beverages for busy law students.',
-    hours: 'Mon-Fri: 8:00 AM - 5:00 PM',
+    coordinates: '34.02359770243855, -118.28613747467519', // School of Cinematic Arts
+    description: 'Premium coffee & tea beverages',
+    fullDescription: 'Features deliciously made iced, hot and blended beverages as well as tasty snacks and pastries. Located at the School of Cinematic Arts.',
+    hours: 'Mon-Fri: 7:00 AM - 5:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
+  { 
+    id: '5', 
+    name: 'Chad Tons Family Café (JFF)',
+    type: 'cafe',
+    coordinates: '34.0186748,-118.2824608', // Jess and John Furth Hall
+    description: 'Asian cuisine, sandwiches & boba tea',
+    fullDescription: 'The menu features bao, banh mi, dim sum, Asian salads, noodles, rice bowls and sushi. A diverse selection of Asian-inspired dishes.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '6', 
+    name: 'Filone\'s (TCC)',
+    type: 'cafe',
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Fresh pastas & classic salads',
+    fullDescription: 'Filone\'s offers satisfying comfort food at its finest with fresh pastas and classic salads that are ready to go when you are.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '7', 
+    name: 'Law Café (LAW)',
+    type: 'cafe',
+    coordinates: '34.0186,-118.2844', // Gould School of Law
+    description: 'Asian bowls and boba tea',
+    fullDescription: 'Located in the basement of the Law School, Law Café offers Asian bowls and boba tea. Convenient dining option for law students.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '8', 
+    name: 'Literatea (TUT)',
+    type: 'cafe',
+    coordinates: '34.020873,-118.284744', // Tutor Hall
+    description: 'Hot tea, coffee, boba tea & healthy grab & go',
+    fullDescription: 'Literatea offers hot tea, coffee, boba tea, and healthy grab & go selections. A cozy spot for tea lovers and health-conscious diners.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '9', 
+    name: 'Moreton Fig Café (MOR)',
+    type: 'cafe',
+    coordinates: '34.0201118,-118.2866089', // Moreton Fig Building
+    description: 'Freshly prepared coffee and pastries',
+    fullDescription: 'Moreton Fig Café features freshly prepared coffee and pastries in a stylish and welcoming setting. Perfect for a coffee break.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '10', 
+    name: 'Panda Express (TCC)',
+    type: 'cafe',
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Classic Chinese flavors & fresh ingredients',
+    fullDescription: 'Panda Express combines classic Chinese flavors and fresh ingredients in a popular dining experience. Quick and convenient Asian cuisine.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '11', 
+    name: 'Popovich Hall Café (JKP)',
+    type: 'cafe',
+    coordinates: '34.0189287,-118.2823315', // Popovich Hall
+    description: 'Mediterranean sandwiches, wraps & acai bowls',
+    fullDescription: 'Popovich Hall features Mediterranean sandwiches, wraps and salads, acai bowls and pastries. Mediterranean-inspired healthy options.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '12', 
+    name: 'Rosso Oro\'s',
+    type: 'cafe',
+    coordinates: '34.018699,-118.281916', 
+    description: 'Thin-crust pizza & Italian fare',
+    fullDescription: 'Rosso Oro\'s offers thin-crust pizza and other Italian fare in a sports-themed hangout with TVs & shuffleboard. Great for game watching.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '13', 
+    name: 'Slice Shop (TCC)',
+    type: 'cafe',
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Crispy thin crust pizza',
+    fullDescription: 'Slice Shop brings crispy thin crust pizza to campus with classic toppings including pepperoni and supreme. Quick pizza for hungry students.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '14', 
+    name: 'Seeds Marketplace (TCC)',
+    type: 'cafe',
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Creative salads, sandwiches & hot entrées',
+    fullDescription: 'Seeds Marketplace offers creative salads, handcrafted sandwiches, comforting hot entrées, drinks, and snacks. Customize your selection or choose from our variety of fresh grab & go items.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
+  },
+  { 
+    id: '15', 
+    name: 'Trojan Grounds (TCC)',
+    type: 'cafe',
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Illy coffee & fresh food options',
+    fullDescription: 'Step into the newly renovated Trojan Grounds, where every detail has been thoughtfully designed to enhance your experience. Featuring illy coffee and an array of fresh, flavorful food options.',
+    hours: 'Mon-Fri: 11:00 AM - 7:00 PM, Sat-Sun: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '16', 
+    name: 'Taco-Taco (TCC)',
+    type: 'cafe',
+    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    description: 'Made-to-order Mexican-inspired dishes',
+    fullDescription: 'Taco-Taco offers made-to-order Mexican-inspired dishes. Choose from a wide variety of ingredients to build your new favorite burrito, bowl, or salad.',
+    hours: 'Summer: Closed',
+    accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
+  },
+  { 
+    id: '17', 
+    name: 'Tutor Hall Café (RTH)',
+    type: 'cafe',
+    coordinates: '34.0200873,-118.2898349', // Tutor Hall
+    description: 'Indian cuisine, sandwiches & pastries',
+    fullDescription: 'Tutor Hall Café features Indian cuisine, sandwiches, salads, pastries, coffee and tea. Diverse menu with Indian specialties.',
+    hours: 'Mon-Fri: 8:00 AM - 3:00 PM, Sat-Sun: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '18', 
+    name: 'McKay\'s',
+    type: 'cafe',
+    coordinates: '34.01915695078638, -118.28130093590039', // Heritage Hall area
+    description: 'Sports-themed restaurant with breakfast buffet',
+    fullDescription: 'McKay\'s is a nostalgic sports-themed restaurant featuring a daily breakfast buffet and special events on home game days. Created in homage to football coach John McKay.',
+    hours: 'Mon-Fri: 6:30 AM - 11:00 AM Breakfast, 11:00 AM - 2:30 PM Lunch, Sat-Sun: Closed',
+    accepts: 'Dining Dollars, Credit Cards'
+  },
+  { 
+    id: '19', 
+    name: 'The University Club',
+    type: 'cafe',
+    coordinates: '34.022633471500335, -118.28319663623058', // University Club Building
+    description: 'Full-service restaurant for members & non-members',
+    fullDescription: 'The University Club is a full-service restaurant welcoming members and non-members alike. Upscale dining experience on campus.',
+    hours: 'Hours vary - Check with restaurant',
+    accepts: 'Credit Cards, Discretionary Dollars'
+  }
 ];
 
 export const dummyDiningOptions: DiningOption[] = [
@@ -139,7 +289,7 @@ export const dummyDiningOptions: DiningOption[] = [
     id: "parkside",
     name: "Parkside Restaurant & Grill",
     type: "dining_hall",
-    image_url: "https://dailytrojan.com/wp-content/uploads/2021/10/ParksideDining_090321_SarahCortina_E003-scaled.jpg",
+    image_url: require('../assets/images/parkside-logo.png'),
     openTime: {
       Monday: { open: "07:00", close: "22:00" },
       Tuesday: { open: "07:00", close: "22:00" },
@@ -155,7 +305,7 @@ export const dummyDiningOptions: DiningOption[] = [
     id: "village",
     name: "Village Dining Hall",
     type: "dining_hall",
-    image_url: "https://hospitality.usc.edu/wp-content/uploads/2017/07/01_usc_village_dining_hall.jpg",
+    image_url: require('../assets/images/village-logo.png'),
     openTime: {
       Monday: { open: "07:00", close: "22:00" },
       Tuesday: { open: "07:00", close: "22:00" },
@@ -171,7 +321,7 @@ export const dummyDiningOptions: DiningOption[] = [
     id: "evk",
     name: "Everybody's Kitchen",
     type: "dining_hall",
-    image_url: "https://hospitality.usc.edu/wp-content/uploads/2015/06/03_evk_slider.jpg",
+    image_url: require('../assets/images/evk-logo.png'),
     openTime: {
       Monday: { open: "07:00", close: "22:00" },
       Tuesday: { open: "07:00", close: "22:00" },

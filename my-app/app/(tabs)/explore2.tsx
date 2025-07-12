@@ -25,20 +25,15 @@ const CampusFoodScreen = () => {
         setSelectedCafe(null);
     };
 
-    // Combine cafes and food trucks for the map
+    // Only show cafes on the map (food trucks hidden for now)
     const allLocations = [
         ...dummyCafes.map(cafe => ({
             id: cafe.id,
             name: cafe.name,
             coordinates: cafe.coordinates,
             description: cafe.description
-        })),
-        ...dummyFoodTrucks.map(truck => ({
-            id: truck.id,
-            name: truck.name,
-            coordinates: getCoordinatesForLocation(truck.location),
-            description: truck.description || truck.name
         }))
+        // Food trucks removed from map display
     ];
 
     // Helper function to get coordinates for food truck locations
@@ -62,7 +57,6 @@ const CampusFoodScreen = () => {
             }
         >
             <View style={styles.container}>
-                <Text style={styles.subtitle}>Food trucks, cafes & quick bites around campus</Text>
                 
                 <CampusMap locations={allLocations} />
                 

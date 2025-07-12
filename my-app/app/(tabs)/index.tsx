@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Image, Icon, Text } from '@rneui/themed';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import MealPlanCalculator from '@/components/MealPlanCalculator';
+import DiningHallCard from '@/components/DiningHallCard';
 import { colors } from '../../styles';
 
 import { useSelectedDiningHall } from "@/providers/DiningOptionProvider";
@@ -62,21 +63,12 @@ export default function Homepage() {
           </View>
         )}
         {openNow.map((option) => (
-          <TouchableOpacity key={option.id} onPress={() => handleSelect(option)}>
-            <Card containerStyle={styles.card}>
-              <Image
-                source={{ uri: option.image_url }}
-                containerStyle={styles.image}
-                resizeMode="cover"
-                PlaceholderContent={<ActivityIndicator />}
-              />
-              <Card.Title style={styles.cardTitle}>{option.name}</Card.Title>
-              <Card.Divider />
-              <Text style={[styles.status, { color: statuses[option.id]?.color }]}>
-                {statuses[option.id]?.text || "Loading..."}
-              </Text>
-            </Card>
-          </TouchableOpacity>
+          <DiningHallCard
+            key={option.id}
+            option={option}
+            status={statuses[option.id] || { text: "Loading...", color: "#7f8c8d" }}
+            onPress={() => handleSelect(option)}
+          />
         ))}
 
         {/* 🔴 Section for Closed Locations */}
@@ -87,21 +79,12 @@ export default function Homepage() {
           </View>
         )}
         {closedNow.map((option) => (
-          <TouchableOpacity key={option.id} onPress={() => handleSelect(option)}>
-            <Card containerStyle={styles.card}>
-              <Image
-                source={{ uri: option.image_url }}
-                containerStyle={styles.image}
-                resizeMode="cover"
-                PlaceholderContent={<ActivityIndicator />}
-              />
-              <Card.Title style={styles.cardTitle}>{option.name}</Card.Title>
-              <Card.Divider />
-              <Text style={[styles.status, { color: statuses[option.id]?.color }]}>
-                {statuses[option.id]?.text || "Loading..."}
-              </Text>
-            </Card>
-          </TouchableOpacity>
+          <DiningHallCard
+            key={option.id}
+            option={option}
+            status={statuses[option.id] || { text: "Loading...", color: "#7f8c8d" }}
+            onPress={() => handleSelect(option)}
+          />
         ))}
 
         {/* Meal Plan Calculator Button */}
@@ -176,59 +159,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.primary.main,
   },
-  title: {
-    fontSize: 26,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 15,
-  },
-  card: {
-    width: 280,
-    height: 220,
-    alignSelf: "center",
-    borderRadius: 15,
-    backgroundColor: "white",
-    padding: 0,
-    marginBottom: 15,
-  },
-  cardTitle: {
-    fontFamily: 'Nunito-Regular',
-    width: "100%",
-    textAlign: "center",
-    fontSize: 16,
-    marginTop: 6,
-    marginBottom: 4,
-  },
-  cardText: {
-    fontSize: 14,
-    color: "gray",
-    textAlign: "center",
-    width: "100%",
-    marginBottom: 8,
-  },
-  image: {
-    height: 140,
-    width: "100%",
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-  },
+
   sectionHeader: {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
-    marginVertical: 15,
+    marginVertical: 25,
     paddingLeft: 10,
   },
   dot: {
     width: 12,
     height: 12,
     borderRadius: 6,
-    marginRight: 8,
+    marginRight: 12,
   },
   sectionText: {
-    fontSize: 28, // ✅ Bigger text
-    fontWeight: "bold",
+    fontSize: 24,
+    fontWeight: "700",
     textAlign: "left",
+    color: '#2c3e50',
+    fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
   },
   headerContainer: {
     flex: 1,
@@ -243,12 +193,5 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'left',
   },
-  status: {
-    fontStyle: "italic",
-    fontSize: 14,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 8,
-    paddingHorizontal: 8,
-  },
+
 });
