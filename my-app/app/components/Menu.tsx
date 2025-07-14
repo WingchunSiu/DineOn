@@ -23,10 +23,11 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
       try {
         setIsLoading(true);
         setError(null);
+        const currentDay = new Date().toLocaleDateString("en-US", { weekday: "long" });
         const items = await fetchMenuItemsFromSupabase(
           diningLocation.id,
           timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1),
-          'Friday' // Hardcoded for testing
+          currentDay
         );
         setMenuItems(items);
       } catch (err) {

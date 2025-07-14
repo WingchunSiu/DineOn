@@ -377,7 +377,7 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
                 
                 {selectedPlan.swipes === 0 && renderCardinalPlanSummary()}
                 
-                {selectedPlan.swipes && selectedPlan.swipes > 0 && renderSwipesPlanSummary()}
+                {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesTracking()}
                 
                 {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsOnlySummary()}
               </View>
@@ -391,7 +391,7 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
 
               {selectedPlan.swipes === 0 && renderCardinalValueBox()}
 
-              {selectedPlan.swipes && selectedPlan.swipes > 0 && renderSwipesValueBox()}
+              {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesValueBox()}
 
               {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsValueBox()}
 
@@ -417,7 +417,7 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
 
               {selectedPlan.swipes === 0 && renderCardinalTracking()}
 
-              {selectedPlan.swipes && selectedPlan.swipes > 0 && renderSwipesTracking()}
+              {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesTracking()}
             </View>
           )}
 
