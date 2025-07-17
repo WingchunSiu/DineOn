@@ -327,7 +327,7 @@ export const dummyDiningOptions: DiningOption[] = [
       Tuesday: { open: "07:00", close: "22:00" },
       Wednesday: { open: "07:00", close: "22:00" },
       Thursday: { open: "07:00", close: "22:00" },
-      Friday: { open: "01:00", close: "03:10" },
+      Friday: { open: "07:00", close: "22:00" },
       Saturday: { open: "09:00", close: "22:00" },
       Sunday: { open: "09:00", close: "22:00" },
     },

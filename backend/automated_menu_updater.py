@@ -111,7 +111,7 @@ class MenuUpdater:
             self.logger.error(f"Error scraping menu for {dining_hall_id}: {str(e)}")
             return {dining_hall_id: {}}
 
-    def scrape_multiple_days(self, days_to_scrape=3):
+    def scrape_multiple_days(self, days_to_scrape=7):
         """Scrape all dining halls for multiple days"""
         all_data = {}
         start_date = datetime.date.today()

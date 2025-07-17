@@ -3,6 +3,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Stack } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { theme, colors } from '../../styles';
+import { DayProvider } from '../providers/DayProvider';
 
 import BreakfastTab from './breakfast';
 import LunchTab from './lunch';
@@ -13,6 +14,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function MenuTabsLayout() {
   return (
+    <DayProvider>
     <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <Stack.Screen name="Menu" options={{ headerShown: false }} />      
       <Tab.Navigator
@@ -30,5 +32,6 @@ export default function MenuTabsLayout() {
         <Tab.Screen name="dinner" component={DinnerTab} />
       </Tab.Navigator>
     </SafeAreaView>
+    </DayProvider>
   );
 }

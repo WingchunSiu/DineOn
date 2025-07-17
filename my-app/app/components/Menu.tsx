@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { DiningOption, MenuItemType } from "@/utils/types";
 import MenuSection from "./MenuSection";
+import HeaderDayPicker from "./HeaderDayPicker";
 import { colors } from '../../styles';
 import { fetchMenuItemsFromSupabase } from '@/utils/util';
+import { useSelectedDay } from '../providers/DayProvider';
 
 export interface MenuProps {
   timeOfDay: "breakfast" | "lunch" | "dinner";
@@ -15,6 +17,7 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
   const [menuItems, setMenuItems] = useState<MenuItemType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { selectedDay, setSelectedDay } = useSelectedDay();
 
   useEffect(() => {
     const fetchMenu = async () => {
@@ -23,11 +26,15 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
       try {
         setIsLoading(true);
         setError(null);
-        const currentDay = new Date().toLocaleDateString("en-US", { weekday: "long" });
+        
+        // Convert date string to day of week for database query
+        const selectedDate = new Date(selectedDay);
+        const dayOfWeek = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
+        
         const items = await fetchMenuItemsFromSupabase(
           diningLocation.id,
           timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1),
-          currentDay
+          dayOfWeek
         );
         setMenuItems(items);
       } catch (err) {
@@ -39,7 +46,7 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
     };
 
     fetchMenu();
-  }, [diningLocation, timeOfDay]);
+  }, [diningLocation, timeOfDay, selectedDay]);
 
   if (!diningLocation) return <Text style={styles.errorText}>No menu available</Text>;
 
@@ -64,6 +71,10 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
       headerImage={
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>{diningLocation.name}</Text>
+          <HeaderDayPicker 
+            selectedDay={selectedDay}
+            onDaySelect={setSelectedDay}
+          />
         </View>
       }
     >
@@ -118,8 +129,9 @@ const styles = StyleSheet.create({
   headerContainer: {
     flex: 1,
     width: "100%",
-    justifyContent: "flex-end",
-    alignItems: "flex-start",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
     paddingVertical: 20,
     paddingHorizontal: 20,
   },
@@ -128,6 +140,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "white",
     textAlign: "left",
-    width: "100%",
+    flex: 1,
+    marginRight: 16,
   },
 });
