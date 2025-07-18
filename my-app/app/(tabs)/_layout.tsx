@@ -6,6 +6,7 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { theme } from '../../styles';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
   return (
@@ -41,7 +42,9 @@ export default function TabLayout() {
         name="explore2"
         options={{
           title: 'Campus Food',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="cup.and.saucer.fill" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="local-cafe" size={28} color={color} />
+          ),
         }}
       />
     </Tabs>
