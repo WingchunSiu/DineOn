@@ -1,7 +1,9 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Icon } from '@rneui/themed';
 import { MenuItemType } from '@/utils/types';
 import { menuStyles } from '../../styles';
+import { router } from 'expo-router';
 
 interface MenuItemProps {
   item: MenuItemType;
@@ -27,7 +29,14 @@ const LabelBadge = ({ label }: { label: string }) => {
 export default function MenuItem({ item }: MenuItemProps) {
   const { featured } = item;
 
+  const handleInfoPress = useCallback(() => {
+    console.log('Info icon pressed for:', item.name);
+    // @ts-ignore - dynamic route
+    router.push({ pathname: 'info', params: { q: item.name } });
+  }, [item.name]);
+
   return (
+    <>
     <View style={featured ? menuStyles.featuredItem : menuStyles.item}>
       {featured && (
         <Image
@@ -36,9 +45,14 @@ export default function MenuItem({ item }: MenuItemProps) {
         />
       )}
       <View style={featured ? styles.featuredContent : styles.regularContent}>
-        <Text style={featured ? menuStyles.featuredText : menuStyles.itemText}>
-          {item.name}
-        </Text>
+        <View style={styles.nameRow}>
+          <Text style={featured ? menuStyles.featuredText : menuStyles.itemText}>
+            {item.name}
+          </Text>
+          <TouchableOpacity onPress={handleInfoPress} style={styles.infoButton}>
+            <Icon name="information-circle-outline" type="ionicon" size={18} color="#888" />
+          </TouchableOpacity>
+        </View>
         {item.labels && item.labels.length > 0 && (
           <View style={styles.labelsContainer}>
             {item.labels.slice(0, 3).map((label, index) => (
@@ -51,6 +65,8 @@ export default function MenuItem({ item }: MenuItemProps) {
         )}
       </View>
     </View>
+    {/* navigation route handles info view */}
+    </>
   );
 }
 
@@ -61,6 +77,13 @@ const styles = StyleSheet.create({
   },
   featuredContent: {
     alignItems: 'center',
+  },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  infoButton: {
+    marginLeft: 6,
   },
   labelsContainer: {
     flexDirection: 'row',
