@@ -50,44 +50,24 @@ export interface MealPlan {
 
 export const dummyFoodTrucks: FoodTruck[] = [
   {
-    id: "kogi",
-    name: "Kogi BBQ Truck",
+    id: "bandit_chowmein",
+    name: "Bandit Chowmein",
     type: "food_truck",
-    location: "Outside Leavey Library",
-    schedule: "Usually here 11:00 AM - 3:00 PM",
-    menu: ["Korean BBQ Tacos", "Kimchi Quesadilla", "Short Rib Sliders", "Spicy Pork Burrito"],
+    location: "Near 3137 S Hoover St",
+    schedule: "Mon-Sat: 12:00 PM - 10:00 PM",
+    menu: ["Chow Mein", "Fried Rice", "Egg Rolls", "Wonton Soup", "Orange Chicken"],
     image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
-    description: "Korean-Mexican fusion favorites"
+    description: "Authentic Chinese street food"
   },
   {
-    id: "grilled_cheese",
-    name: "The Grilled Cheese Truck",
+    id: "brothers_tacos",
+    name: "Brothers Tacos",
     type: "food_truck",
-    location: "Near Trousdale Parkway",
-    schedule: "Usually here 12:00 PM - 4:00 PM",
-    menu: ["Classic Grilled Cheese", "Mac & Cheese Melt", "BBQ Pulled Pork Melt", "Tomato Soup"],
-    image_url: "https://images.unsplash.com/photo-1528736235302-52922df5c122?w=500",
-    description: "Gourmet grilled cheese sandwiches"
-  },
-  {
-    id: "lobos_truck",
-    name: "Lobos Truck",
-    type: "food_truck",
-    location: "Alumni Park",
-    schedule: "Usually here 10:30 AM - 2:30 PM",
-    menu: ["Carne Asada Burrito", "Fish Tacos", "Quesadillas", "Nachos", "Horchata"],
+    location: "Near 975 W Jefferson Blvd",
+    schedule: "Sun-Thu: 4:00 PM - 1:00 AM, Fri-Sat: 4:00 PM - 2:00 AM",
+    menu: ["Street Tacos", "Quesadillas", "Burritos", "Nachos", "Horchata"],
     image_url: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=500",
-    description: "Authentic Mexican street food"
-  },
-  {
-    id: "crepe_truck",
-    name: "Sweet & Savory Crepes",
-    type: "food_truck",
-    location: "Outside Doheny Library",
-    schedule: "Usually here 9:00 AM - 2:00 PM",
-    menu: ["Nutella Banana Crepe", "Ham & Cheese Crepe", "Strawberry Cream", "Chicken Caesar Crepe"],
-    image_url: "https://images.unsplash.com/photo-1506084868230-bb9d95c24759?w=500",
-    description: "Fresh made-to-order crepes"
+    description: "Late-night Mexican favorites"
   }
 ];
 

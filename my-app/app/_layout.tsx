@@ -29,15 +29,15 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={DefaultTheme}>
-        <SelectedDiningHallProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="dark" />
-        </SelectedDiningHallProvider>
-      </ThemeProvider>
+    <ThemeProvider value={DefaultTheme}>
+      <SelectedDiningHallProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="dark" />
+      </SelectedDiningHallProvider>
+    </ThemeProvider>
     </GestureHandlerRootView>
   );
 }

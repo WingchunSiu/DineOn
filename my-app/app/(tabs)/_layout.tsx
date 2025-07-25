@@ -32,13 +32,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Food Trucks',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="truck.box.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
         name="explore2"
         options={{
           title: 'Campus Food',

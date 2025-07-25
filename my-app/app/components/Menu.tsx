@@ -95,6 +95,7 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
         {menuItems.length === 0 && !isLoading && (
           <Text style={styles.noItemsText}>No menu items available for this time</Text>
         )}
+        <Text style = {styles.disclaimerText}>If you have severe allergies, please refer to the school's website for more information</Text>
       </View>
     </ParallaxScrollView>
   );
@@ -142,5 +143,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     flex: 1,
     marginRight: 16,
+  },
+  disclaimerText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: colors.text.secondary,
+    marginTop: 20,
+    fontStyle: "italic",
   },
 });

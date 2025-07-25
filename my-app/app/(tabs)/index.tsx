@@ -101,7 +101,7 @@ export default function Homepage() {
           visible={calculatorVisible}
           onClose={() => setCalculatorVisible(false)}
         />
-
+        <Text style={styles.disclaimerText}>Openning hours are subject to change during public holidays and summer break</Text>
       </View>
     </ParallaxScrollView>
   );
@@ -193,5 +193,11 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'left',
   },
-
+  disclaimerText: {
+    fontSize: 14,
+    textAlign: "center",
+    color: colors.text.secondary,
+    marginTop: 20,
+    fontStyle: "italic",
+  },
 });

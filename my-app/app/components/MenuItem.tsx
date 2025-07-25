@@ -46,9 +46,9 @@ export default function MenuItem({ item }: MenuItemProps) {
       )}
       <View style={featured ? styles.featuredContent : styles.regularContent}>
         <View style={styles.nameRow}>
-          <Text style={featured ? menuStyles.featuredText : menuStyles.itemText}>
-            {item.name}
-          </Text>
+        <Text style={featured ? menuStyles.featuredText : menuStyles.itemText}>
+          {item.name}
+        </Text>
           <TouchableOpacity onPress={handleInfoPress} style={styles.infoButton}>
             <Icon name="information-circle-outline" type="ionicon" size={18} color="#888" />
           </TouchableOpacity>
