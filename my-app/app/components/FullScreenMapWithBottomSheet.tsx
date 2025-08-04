@@ -17,6 +17,7 @@ type LocationItem = {
   type: 'food_truck' | 'cafe';
   coordinates: string;
   description: string;
+  address?: string;
   schedule?: string;
   hours?: string;
   data: FoodTruck | Cafe;
@@ -35,27 +36,15 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
   const centerLat = 34.0224;
   const centerLng = -118.2851;
 
-  // Helper function to get coordinates for food truck locations
-  const getCoordinatesForLocation = (location: string): string => {
-    const locationMap: { [key: string]: string } = {
-      'Outside Leavey Library': '34.0216,-118.2828',
-      'Near Trousdale Parkway': '34.0205,-118.2851',
-      'Alumni Park': '34.0202,-118.2847',
-      'Outside Doheny Library': '34.0201,-118.2837',
-      'Near 3137 S Hoover St': '34.0189,-118.2851',
-      'Near 975 W Jefferson Blvd': '34.0173,-118.2851'
-    };
-    return locationMap[location] || '34.0205,-118.2851';
-  };
-
   // Combine food trucks and cafes into unified location data
   const allLocations: LocationItem[] = useMemo(() => {
     const foodTruckLocations = dummyFoodTrucks.map(truck => ({
       id: truck.id,
       name: truck.name,
       type: 'food_truck' as const,
-      coordinates: getCoordinatesForLocation(truck.location),
+      coordinates: truck.coordinates,
       description: truck.description || '',
+      address: truck.location,
       schedule: truck.schedule,
       data: truck
     }));
@@ -167,6 +156,9 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
           <View style={styles.locationInfo}>
             <Text style={styles.locationName}>{item.name}</Text>
             <Text style={styles.locationDescription}>{item.description}</Text>
+            {item.type === 'food_truck' && item.address && (
+              <Text style={styles.locationAddress}>📍 {item.address}</Text>
+            )}
             {item.type === 'food_truck' && item.schedule && (
               <Text style={styles.locationTime}>⏰ {item.schedule}</Text>
             )}
@@ -219,6 +211,7 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
         rotateEnabled={false}
         scrollEnabled={true}
         pitchEnabled={false}
+        onPress={() => setSelectedLocation(null)}
       >
         {markers.map((marker) => (
           <Marker
@@ -231,6 +224,7 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
             coordinate={marker.coordinate}
             title={marker.title}
             description={marker.description}
+            onPress={() => setSelectedLocation(marker.locationData)}
           >
             <View style={[
               styles.customMarker,
@@ -255,6 +249,9 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
                 <Text style={styles.calloutDescription} numberOfLines={2}>
                   {marker.description}
                 </Text>
+                {marker.type === 'food_truck' && marker.locationData.address && (
+                  <Text style={styles.calloutTime}>📍 {marker.locationData.address}</Text>
+                )}
                 {marker.type === 'food_truck' && marker.locationData.schedule && (
                   <Text style={styles.calloutTime}>⏰ {marker.locationData.schedule}</Text>
                 )}
@@ -466,6 +463,12 @@ const styles = StyleSheet.create({
     color: '#666',
     marginBottom: 4,
     lineHeight: 18,
+  },
+  locationAddress: {
+    fontSize: 13,
+    color: '#666',
+    marginBottom: 2,
+    fontWeight: '500',
   },
   locationTime: {
     fontSize: 12,

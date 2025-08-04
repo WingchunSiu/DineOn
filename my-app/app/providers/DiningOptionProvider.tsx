@@ -25,3 +25,6 @@ export const useSelectedDiningHall = () => {
   }
   return context;
 };
+
+// Add default export to fix the routing error
+export default SelectedDiningHallProvider;

@@ -8,16 +8,38 @@ interface HeaderDayPickerProps {
   onDaySelect: (day: string) => void;
 }
 
-// Generate next 7 days starting from today
+// Helper function to get current date in Los Angeles timezone
+const getLADate = () => {
+  const now = new Date();
+  
+  // Get LA date components using Intl.DateTimeFormat
+  const laFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
+  
+  const laParts = laFormatter.formatToParts(now);
+  const year = parseInt(laParts.find(part => part.type === 'year')?.value || '2024');
+  const month = parseInt(laParts.find(part => part.type === 'month')?.value || '1') - 1; // Month is 0-indexed
+  const day = parseInt(laParts.find(part => part.type === 'day')?.value || '1');
+  
+  return new Date(year, month, day);
+};
+
+// Generate next 7 days starting from today in LA timezone
 const getNext7Days = () => {
   const days = [];
-  const today = new Date();
+  const todayLA = getLADate();
+  
   for (let i = 0; i < 7; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
+    const date = new Date(todayLA);
+    date.setDate(todayLA.getDate() + i);
+    
     days.push({
       dateString: date.toISOString().split('T')[0], // YYYY-MM-DD for internal tracking
-      weekday: date.toLocaleDateString("en-US", { weekday: "long" }), // Display name
+      weekday: date.toLocaleDateString("en-US", { weekday: "long" }), // Display name (should match openTime keys)
       isToday: i === 0
     });
   }

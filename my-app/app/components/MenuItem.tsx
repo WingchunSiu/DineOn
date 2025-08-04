@@ -55,12 +55,9 @@ export default function MenuItem({ item }: MenuItemProps) {
         </View>
         {item.labels && item.labels.length > 0 && (
           <View style={styles.labelsContainer}>
-            {item.labels.slice(0, 3).map((label, index) => (
+            {item.labels.map((label, index) => (
               <LabelBadge key={index} label={label} />
             ))}
-            {item.labels.length > 3 && (
-              <Text style={styles.moreLabels}>+{item.labels.length - 3}</Text>
-            )}
           </View>
         )}
       </View>

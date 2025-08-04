@@ -2,6 +2,7 @@ export interface FoodTruck {
   id: string;
   name: string;
   type: "food_truck";
+  coordinates: string;
   location: string; // "Outside Leavey Library"
   schedule: string; // "Usually here 11:00 AM - 3:00 PM"
   menu: string[]; // Simple array for now
@@ -53,21 +54,34 @@ export const dummyFoodTrucks: FoodTruck[] = [
     id: "bandit_chowmein",
     name: "Bandit Chowmein",
     type: "food_truck",
-    location: "Near 3137 S Hoover St",
+    location: "Near 3131 S Hoover St",
+    coordinates: "34.02597455921248, -118.28412523744423",
     schedule: "Mon-Sat: 12:00 PM - 10:00 PM",
     menu: ["Chow Mein", "Fried Rice", "Egg Rolls", "Wonton Soup", "Orange Chicken"],
     image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
-    description: "Authentic Chinese street food"
+    description: "Authentic Asian street food"
   },
   {
     id: "brothers_tacos",
     name: "Brothers Tacos",
     type: "food_truck",
     location: "Near 975 W Jefferson Blvd",
+    coordinates: "34.024839042056904, -118.28620018769318",
     schedule: "Sun-Thu: 4:00 PM - 1:00 AM, Fri-Sat: 4:00 PM - 2:00 AM",
     menu: ["Street Tacos", "Quesadillas", "Burritos", "Nachos", "Horchata"],
     image_url: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=500",
     description: "Late-night Mexican favorites"
+  },
+  {
+    id: "taco_stand",
+    name: "Taco Stand",
+    type: "food_truck",
+    location: "Near 3300 S Hoover St",
+    coordinates: "34.023826038630595, -118.28379544640842",
+    schedule: "Mon-Sat: 7:00 PM - 3:00 AM",
+    menu: ["Al Pastor Tacos", "Carnitas", "Carne Asada", "Elote", "Aguas Frescas"],
+    image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
+    description: "Authentic Mexican street tacos and sides"
   }
 ];
 
@@ -311,7 +325,7 @@ export const dummyDiningOptions: DiningOption[] = [
       Saturday: { open: "09:00", close: "22:00" },
       Sunday: { open: "09:00", close: "22:00" },
     },
-    categories: ["Fresh From The Farm", "Hot Line"],
+    categories: ["Fresh from the Farm", "Hot Line"],
   },
 ];
 

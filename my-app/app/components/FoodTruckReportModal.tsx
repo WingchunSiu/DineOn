@@ -39,13 +39,13 @@ const FoodTruckReportModal: React.FC<FoodTruckReportModalProps> = ({ visible, on
                     `Description: ${reportForm.description || 'Not specified'}\n\n` +
                     `Reported via DineOn app`;
 
-        const emailUrl = `mailto:siuw@usc.edu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&to=siuw@usc.edu&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         
-        Linking.openURL(emailUrl).then(() => {
+        Linking.openURL(gmailUrl).then(() => {
             closeModal();
-            Alert.alert('Thank you!', 'Your food truck report has been submitted. We appreciate your help in keeping our listings up to date!');
+            Alert.alert('Thank you!', 'Your food truck report has been submitted via Gmail. We appreciate your help in keeping our listings up to date!');
         }).catch(() => {
-            Alert.alert('Error', 'Unable to open email app. Please try again.');
+            Alert.alert('Error', 'Unable to open Gmail. Please make sure you have access to Gmail in your browser.');
         });
     };
 

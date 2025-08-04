@@ -4,11 +4,35 @@ import { MenuItemType } from './types';
 
 
 export const getStatus = (diningOption: DiningOption) => {
+  // Get current time in Los Angeles timezone using a more reliable method
   const now = new Date();
-  const day = now.toLocaleDateString("en-US", { weekday: "long" }); // Get current day name (Monday, Tuesday, etc.)
-  const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert time to minutes
+  
+  // Get LA time components directly using Intl.DateTimeFormat
+  const laFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    weekday: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
+  
+  const laParts = laFormatter.formatToParts(now);
+  const day = laParts.find(part => part.type === 'weekday')?.value || 'Monday';
+  const hour = parseInt(laParts.find(part => part.type === 'hour')?.value || '0');
+  const minute = parseInt(laParts.find(part => part.type === 'minute')?.value || '0');
+  const currentTime = hour * 60 + minute; // Convert time to minutes
 
-  const { open, close } = diningOption.openTime[day];
+  // Check if the day exists in openTime
+  const daySchedule = diningOption.openTime[day];
+  if (!daySchedule) {
+    console.error(`No schedule found for day: ${day}. Available days:`, Object.keys(diningOption.openTime));
+    return { 
+      text: "Schedule unavailable", 
+      color: "#666666" 
+    };
+  }
+
+  const { open, close } = daySchedule;
   const openTime = parseInt(open.split(":")[0]) * 60 + parseInt(open.split(":")[1]); // Convert to minutes
   const closeTime = parseInt(close.split(":")[0]) * 60 + parseInt(close.split(":")[1]); // Convert to minutes
 
@@ -51,8 +75,21 @@ export const getStatus = (diningOption: DiningOption) => {
 
 // Breakfast 7 to 11, Lunch 11 to 4, Dinner 4 to 10
 export const getTimeOfDay = () => {
+  // Get current time in Los Angeles timezone using a more reliable method
   const now = new Date();
-  const currentTime = now.getHours() * 60 + now.getMinutes(); // Convert to minutes
+  
+  // Get LA time components directly using Intl.DateTimeFormat
+  const laFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false
+  });
+  
+  const laParts = laFormatter.formatToParts(now);
+  const hour = parseInt(laParts.find(part => part.type === 'hour')?.value || '0');
+  const minute = parseInt(laParts.find(part => part.type === 'minute')?.value || '0');
+  const currentTime = hour * 60 + minute; // Convert to minutes
 
   if (currentTime < 11 * 60) {
     return "breakfast";
