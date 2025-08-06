@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Modal, ScrollView, TextInput, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Clipboard, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 interface FoodTruckReportModalProps {
@@ -8,45 +8,15 @@ interface FoodTruckReportModalProps {
 }
 
 const FoodTruckReportModal: React.FC<FoodTruckReportModalProps> = ({ visible, onClose }) => {
-    const [reportForm, setReportForm] = useState({
-        truckName: '',
-        location: '',
-        schedule: '',
-        description: ''
-    });
+    const emailAddress = 'siuw@usc.edu';
 
-    const closeModal = () => {
-        onClose();
-        setReportForm({
-            truckName: '',
-            location: '',
-            schedule: '',
-            description: ''
-        });
-    };
-
-    const submitFoodTruckReport = () => {
-        if (!reportForm.truckName.trim() || !reportForm.location.trim()) {
-            Alert.alert('Missing Information', 'Please fill in at least the truck name and location.');
-            return;
-        }
-
-        const subject = `New Food Truck Report: ${reportForm.truckName}`;
-        const body = `New Food Truck Report\n\n` +
-                    `Truck Name: ${reportForm.truckName}\n` +
-                    `Location: ${reportForm.location}\n` +
-                    `Schedule: ${reportForm.schedule || 'Not specified'}\n` +
-                    `Description: ${reportForm.description || 'Not specified'}\n\n` +
-                    `Reported via DineOn app`;
-
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&to=siuw@usc.edu&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        
-        Linking.openURL(gmailUrl).then(() => {
-            closeModal();
-            Alert.alert('Thank you!', 'Your food truck report has been submitted via Gmail. We appreciate your help in keeping our listings up to date!');
-        }).catch(() => {
-            Alert.alert('Error', 'Unable to open Gmail. Please make sure you have access to Gmail in your browser.');
-        });
+    const copyEmailToClipboard = () => {
+        Clipboard.setString(emailAddress);
+        Alert.alert(
+            'Email Copied! 📧',
+            `${emailAddress} has been copied to your clipboard. You can now paste it in your email app.`,
+            [{ text: 'Got it!', style: 'default' }]
+        );
     };
 
     return (
@@ -57,75 +27,42 @@ const FoodTruckReportModal: React.FC<FoodTruckReportModalProps> = ({ visible, on
         >
             <View style={styles.modalContainer}>
                 <View style={styles.modalHeader}>
-                    <TouchableOpacity onPress={closeModal}>
+                    <TouchableOpacity onPress={onClose}>
                         <Ionicons name="close" size={28} color="#333" />
                     </TouchableOpacity>
                     <Text style={styles.modalTitle}>Report New Food Truck</Text>
                     <View style={{ width: 28 }} />
                 </View>
                 
-                <ScrollView style={styles.modalContent}>
+                <View style={styles.modalContent}>
                     <Text style={styles.reportDescription}>
                         Help us grow the foodie community! 🍴
                     </Text>
                     <Text style={styles.reportSubDescription}>
-                        Please share any new food trucks you've spotted on or near campus to help keep our listings up to date.
+                        Spotted a new food truck on or near campus? Email us the details!
                     </Text>
                     
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.inputLabel}>Truck Name *</Text>
-                        <TextInput
-                            style={styles.textInput}
-                            value={reportForm.truckName}
-                            onChangeText={(text) => setReportForm({...reportForm, truckName: text})}
-                            placeholder="e.g., Tasty Tacos"
-                            placeholderTextColor="#999"
-                        />
+                    <View style={styles.emailSection}>
+                        <Text style={styles.emailLabel}>Send your report to:</Text>
+                        <TouchableOpacity 
+                            style={styles.emailButton}
+                            onPress={copyEmailToClipboard}
+                        >
+                            <Ionicons name="mail" size={24} color="#C41E3A" />
+                            <Text style={styles.emailText}>{emailAddress}</Text>
+                            <Ionicons name="copy" size={20} color="#666" />
+                        </TouchableOpacity>
+                        <Text style={styles.emailHint}>Tap to copy email address</Text>
                     </View>
 
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.inputLabel}>Location *</Text>
-                        <TextInput
-                            style={styles.textInput}
-                            value={reportForm.location}
-                            onChangeText={(text) => setReportForm({...reportForm, location: text})}
-                            placeholder="e.g., Outside Leavey Library"
-                            placeholderTextColor="#999"
-                        />
+                    <View style={styles.instructionSection}>
+                        <Text style={styles.instructionTitle}>What to include:</Text>
+                        <Text style={styles.instructionItem}>• Food truck name</Text>
+                        <Text style={styles.instructionItem}>• Location where you saw it</Text>
+                        <Text style={styles.instructionItem}>• Schedule (if known)</Text>
+                        <Text style={styles.instructionItem}>• Type of food they serve</Text>
                     </View>
-
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.inputLabel}>Schedule (if known)</Text>
-                        <TextInput
-                            style={styles.textInput}
-                            value={reportForm.schedule}
-                            onChangeText={(text) => setReportForm({...reportForm, schedule: text})}
-                            placeholder="e.g., Mon-Fri: 11:00 AM - 3:00 PM"
-                            placeholderTextColor="#999"
-                        />
-                    </View>
-
-                    <View style={styles.inputGroup}>
-                        <Text style={styles.inputLabel}>Description (optional)</Text>
-                        <TextInput
-                            style={[styles.textInput, styles.textArea]}
-                            value={reportForm.description}
-                            onChangeText={(text) => setReportForm({...reportForm, description: text})}
-                            placeholder="Any additional details about the food truck..."
-                            placeholderTextColor="#999"
-                            multiline
-                            numberOfLines={3}
-                        />
-                    </View>
-
-                    <TouchableOpacity
-                        style={styles.submitButton}
-                        onPress={submitFoodTruckReport}
-                    >
-                        <Ionicons name="mail" size={20} color="white" />
-                        <Text style={styles.submitButtonText}>Submit Report</Text>
-                    </TouchableOpacity>
-                </ScrollView>
+                </View>
             </View>
         </Modal>
     );
@@ -154,6 +91,7 @@ const styles = StyleSheet.create({
     modalContent: {
         flex: 1,
         padding: 20,
+        justifyContent: 'center',
     },
     reportDescription: {
         fontSize: 18,
@@ -167,48 +105,59 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#666',
         lineHeight: 22,
-        marginBottom: 20,
+        marginBottom: 30,
         textAlign: 'center',
     },
-    inputGroup: {
+    emailSection: {
+        marginBottom: 30,
+        alignItems: 'center',
+    },
+    emailLabel: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
         marginBottom: 15,
     },
-    inputLabel: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#333',
-        marginBottom: 5,
-    },
-    textInput: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        fontSize: 16,
-        color: '#333',
-        backgroundColor: '#f9f9f9',
-    },
-    textArea: {
-        minHeight: 80,
-        paddingTop: 10,
-        textAlignVertical: 'top',
-    },
-    submitButton: {
+    emailButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#C41E3A',
-        paddingVertical: 12,
+        backgroundColor: '#f8f9fa',
         paddingHorizontal: 20,
-        borderRadius: 8,
-        marginTop: 20,
+        paddingVertical: 15,
+        borderRadius: 12,
+        borderWidth: 2,
+        borderColor: '#C41E3A',
+        marginBottom: 8,
     },
-    submitButtonText: {
-        color: 'white',
+    emailText: {
         fontSize: 16,
-        fontWeight: 'bold',
-        marginLeft: 8,
+        fontWeight: '600',
+        color: '#C41E3A',
+        marginHorizontal: 12,
+        flex: 1,
+        textAlign: 'center',
+    },
+    emailHint: {
+        fontSize: 12,
+        color: '#666',
+        fontStyle: 'italic',
+    },
+    instructionSection: {
+        backgroundColor: '#f8f9fa',
+        padding: 20,
+        borderRadius: 12,
+    },
+    instructionTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 12,
+    },
+    instructionItem: {
+        fontSize: 14,
+        color: '#666',
+        lineHeight: 20,
+        marginBottom: 4,
     },
 });
 

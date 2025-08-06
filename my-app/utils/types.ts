@@ -59,7 +59,7 @@ export const dummyFoodTrucks: FoodTruck[] = [
     schedule: "Mon-Sat: 12:00 PM - 10:00 PM",
     menu: ["Chow Mein", "Fried Rice", "Egg Rolls", "Wonton Soup", "Orange Chicken"],
     image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
-    description: "Authentic Asian street food"
+    description: "Asian Street Food"
   },
   {
     id: "brothers_tacos",
@@ -81,7 +81,7 @@ export const dummyFoodTrucks: FoodTruck[] = [
     schedule: "Mon-Sat: 7:00 PM - 3:00 AM",
     menu: ["Al Pastor Tacos", "Carnitas", "Carne Asada", "Elote", "Aguas Frescas"],
     image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
-    description: "Authentic Mexican street tacos and sides"
+    description: "Mexican Street Tacos and Sides"
   },
   {
     id:"indian_food_truck",
@@ -92,7 +92,7 @@ export const dummyFoodTrucks: FoodTruck[] = [
     schedule: "Mon-Sat: 11:00 AM - 5:00 PM",
     menu: ["Tandoori Chicken", "Naan", "Raita", "Chana Masala", "Palak Paneer"],
     image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
-    description: "Authentic Indian street food"
+    description: "Indian Street Food and Sides"
   }
 ];
 

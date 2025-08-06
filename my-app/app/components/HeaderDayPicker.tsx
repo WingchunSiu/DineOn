@@ -70,9 +70,8 @@ export default function HeaderDayPicker({ selectedDay, onDaySelect }: HeaderDayP
   const getSelectedDayName = () => {
     const selectedDate = new Date(selectedDay);
     const dayName = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
-    const monthDay = selectedDate.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
-    console.log('Selected day name:', dayName, 'Month/Day:', monthDay);
-    return `${dayName} ${monthDay}`;
+    console.log('Selected day name:', dayName);
+    return dayName;
   };
 
   const handleDaySelect = (dateString: string) => {
