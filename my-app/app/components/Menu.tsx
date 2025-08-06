@@ -31,6 +31,9 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
         const selectedDate = new Date(selectedDay);
         const dayOfWeek = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
         
+        console.log('Selected day:', selectedDay);
+        console.log('Day of week for query:', dayOfWeek);
+        
         const items = await fetchMenuItemsFromSupabase(
           diningLocation.id,
           timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1),

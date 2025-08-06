@@ -12,20 +12,18 @@ interface HeaderDayPickerProps {
 const getLADate = () => {
   const now = new Date();
   
-  // Get LA date components using Intl.DateTimeFormat
-  const laFormatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Los_Angeles",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
+  // Get LA date string directly using en-CA format (YYYY-MM-DD)
+  const laDateString = now.toLocaleDateString("en-CA", {
+    timeZone: "America/Los_Angeles"
   });
   
-  const laParts = laFormatter.formatToParts(now);
-  const year = parseInt(laParts.find(part => part.type === 'year')?.value || '2024');
-  const month = parseInt(laParts.find(part => part.type === 'month')?.value || '1') - 1; // Month is 0-indexed
-  const day = parseInt(laParts.find(part => part.type === 'day')?.value || '1');
+  console.log('Current LA date string:', laDateString);
   
-  return new Date(year, month, day);
+  // Create Date object from the YYYY-MM-DD string
+  const laDate = new Date(laDateString + 'T00:00:00');
+  console.log('Created LA Date object:', laDate);
+  
+  return laDate;
 };
 
 // Generate next 7 days starting from today in LA timezone
@@ -33,15 +31,30 @@ const getNext7Days = () => {
   const days = [];
   const todayLA = getLADate();
   
+  console.log('Today LA:', todayLA);
+  
   for (let i = 0; i < 7; i++) {
     const date = new Date(todayLA);
     date.setDate(todayLA.getDate() + i);
     
-    days.push({
-      dateString: date.toISOString().split('T')[0], // YYYY-MM-DD for internal tracking
-      weekday: date.toLocaleDateString("en-US", { weekday: "long" }), // Display name (should match openTime keys)
+    // Get the weekday name for this specific date
+    const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
+    
+    // Format as MM/DD - use the actual date, not todayLA
+    const monthDay = date.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
+    
+    // Get proper YYYY-MM-DD string for this date
+    const dateString = date.toLocaleDateString("en-CA");
+    
+    const dayInfo = {
+      dateString: dateString, // YYYY-MM-DD for internal tracking
+      weekday: weekday,
+      monthDay: monthDay,
       isToday: i === 0
-    });
+    };
+    
+    console.log(`Day ${i}:`, dayInfo);
+    days.push(dayInfo);
   }
   return days;
 };
@@ -49,10 +62,17 @@ const getNext7Days = () => {
 export default function HeaderDayPicker({ selectedDay, onDaySelect }: HeaderDayPickerProps) {
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const availableDays = getNext7Days();
+  
+  // Debug logging
+  console.log('Available days:', availableDays);
+  console.log('Selected day:', selectedDay);
 
   const getSelectedDayName = () => {
     const selectedDate = new Date(selectedDay);
-    return selectedDate.toLocaleDateString("en-US", { weekday: "long" });
+    const dayName = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
+    const monthDay = selectedDate.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
+    console.log('Selected day name:', dayName, 'Month/Day:', monthDay);
+    return `${dayName} ${monthDay}`;
   };
 
   const handleDaySelect = (dateString: string) => {
@@ -76,6 +96,13 @@ export default function HeaderDayPicker({ selectedDay, onDaySelect }: HeaderDayP
           item.isToday && styles.todayDayItemText
         ]}>
           {item.weekday}
+        </Text>
+        <Text style={[
+          styles.dayItemSubText,
+          selectedDay === item.dateString && styles.selectedDayItemText,
+          item.isToday && styles.todayDayItemText
+        ]}>
+          {item.monthDay}
         </Text>
         {item.isToday && (
           <View style={styles.todayIndicator}>
@@ -211,6 +238,11 @@ const styles = StyleSheet.create({
   dayItemText: {
     fontSize: 16,
     color: '#333',
+  },
+  dayItemSubText: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 2,
   },
   selectedDayItemText: {
     color: 'white',

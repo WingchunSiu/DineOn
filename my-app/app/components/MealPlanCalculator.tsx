@@ -123,21 +123,23 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
     if (!selectedPlan) return { swipes: 0, dollars: 0 };
     
     if (selectedPlan.swipes === 0) {
-      // For Cardinal Plan
+      // For Cardinal Plan - calculate remaining value based on meals used
       const avgMealPrice = (standardPrices.breakfast + standardPrices.lunch + standardPrices.dinner) / 3;
       const mealsUsed = parseInt(usedSwipes) || 0;
-      const remainingSwipeValue = selectedPlan.totalCost - (mealsUsed * avgMealPrice);
+      const remainingSwipeValue = Math.max(0, selectedPlan.totalCost - (mealsUsed * avgMealPrice));
       return {
         swipes: remainingSwipeValue,
         dollars: 0
       };
     }
     
-    const remainingSwipes = (selectedPlan.swipes || 0) - (parseInt(usedSwipes) || 0);
+    const usedSwipesCount = parseInt(usedSwipes) || 0;
+    const remainingSwipes = Math.max(0, (selectedPlan.swipes || 0) - usedSwipesCount);
     const swipeValue = getSwipeValue(selectedPlan);
     const remainingSwipeValue = remainingSwipes * swipeValue;
     
-    const remainingDollars = (selectedPlan.diningDollars || 0) - (parseInt(usedDiningDollars) || 0);
+    const usedDollarsAmount = parseInt(usedDiningDollars) || 0;
+    const remainingDollars = Math.max(0, (selectedPlan.diningDollars || 0) - usedDollarsAmount);
     
     return {
       swipes: remainingSwipeValue,
@@ -148,16 +150,19 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
   const getRecommendedWeeklyEating = () => {
     if (!selectedPlan || !weeksLeft) return 0;
     
+    const weeksRemaining = parseInt(weeksLeft) || 0;
+    if (weeksRemaining <= 0) return 0;
+    
     if (selectedPlan.swipes === 0) {
       // For Cardinal Plan, calculate based on average meal price
       const avgMealPrice = (standardPrices.breakfast + standardPrices.lunch + standardPrices.dinner) / 3;
-      const weeksRemaining = parseInt(weeksLeft);
-      const remainingValue = selectedPlan.totalCost - (parseInt(usedSwipes) * avgMealPrice);
-      return Math.round((remainingValue / (avgMealPrice * weeksRemaining)) * 10) / 10;
+      const mealsUsed = parseInt(usedSwipes) || 0;
+      const remainingValue = selectedPlan.totalCost - (mealsUsed * avgMealPrice);
+      return Math.max(0, Math.round((remainingValue / (avgMealPrice * weeksRemaining)) * 10) / 10);
     }
     
-    const remainingSwipes = (selectedPlan.swipes || 0) - parseInt(usedSwipes);
-    const weeksRemaining = parseInt(weeksLeft);
+    const usedSwipesCount = parseInt(usedSwipes) || 0;
+    const remainingSwipes = Math.max(0, (selectedPlan.swipes || 0) - usedSwipesCount);
     
     return Math.round((remainingSwipes / weeksRemaining) * 10) / 10;
   };
@@ -258,7 +263,11 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
           <TextInput
             style={styles.input}
             value={usedSwipes}
-            onChangeText={setUsedSwipes}
+            onChangeText={(text) => {
+              // Only allow positive numbers
+              const numericValue = text.replace(/[^0-9]/g, '');
+              setUsedSwipes(numericValue);
+            }}
             placeholder="45"
             keyboardType="numeric"
           />
@@ -268,7 +277,14 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
           <TextInput
             style={styles.input}
             value={usedCampusCenterSwipes}
-            onChangeText={setUsedCampusCenterSwipes}
+            onChangeText={(text) => {
+              // Only allow 0-2 for campus center swipes
+              const numericValue = text.replace(/[^0-9]/g, '');
+              const value = parseInt(numericValue) || 0;
+              if (value <= 2) {
+                setUsedCampusCenterSwipes(numericValue);
+              }
+            }}
             placeholder="1"
             keyboardType="numeric"
           />
@@ -279,7 +295,7 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
               📈 You need to eat {getRecommendedWeeklyEating()} times per week to get full value.
             </Text>
             <Text style={styles.trackingText}>
-              💰 Remaining value: ~${(selectedPlan.totalCost - (parseInt(usedSwipes) * ((standardPrices.breakfast + standardPrices.lunch + standardPrices.dinner) / 3))).toFixed(0)}
+              💰 Remaining value: ~${Math.max(0, selectedPlan.totalCost - ((parseInt(usedSwipes) || 0) * ((standardPrices.breakfast + standardPrices.lunch + standardPrices.dinner) / 3))).toFixed(0)}
             </Text>
             <Text style={styles.trackingText}>
               🎫 Campus Center swipes remaining this week: {2 - (parseInt(usedCampusCenterSwipes) || 0)}
@@ -297,7 +313,14 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
         <TextInput
           style={styles.input}
           value={usedSwipes}
-          onChangeText={setUsedSwipes}
+          onChangeText={(text) => {
+            // Only allow positive numbers up to plan limit
+            const numericValue = text.replace(/[^0-9]/g, '');
+            const value = parseInt(numericValue) || 0;
+            if (selectedPlan && value <= (selectedPlan.swipes || 0)) {
+              setUsedSwipes(numericValue);
+            }
+          }}
           placeholder="78"
           keyboardType="numeric"
         />
@@ -308,7 +331,7 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
             📈 You need to eat {getRecommendedWeeklyEating()} times per week to use all swipes.
           </Text>
           <Text style={styles.trackingText}>
-            💰 Remaining swipe value: ~${getRemainingValue().swipes.toFixed(0)}
+            💰 Remaining swipe value: ~${Math.max(0, getRemainingValue().swipes).toFixed(0)}
           </Text>
         </View>
       )}
@@ -377,7 +400,7 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
                 
                 {selectedPlan.swipes === 0 && renderCardinalPlanSummary()}
                 
-                {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesTracking()}
+                {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesPlanSummary()}
                 
                 {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsOnlySummary()}
               </View>
@@ -409,7 +432,14 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
                 <TextInput
                   style={styles.input}
                   value={weeksLeft}
-                  onChangeText={setWeeksLeft}
+                  onChangeText={(text) => {
+                    // Only allow 1-16 weeks
+                    const numericValue = text.replace(/[^0-9]/g, '');
+                    const value = parseInt(numericValue) || 0;
+                    if (value <= 16) {
+                      setWeeksLeft(numericValue);
+                    }
+                  }}
                   placeholder="5"
                   keyboardType="numeric"
                 />
@@ -431,7 +461,14 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
                 <TextInput
                   style={styles.input}
                   value={usedDiningDollars}
-                  onChangeText={setUsedDiningDollars}
+                  onChangeText={(text) => {
+                    // Only allow positive numbers up to plan limit
+                    const numericValue = text.replace(/[^0-9]/g, '');
+                    const value = parseInt(numericValue) || 0;
+                    if (selectedPlan && value <= (selectedPlan.diningDollars || 0)) {
+                      setUsedDiningDollars(numericValue);
+                    }
+                  }}
                   placeholder="52"
                   keyboardType="numeric"
                 />
@@ -440,7 +477,7 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
               {usedDiningDollars && (
                 <View style={styles.dollarsBox}>
                   <Text style={styles.dollarsText}>
-                    💳 Dining Dollars Left: ${getRemainingValue().dollars.toFixed(2)}
+                    💳 Dining Dollars Left: ${Math.max(0, getRemainingValue().dollars).toFixed(2)}
                   </Text>
                   <Text style={styles.reminderText}>
                     🕔 Reminder: Dining Dollars reset at semester end (use them or lose them!)

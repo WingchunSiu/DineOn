@@ -82,6 +82,17 @@ export const dummyFoodTrucks: FoodTruck[] = [
     menu: ["Al Pastor Tacos", "Carnitas", "Carne Asada", "Elote", "Aguas Frescas"],
     image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
     description: "Authentic Mexican street tacos and sides"
+  },
+  {
+    id:"indian_food_truck",
+    name: "Indian Street Food",
+    type: "food_truck",
+    location: "Near 3100 S Hoover St",
+    coordinates: "34.025819844400225, -118.28388379728352",
+    schedule: "Mon-Sat: 11:00 AM - 5:00 PM",
+    menu: ["Tandoori Chicken", "Naan", "Raita", "Chana Masala", "Palak Paneer"],
+    image_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500",
+    description: "Authentic Indian street food"
   }
 ];
 
@@ -228,12 +239,12 @@ export const dummyCafes: Cafe[] = [
   },
   { 
     id: '15', 
-    name: 'Trojan Grounds (TCC)',
+    name: 'Trojan Grounds (illy)',
     type: 'cafe',
-    coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
+    coordinates: '34.02141856986762, -118.28249110000006', 
     description: 'Illy coffee & fresh food options',
     fullDescription: 'Step into the newly renovated Trojan Grounds, where every detail has been thoughtfully designed to enhance your experience. Featuring illy coffee and an array of fresh, flavorful food options.',
-    hours: 'Mon-Fri: 11:00 AM - 7:00 PM, Sat-Sun: Closed',
+    hours: 'Mon-Fri: 7:00 AM - 5:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 

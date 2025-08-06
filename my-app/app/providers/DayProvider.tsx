@@ -15,20 +15,13 @@ interface DayProviderProps {
 const getLADateString = () => {
   const now = new Date();
   
-  // Get LA date components using Intl.DateTimeFormat
-  const laFormatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: "America/Los_Angeles",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
+  // Get LA date string directly using en-CA format (YYYY-MM-DD)
+  const laDateString = now.toLocaleDateString("en-CA", {
+    timeZone: "America/Los_Angeles"
   });
   
-  const laParts = laFormatter.formatToParts(now);
-  const year = laParts.find(part => part.type === 'year')?.value || '2024';
-  const month = laParts.find(part => part.type === 'month')?.value || '01';
-  const day = laParts.find(part => part.type === 'day')?.value || '01';
-  
-  return `${year}-${month}-${day}`;
+  console.log('DayProvider - Current LA date string:', laDateString);
+  return laDateString;
 };
 
 export function DayProvider({ children }: DayProviderProps) {
