@@ -8,53 +8,45 @@ interface HeaderDayPickerProps {
   onDaySelect: (day: string) => void;
 }
 
-// Helper function to get current date in Los Angeles timezone
-const getLADate = () => {
+// Format helpers anchored to Los Angeles time
+const formatLA = (date: Date, options: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', ...options }).format(date);
+
+// Returns LA calendar date string YYYY-MM-DD for the provided UTC anchor
+const formatLA_YYYY_MM_DD = (date: Date) =>
+  new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Los_Angeles',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+
+// Get LA "today" anchored via UTC noon to avoid TZ edge cases
+const getLATodayAnchor = () => {
+  // Use current date at 12:00 UTC so it maps to the same LA calendar day
   const now = new Date();
-  
-  // Get LA date string directly using en-CA format (YYYY-MM-DD)
-  const laDateString = now.toLocaleDateString("en-CA", {
-    timeZone: "America/Los_Angeles"
-  });
-  
-  console.log('Current LA date string:', laDateString);
-  
-  // Create Date object from the YYYY-MM-DD string
-  const laDate = new Date(laDateString + 'T00:00:00');
-  console.log('Created LA Date object:', laDate);
-  
-  return laDate;
+  const utcNoon = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 12, 0, 0));
+  return utcNoon;
 };
 
-// Generate next 7 days starting from today in LA timezone
+// Generate next 7 LA days starting from LA today (all formatting forced to LA)
 const getNext7Days = () => {
-  const days = [];
-  const todayLA = getLADate();
-  
-  console.log('Today LA:', todayLA);
-  
+  const days = [] as Array<{ dateString: string; weekday: string; monthDay: string; isToday: boolean }>;
+  const laTodayAnchor = getLATodayAnchor();
+
   for (let i = 0; i < 7; i++) {
-    const date = new Date(todayLA);
-    date.setDate(todayLA.getDate() + i);
-    
-    // Get the weekday name for this specific date
-    const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
-    
-    // Format as MM/DD - use the actual date, not todayLA
-    const monthDay = date.toLocaleDateString("en-US", { month: "2-digit", day: "2-digit" });
-    
-    // Get proper YYYY-MM-DD string for this date
-    const dateString = date.toLocaleDateString("en-CA");
-    
-    const dayInfo = {
-      dateString: dateString, // YYYY-MM-DD for internal tracking
-      weekday: weekday,
-      monthDay: monthDay,
-      isToday: i === 0
-    };
-    
-    console.log(`Day ${i}:`, dayInfo);
-    days.push(dayInfo);
+    const anchor = new Date(laTodayAnchor.getTime() + i * 24 * 60 * 60 * 1000);
+
+    const weekday = formatLA(anchor, { weekday: 'long' });
+    const monthDay = formatLA(anchor, { month: '2-digit', day: '2-digit' });
+    const dateString = formatLA_YYYY_MM_DD(anchor);
+
+    days.push({
+      dateString,
+      weekday,
+      monthDay,
+      isToday: i === 0,
+    });
   }
   return days;
 };
@@ -62,16 +54,11 @@ const getNext7Days = () => {
 export default function HeaderDayPicker({ selectedDay, onDaySelect }: HeaderDayPickerProps) {
   const [isPickerVisible, setIsPickerVisible] = useState(false);
   const availableDays = getNext7Days();
-  
-  // Debug logging
-  console.log('Available days:', availableDays);
-  console.log('Selected day:', selectedDay);
 
   const getSelectedDayName = () => {
-    const selectedDate = new Date(selectedDay);
-    const dayName = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
-    console.log('Selected day name:', dayName);
-    return dayName;
+    // Anchor via UTC noon to stabilize day regardless of device TZ
+    const anchor = new Date(`${selectedDay}T12:00:00Z`);
+    return formatLA(anchor, { weekday: 'long' });
   };
 
   const handleDaySelect = (dateString: string) => {

@@ -27,9 +27,13 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
         setIsLoading(true);
         setError(null);
         
-        // Convert date string to day of week for database query
-        const selectedDate = new Date(selectedDay);
-        const dayOfWeek = selectedDate.toLocaleDateString("en-US", { weekday: "long" });
+        // Convert date string to day of week for database query (force LA timezone)
+        // Use a UTC noon anchor to avoid timezone shifts (device tz vs LA tz)
+        const laAnchor = new Date(`${selectedDay}T12:00:00Z`);
+        const dayOfWeek = new Intl.DateTimeFormat("en-US", {
+          weekday: "long",
+          timeZone: "America/Los_Angeles",
+        }).format(laAnchor);
         
         console.log('Selected day:', selectedDay);
         console.log('Day of week for query:', dayOfWeek);
