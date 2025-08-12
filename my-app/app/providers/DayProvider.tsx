@@ -20,7 +20,6 @@ const getLADateString = () => {
     timeZone: "America/Los_Angeles"
   });
   
-  console.log('DayProvider - Current LA date string:', laDateString);
   return laDateString;
 };
 

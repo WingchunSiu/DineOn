@@ -9,6 +9,7 @@ import { colors } from '@/styles';
 interface FullScreenMapWithBottomSheetProps {
   onReportPress: () => void;
   onCafeSelect?: (cafe: Cafe) => void;
+  onFoodTruckSelect?: (foodTruck: FoodTruck) => void;
 }
 
 type LocationItem = {
@@ -23,7 +24,7 @@ type LocationItem = {
   data: FoodTruck | Cafe;
 };
 
-const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> = ({ onReportPress, onCafeSelect }) => {
+const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> = ({ onReportPress, onCafeSelect, onFoodTruckSelect }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const mapRef = useRef<MapView>(null);
   const markersRef = useRef<{ [key: string]: any }>({});
@@ -80,51 +81,22 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
     });
   }, [allLocations]);
 
-  const focusOnMapLocationAndShowCallout = (location: LocationItem) => {
-    const [lat, lng] = location.coordinates.split(',').map(Number);
-    
-    // First animate to the location
-    mapRef.current?.animateToRegion({
-      latitude: lat,
-      longitude: lng,
-      latitudeDelta: 0.005,
-      longitudeDelta: 0.005,
-    }, 1000);
-    
-    setSelectedLocation(location);
-    
-    // Then show the callout after a short delay
-    setTimeout(() => {
-      const markerRef = markersRef.current[location.id];
-      if (markerRef) {
-        markerRef.showCallout();
-      }
-    }, 1200); // Slight delay after map animation
-  };
+
 
   const jumpToLocationAndShowCallout = (location: LocationItem) => {
-    const [lat, lng] = location.coordinates.split(',').map(Number);
-    
     // First collapse the bottom sheet to show the map
     bottomSheetRef.current?.snapToIndex(0);
     
-    // Animate to the location
-    mapRef.current?.animateToRegion({
-      latitude: lat,
-      longitude: lng,
-      latitudeDelta: 0.005,
-      longitudeDelta: 0.005,
-    }, 1000);
-    
+    // Set the selected location without moving the map
     setSelectedLocation(location);
     
-    // Show the callout after animation
+    // Show the callout immediately without animation
     setTimeout(() => {
       const markerRef = markersRef.current[location.id];
       if (markerRef) {
         markerRef.showCallout();
       }
-    }, 1100);
+    }, 100);
   };
 
   const openBottomSheetForLocation = (location: LocationItem) => {
@@ -132,9 +104,14 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
     // Expand bottom sheet to show more details
     bottomSheetRef.current?.snapToIndex(1);
     
-    // If it's a cafe, trigger the detailed modal
+    // If it's a cafe, trigger the detailed modal (without moving map)
     if (location.type === 'cafe' && onCafeSelect) {
       onCafeSelect(location.data as Cafe);
+    }
+    
+    // If it's a food truck, trigger the detailed modal (without moving map)
+    if (location.type === 'food_truck' && onFoodTruckSelect) {
+      onFoodTruckSelect(location.data as FoodTruck);
     }
   };
 
@@ -239,7 +216,10 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
             {/* Custom Callout */}
             <Callout
               style={styles.calloutContainer}
-              onPress={() => openBottomSheetForLocation(marker.locationData)}
+              onPress={() => {
+                // Open detail modal without moving map or changing view
+                openBottomSheetForLocation(marker.locationData);
+              }}
             >
               <View style={styles.calloutContent}>
                 <View style={styles.calloutHeader}>
@@ -320,7 +300,7 @@ const styles = StyleSheet.create({
   selectedMarker: {
     borderColor: '#C41E3A',
     borderWidth: 3,
-    transform: [{ scale: 1.2 }],
+    // Removed scale transform to prevent visual jumping
   },
   markerText: {
     fontSize: 14,

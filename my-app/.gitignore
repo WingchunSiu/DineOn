@@ -36,3 +36,6 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# EAS Build Configuration (contains API keys)
+eas.json

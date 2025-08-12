@@ -1,13 +1,13 @@
 {
   "expo": {
-    "name": "my-app",
+    "name": "DineOn!",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/d-icon.png",
-    "scheme": "myapp",
+    "scheme": "dineon",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "jsEngine": "jsc",
     "ios": {
       "supportsTablet": true,
@@ -20,7 +20,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.michaelsiu1.myapp"
     },
     "web": {
       "bundler": "metro",

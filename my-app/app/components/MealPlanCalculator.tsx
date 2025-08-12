@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, TouchableOpacity, StyleSheet, Modal, ScrollView, TextInput } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text } from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/styles';
@@ -17,6 +18,8 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
   const [weeksLeft, setWeeksLeft] = useState<string>('');
   const [usedDiningDollars, setUsedDiningDollars] = useState<string>('');
   const [usedCampusCenterSwipes, setUsedCampusCenterSwipes] = useState<string>('');
+  const [focusedInput, setFocusedInput] = useState<string | null>(null);
+  const scrollViewRef = useRef<any>(null);
 
   // Calculation Functions
   const getSwipeValue = (plan: MealPlan) => {
@@ -258,37 +261,49 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
     if (!selectedPlan) return null;
     return (
       <View>
-        <View style={styles.inputRow}>
-          <Text style={styles.inputLabel}>Residential meals used:</Text>
-          <TextInput
-            style={styles.input}
-            value={usedSwipes}
-            onChangeText={(text) => {
-              // Only allow positive numbers
-              const numericValue = text.replace(/[^0-9]/g, '');
-              setUsedSwipes(numericValue);
-            }}
-            placeholder="45"
-            keyboardType="numeric"
-          />
-        </View>
-        <View style={styles.inputRow}>
-          <Text style={styles.inputLabel}>Campus Center swipes used this week:</Text>
-          <TextInput
-            style={styles.input}
-            value={usedCampusCenterSwipes}
-            onChangeText={(text) => {
-              // Only allow 0-2 for campus center swipes
-              const numericValue = text.replace(/[^0-9]/g, '');
-              const value = parseInt(numericValue) || 0;
-              if (value <= 2) {
-                setUsedCampusCenterSwipes(numericValue);
-              }
-            }}
-            placeholder="1"
-            keyboardType="numeric"
-          />
-        </View>
+                      <View style={styles.inputRow}>
+                <Text style={styles.inputLabel}>Residential meals used:</Text>
+                <TextInput
+                  style={[
+                    styles.input,
+                    focusedInput === 'usedSwipes' && styles.inputFocused
+                  ]}
+                  value={usedSwipes}
+                  onChangeText={(text) => {
+                    // Only allow positive numbers
+                    const numericValue = text.replace(/[^0-9]/g, '');
+                    setUsedSwipes(numericValue);
+                  }}
+                  placeholder="45"
+                  keyboardType="numeric"
+                  onFocus={() => setFocusedInput('usedSwipes')}
+                  onBlur={() => setFocusedInput(null)}
+                  showSoftInputOnFocus={true}
+                />
+              </View>
+                      <View style={styles.inputRow}>
+                <Text style={styles.inputLabel}>Campus Center swipes used this week:</Text>
+                <TextInput
+                  style={[
+                    styles.input,
+                    focusedInput === 'usedCampusCenterSwipes' && styles.inputFocused
+                  ]}
+                  value={usedCampusCenterSwipes}
+                  onChangeText={(text) => {
+                    // Only allow 0-2 for campus center swipes
+                    const numericValue = text.replace(/[^0-9]/g, '');
+                    const value = parseInt(numericValue) || 0;
+                    if (value <= 2) {
+                      setUsedCampusCenterSwipes(numericValue);
+                    }
+                  }}
+                  placeholder="1"
+                  keyboardType="numeric"
+                  onFocus={() => setFocusedInput('usedCampusCenterSwipes')}
+                  onBlur={() => setFocusedInput(null)}
+                  showSoftInputOnFocus={true}
+                />
+              </View>
         {weeksLeft && usedSwipes && (
           <View style={styles.trackingResults}>
             <Text style={styles.trackingText}>
@@ -308,23 +323,29 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
 
   const renderSwipesTracking = () => (
     <View>
-      <View style={styles.inputRow}>
-        <Text style={styles.inputLabel}>Swipes used so far:</Text>
-        <TextInput
-          style={styles.input}
-          value={usedSwipes}
-          onChangeText={(text) => {
-            // Only allow positive numbers up to plan limit
-            const numericValue = text.replace(/[^0-9]/g, '');
-            const value = parseInt(numericValue) || 0;
-            if (selectedPlan && value <= (selectedPlan.swipes || 0)) {
-              setUsedSwipes(numericValue);
-            }
-          }}
-          placeholder="78"
-          keyboardType="numeric"
-        />
-      </View>
+                    <View style={styles.inputRow}>
+                <Text style={styles.inputLabel}>Swipes used so far:</Text>
+                <TextInput
+                  style={[
+                    styles.input,
+                    focusedInput === 'usedSwipes' && styles.inputFocused
+                  ]}
+                  value={usedSwipes}
+                  onChangeText={(text) => {
+                    // Only allow positive numbers up to plan limit
+                    const numericValue = text.replace(/[^0-9]/g, '');
+                    const value = parseInt(numericValue) || 0;
+                    if (selectedPlan && value <= (selectedPlan.swipes || 0)) {
+                      setUsedSwipes(numericValue);
+                    }
+                  }}
+                  placeholder="78"
+                  keyboardType="numeric"
+                  onFocus={() => setFocusedInput('usedSwipes')}
+                  onBlur={() => setFocusedInput(null)}
+                  showSoftInputOnFocus={true}
+                />
+              </View>
       {usedSwipes && weeksLeft && (
         <View style={styles.trackingResults}>
           <Text style={styles.trackingText}>
@@ -353,140 +374,172 @@ export default function MealPlanCalculator({visible, onClose }: MealPlanCalculat
           <View style={{ width: 28 }} />
         </View>
 
-        <ScrollView style={styles.modalContent}>
-          {/* Plan Selector */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>🔽 Select Your Plan:</Text>
-            <TouchableOpacity 
-              style={styles.dropdown}
-              onPress={() => setPlanSelectorVisible(!planSelectorVisible)}
-            >
-              <Text style={styles.dropdownText}>
-                {selectedPlan ? selectedPlan.name : "Choose your meal plan..."}
-              </Text>
-              <Ionicons name="chevron-down" size={20} color="#666" />
-            </TouchableOpacity>
-
-            {planSelectorVisible && (
-              <ScrollView 
-                style={styles.dropdownOptions}
-                nestedScrollEnabled={true}
-                showsVerticalScrollIndicator={true}
+        <KeyboardAwareScrollView 
+          ref={scrollViewRef}
+          style={styles.modalContent}
+          extraScrollHeight={100}
+          enableOnAndroid={true}
+          keyboardShouldPersistTaps="handled"
+          enableAutomaticScroll={true}
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          extraHeight={160}
+          behavior="padding"
+        >
+          <TouchableOpacity 
+            activeOpacity={1} 
+            onPress={() => {
+              // Dismiss keyboard when tapping outside inputs
+              // But don't change focus or scroll position
+            }}
+            style={{ flex: 1 }}
+          >
+            {/* Plan Selector */}
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>🔽 Select Your Plan:</Text>
+              <TouchableOpacity 
+                style={styles.dropdown}
+                onPress={() => setPlanSelectorVisible(!planSelectorVisible)}
               >
-                {mealPlans.map((plan) => (
-                  <TouchableOpacity
-                    key={plan.id}
-                    style={styles.dropdownOption}
-                    onPress={() => {
-                      setSelectedPlan(plan);
-                      setPlanSelectorVisible(false);
-                    }}
-                  >
-                    <Text style={styles.dropdownOptionText}>{plan.name}</Text>
-                    <Text style={styles.dropdownOptionDesc}>{plan.description}</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            )}
-          </View>
+                <Text style={styles.dropdownText}>
+                  {selectedPlan ? selectedPlan.name : "Choose your meal plan..."}
+                </Text>
+                <Ionicons name="chevron-down" size={20} color="#666" />
+              </TouchableOpacity>
 
-          {/* Plan Analysis */}
-          {selectedPlan && (
-            <View style={styles.section}>
-              <Text style={styles.analysisTitle}>📊 {selectedPlan.name} Summary</Text>
-              
-              <View style={styles.summaryBox}>
-                <Text style={styles.summaryText}>🟢 Total Paid: ${selectedPlan.totalCost}</Text>
-                
-                {selectedPlan.swipes === 0 && renderCardinalPlanSummary()}
-                
-                {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesPlanSummary()}
-                
-                {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsOnlySummary()}
-              </View>
-
-              <View style={styles.pricesBox}>
-                <Text style={styles.pricesTitle}>💡 Standard Prices:</Text>
-                <Text style={styles.priceText}>- Breakfast: ${standardPrices.breakfast}</Text>
-                <Text style={styles.priceText}>- Lunch: ${standardPrices.lunch}</Text>
-                <Text style={styles.priceText}>- Dinner: ${standardPrices.dinner}</Text>
-              </View>
-
-              {selectedPlan.swipes === 0 && renderCardinalValueBox()}
-
-              {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesValueBox()}
-
-              {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsValueBox()}
-
-              {renderPlanDescription()}
-            </View>
-          )}
-
-          {/* Usage Tracker */}
-          {selectedPlan && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>🎯 Track Your Progress</Text>
-              
-              <View style={styles.inputRow}>
-                <Text style={styles.inputLabel}>Weeks left in semester:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={weeksLeft}
-                  onChangeText={(text) => {
-                    // Only allow 1-16 weeks
-                    const numericValue = text.replace(/[^0-9]/g, '');
-                    const value = parseInt(numericValue) || 0;
-                    if (value <= 16) {
-                      setWeeksLeft(numericValue);
-                    }
-                  }}
-                  placeholder="5"
-                  keyboardType="numeric"
-                />
-              </View>
-
-              {selectedPlan.swipes === 0 && renderCardinalTracking()}
-
-              {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesTracking()}
-            </View>
-          )}
-
-          {/* Dining Dollars Tracker */}
-          {selectedPlan && selectedPlan.diningDollars && (
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>💳 Dining Dollars</Text>
-              
-              <View style={styles.inputRow}>
-                <Text style={styles.inputLabel}>Dining Dollars used:</Text>
-                <TextInput
-                  style={styles.input}
-                  value={usedDiningDollars}
-                  onChangeText={(text) => {
-                    // Only allow positive numbers up to plan limit
-                    const numericValue = text.replace(/[^0-9]/g, '');
-                    const value = parseInt(numericValue) || 0;
-                    if (selectedPlan && value <= (selectedPlan.diningDollars || 0)) {
-                      setUsedDiningDollars(numericValue);
-                    }
-                  }}
-                  placeholder="52"
-                  keyboardType="numeric"
-                />
-              </View>
-
-              {usedDiningDollars && (
-                <View style={styles.dollarsBox}>
-                  <Text style={styles.dollarsText}>
-                    💳 Dining Dollars Left: ${Math.max(0, getRemainingValue().dollars).toFixed(2)}
-                  </Text>
-                  <Text style={styles.reminderText}>
-                    🕔 Reminder: Dining Dollars reset at semester end (use them or lose them!)
-                  </Text>
-                </View>
+              {planSelectorVisible && (
+                <ScrollView 
+                  style={styles.dropdownOptions}
+                  nestedScrollEnabled={true}
+                  showsVerticalScrollIndicator={true}
+                >
+                  {mealPlans.map((plan) => (
+                    <TouchableOpacity
+                      key={plan.id}
+                      style={styles.dropdownOption}
+                      onPress={() => {
+                        setSelectedPlan(plan);
+                        setPlanSelectorVisible(false);
+                      }}
+                    >
+                      <Text style={styles.dropdownOptionText}>{plan.name}</Text>
+                      <Text style={styles.dropdownOptionDesc}>{plan.description}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
               )}
             </View>
-          )}
-        </ScrollView>
+
+            {/* Plan Analysis */}
+            {selectedPlan && (
+              <View style={styles.section}>
+                <Text style={styles.analysisTitle}>📊 {selectedPlan.name} Summary</Text>
+                
+                <View style={styles.summaryBox}>
+                  <Text style={styles.summaryText}>🟢 Total Paid: ${selectedPlan.totalCost}</Text>
+                  
+                  {selectedPlan.swipes === 0 && renderCardinalPlanSummary()}
+                  
+                  {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesPlanSummary()}
+                  
+                  {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsOnlySummary()}
+                </View>
+
+                <View style={styles.pricesBox}>
+                  <Text style={styles.pricesTitle}>💡 Standard Prices:</Text>
+                  <Text style={styles.priceText}>- Breakfast: ${standardPrices.breakfast}</Text>
+                  <Text style={styles.priceText}>- Lunch: ${standardPrices.lunch}</Text>
+                  <Text style={styles.priceText}>- Dinner: ${standardPrices.dinner}</Text>
+                </View>
+
+                {selectedPlan.swipes === 0 && renderCardinalValueBox()}
+
+                {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesValueBox()}
+
+                {(selectedPlan.swipes === undefined || selectedPlan.swipes === null) && selectedPlan.diningDollars && renderDiningDollarsValueBox()}
+
+                {renderPlanDescription()}
+              </View>
+            )}
+
+            {/* Usage Tracker */}
+            {selectedPlan && (
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>🎯 Track Your Progress</Text>
+                
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>Weeks left in semester:</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      focusedInput === 'weeksLeft' && styles.inputFocused
+                    ]}
+                    value={weeksLeft}
+                    onChangeText={(text) => {
+                      // Only allow 1-16 weeks
+                      const numericValue = text.replace(/[^0-9]/g, '');
+                      const value = parseInt(numericValue) || 0;
+                      if (value <= 16) {
+                        setWeeksLeft(numericValue);
+                      }
+                    }}
+                    placeholder="5"
+                    keyboardType="numeric"
+                    onFocus={() => setFocusedInput('weeksLeft')}
+                    onBlur={() => setFocusedInput(null)}
+                    showSoftInputOnFocus={true}
+                  />
+                </View>
+
+                {selectedPlan.swipes === 0 && renderCardinalTracking()}
+
+                {selectedPlan.swipes !== undefined && selectedPlan.swipes > 0 && renderSwipesTracking()}
+              </View>
+            )}
+
+            {/* Dining Dollars Tracker */}
+            {selectedPlan && selectedPlan.diningDollars && (
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>💳 Dining Dollars</Text>
+                
+                <View style={styles.inputRow}>
+                  <Text style={styles.inputLabel}>Dining Dollars used:</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      focusedInput === 'usedDiningDollars' && styles.inputFocused
+                    ]}
+                    value={usedDiningDollars}
+                    onChangeText={(text) => {
+                      // Only allow positive numbers up to plan limit
+                      const numericValue = text.replace(/[^0-9]/g, '');
+                      const value = parseInt(numericValue) || 0;
+                      if (selectedPlan && value <= (selectedPlan.diningDollars || 0)) {
+                        setUsedDiningDollars(numericValue);
+                      }
+                    }}
+                    placeholder="52"
+                    keyboardType="numeric"
+                    onFocus={() => setFocusedInput('usedDiningDollars')}
+                    onBlur={() => setFocusedInput(null)}
+                    showSoftInputOnFocus={true}
+                  />
+                </View>
+
+                {usedDiningDollars && (
+                  <View style={styles.dollarsBox}>
+                    <Text style={styles.dollarsText}>
+                      💳 Dining Dollars Left: ${Math.max(0, getRemainingValue().dollars).toFixed(2)}
+                    </Text>
+                    <Text style={styles.reminderText}>
+                      🕔 Reminder: Dining Dollars reset at semester end (use them or lose them!)
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
+          </TouchableOpacity>
+        </KeyboardAwareScrollView>
       </View>
     </Modal>
   );
@@ -626,6 +679,15 @@ const styles = StyleSheet.create({
     width: 80,
     textAlign: 'center',
     fontSize: 16,
+  },
+  inputFocused: {
+    borderWidth: 2,
+    borderColor: colors.primary.main,
+    shadowColor: colors.primary.main,
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 2,
   },
   trackingResults: {
     backgroundColor: '#d4edda',
