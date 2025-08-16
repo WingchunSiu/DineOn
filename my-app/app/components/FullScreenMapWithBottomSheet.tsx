@@ -159,7 +159,6 @@ const FullScreenMapWithBottomSheet: React.FC<FullScreenMapWithBottomSheetProps> 
 
   const renderBottomSheetHeader = () => (
     <View style={styles.bottomSheetHeader}>
-      <View style={styles.handle} />
       <View style={styles.headerContent}>
         <Text style={styles.headerTitle}>Campus Dining</Text>
         <TouchableOpacity style={styles.reportButton} onPress={onReportPress}>
@@ -372,14 +371,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#f0f0f0',
     backgroundColor: 'white',
   },
-  handle: {
-    width: 40,
-    height: 4,
-    backgroundColor: '#ccc',
-    borderRadius: 2,
-    alignSelf: 'center',
-    marginBottom: 15,
-  },
+
   headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
