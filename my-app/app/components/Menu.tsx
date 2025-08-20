@@ -100,7 +100,7 @@ export default function Menu({ timeOfDay, diningLocation }: MenuProps) {
           return null;          
         })}
         {menuItems.length === 0 && !isLoading && (
-          <Text style={styles.noItemsText}>No menu items available for this time</Text>
+          <Text style={styles.noItemsText}>Menu is empty today, likely due to a public holiday or disruption. Check official sources for current status.</Text>
         )}
         <Text style = {styles.disclaimerText}>If you have severe allergies, please refer to the school's website for more information</Text>
       </View>

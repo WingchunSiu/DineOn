@@ -104,7 +104,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
     description: 'Homegrown take-out spot with classic fast food',
     fullDescription: 'Burger Crush is a homegrown take-out spot, offering classic fast food favorites like burgers, fries and crispy chicken tenders. Located in the Ronald Tutor Campus Center.',
-    hours: 'Summer: Closed', // Based on hours data showing closed during summer
+    hours: 'Mon-Thu: 11:00 AM - 7:00 PM, Fri: 11:00 AM - 4:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
   },
   { 
@@ -114,7 +114,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0207761,-118.2870243', // Annenberg School for Communication
     description: 'Italian inspired café with coffee, gelato & pastries',
     fullDescription: 'Italian inspired café serving coffee, gelato, pastries and sandwiches. Located in the Annenberg School for Communication and Journalism building.',
-    hours: 'Mon-Fri: 7:00 AM - 2:30 PM, Sat-Sun: Closed',
+    hours: 'Mon-Thu: 7:30 AM - 6:30 PM, Fri: 7:30 AM - 3:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -124,7 +124,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
     description: 'Smoothies, juices and acai bowls',
     fullDescription: 'C&G Juice Co. features smoothies, juices and acai bowls located at the Ronald Tutor Campus Center. Perfect for healthy refreshments between classes.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 10:00 AM - 6:00 PM, Fri: 10:00 AM - 5:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
   },
   { 
@@ -134,7 +134,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.02359770243855, -118.28613747467519', // School of Cinematic Arts
     description: 'Premium coffee & tea beverages',
     fullDescription: 'Features deliciously made iced, hot and blended beverages as well as tasty snacks and pastries. Located at the School of Cinematic Arts.',
-    hours: 'Mon-Fri: 7:00 AM - 5:00 PM, Sat-Sun: Closed',
+    hours: 'Mon-Thu: 7:00 AM - 6:00 PM, Fri: 7:00 AM - 5:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -144,7 +144,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0186748,-118.2824608', // Jess and John Furth Hall
     description: 'Asian cuisine, sandwiches & boba tea',
     fullDescription: 'The menu features bao, banh mi, dim sum, Asian salads, noodles, rice bowls and sushi. A diverse selection of Asian-inspired dishes.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 11:00 AM - 6:00 PM, Fri-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -164,7 +164,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0186,-118.2844', // Gould School of Law
     description: 'Asian bowls and boba tea',
     fullDescription: 'Located in the basement of the Law School, Law Café offers Asian bowls and boba tea. Convenient dining option for law students.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 8:00 AM - 3:30 PM, Fri: 8:00 AM - 2:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -174,7 +174,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.020873,-118.284744', // Tutor Hall
     description: 'Hot tea, coffee, boba tea & healthy grab & go',
     fullDescription: 'Literatea offers hot tea, coffee, boba tea, and healthy grab & go selections. A cozy spot for tea lovers and health-conscious diners.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 8:00 AM - 3:00 PM, Fri: 8:00 AM - 1:30 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -184,7 +184,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0201118,-118.2866089', // Moreton Fig Building
     description: 'Freshly prepared coffee and pastries',
     fullDescription: 'Moreton Fig Café features freshly prepared coffee and pastries in a stylish and welcoming setting. Perfect for a coffee break.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 8:00 AM - 2:30 PM, Fri: 8:00 AM - 1:30 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -194,7 +194,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
     description: 'Classic Chinese flavors & fresh ingredients',
     fullDescription: 'Panda Express combines classic Chinese flavors and fresh ingredients in a popular dining experience. Quick and convenient Asian cuisine.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 10:30 AM - 6:30 PM, Fri: 10:30 AM - 5:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -204,7 +204,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0189287,-118.2823315', // Popovich Hall
     description: 'Mediterranean sandwiches, wraps & acai bowls',
     fullDescription: 'Popovich Hall features Mediterranean sandwiches, wraps and salads, acai bowls and pastries. Mediterranean-inspired healthy options.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 7:30 AM - 5:30 PM, Fri: 7:30 AM - 2:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -214,7 +214,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.018699,-118.281916', 
     description: 'Thin-crust pizza & Italian fare',
     fullDescription: 'Rosso Oro\'s offers thin-crust pizza and other Italian fare in a sports-themed hangout with TVs & shuffleboard. Great for game watching.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Fri: 11:00 AM - 7:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -224,7 +224,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
     description: 'Crispy thin crust pizza',
     fullDescription: 'Slice Shop brings crispy thin crust pizza to campus with classic toppings including pepperoni and supreme. Quick pizza for hungry students.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 11:00 AM - 5:00 PM, Fri: 11:00 AM - 3:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -234,7 +234,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
     description: 'Creative salads, sandwiches & hot entrées',
     fullDescription: 'Seeds Marketplace offers creative salads, handcrafted sandwiches, comforting hot entrées, drinks, and snacks. Customize your selection or choose from our variety of fresh grab & go items.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 7:00 AM - 8:00 PM, Fri: 7:00 AM - 5:00 PM, Sat-Sun: 11:00 AM - 5:00 PM',
     accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
   },
   { 
@@ -244,7 +244,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.02141856986762, -118.28249110000006', 
     description: 'Illy coffee & fresh food options',
     fullDescription: 'Step into the newly renovated Trojan Grounds, where every detail has been thoughtfully designed to enhance your experience. Featuring illy coffee and an array of fresh, flavorful food options.',
-    hours: 'Mon-Fri: 7:00 AM - 5:00 PM, Sat-Sun: Closed',
+    hours: 'Mon-Fri: 6:30 AM - 12:00 AM, Sat-Sun: 8:00 AM - 6:00 PM',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -254,7 +254,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0204923,-118.2861761', // Trojan Campus Center
     description: 'Made-to-order Mexican-inspired dishes',
     fullDescription: 'Taco-Taco offers made-to-order Mexican-inspired dishes. Choose from a wide variety of ingredients to build your new favorite burrito, bowl, or salad.',
-    hours: 'Summer: Closed',
+    hours: 'Mon-Thu: 11:00 AM - 6:30 PM, Fri: 11:00 AM - 4:30 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Meal Swipes, Credit Cards'
   },
   { 
@@ -264,7 +264,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.0200873,-118.2898349', // Tutor Hall
     description: 'Indian cuisine, sandwiches & pastries',
     fullDescription: 'Tutor Hall Café features Indian cuisine, sandwiches, salads, pastries, coffee and tea. Diverse menu with Indian specialties.',
-    hours: 'Mon-Fri: 8:00 AM - 3:00 PM, Sat-Sun: Closed',
+    hours: 'Mon-Thu: 8:00 AM - 5:00 PM, Fri: 8:00 AM - 4:00 PM, Sat-Sun: Closed',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -274,7 +274,7 @@ export const dummyCafes: Cafe[] = [
     coordinates: '34.01915695078638, -118.28130093590039', // Heritage Hall area
     description: 'Sports-themed restaurant with breakfast buffet',
     fullDescription: 'McKay\'s is a nostalgic sports-themed restaurant featuring a daily breakfast buffet and special events on home game days. Created in homage to football coach John McKay.',
-    hours: 'Mon-Fri: 6:30 AM - 11:00 AM Breakfast, 11:00 AM - 2:30 PM Lunch, Sat-Sun: Closed',
+    hours: 'Mon-Sun: 6:30 AM - 11:00 AM',
     accepts: 'Dining Dollars, Credit Cards'
   },
   { 
@@ -301,8 +301,8 @@ export const dummyDiningOptions: DiningOption[] = [
       Wednesday: { open: "07:00", close: "22:00" },
       Thursday: { open: "07:00", close: "22:00" },
       Friday: { open: "07:00", close: "22:00" },
-      Saturday: { open: "09:00", close: "22:00" },
-      Sunday: { open: "09:00", close: "22:00" },
+      Saturday: { open: "08:30", close: "22:00" },
+      Sunday: { open: "08:30", close: "22:00" },
     },
     categories: ["Bistro", "Pizza/Salad Bar", "Americana", "Eurasia", "Allergen Awareness Zone (Must Register)"],
   },
@@ -317,8 +317,8 @@ export const dummyDiningOptions: DiningOption[] = [
       Wednesday: { open: "07:00", close: "22:00" },
       Thursday: { open: "07:00", close: "22:00" },
       Friday: { open: "07:00", close: "22:00" },
-      Saturday: { open: "09:00", close: "22:00" },
-      Sunday: { open: "09:00", close: "22:00" },
+      Saturday: { open: "08:30", close: "22:00" },
+      Sunday: { open: "08:30", close: "22:00" },
     },
     categories: ["Flexitarian", "Salad Bar", "Deli Bar", "Expo", "Plant Based", "Breakfast/Dessert/Fruit", "Mezze Bar", "Crepes"],
   },
@@ -333,8 +333,8 @@ export const dummyDiningOptions: DiningOption[] = [
       Wednesday: { open: "07:00", close: "22:00" },
       Thursday: { open: "07:00", close: "22:00" },
       Friday: { open: "07:00", close: "22:00" },
-      Saturday: { open: "09:00", close: "22:00" },
-      Sunday: { open: "09:00", close: "22:00" },
+      Saturday: { open: "08:30", close: "22:00" },
+      Sunday: { open: "08:30", close: "22:00" },
     },
     categories: ["Fresh from the Farm", "Hot Line"],
   },
