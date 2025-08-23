@@ -31,6 +31,7 @@ jobs:
         cd backend
         echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
         echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> .env
+        echo "MENU_API_URL=${{ secrets.MENU_API_URL }}" >> .env
         
     - name: Run menu automation
       run: |
