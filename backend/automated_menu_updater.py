@@ -57,6 +57,7 @@ DINING_HALLS = [
 ]
 
 BASE_URL = "https://hospitality.usc.edu/dining-hall-menus/"
+API_BASE_URL = os.getenv('MENU_API_URL')
 
 weekday_strs = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -376,6 +377,115 @@ class MenuUpdater:
             self.logger.error(f"Error clearing existing data: {str(e)}")
             raise
 
+    def _transform_api_data(self, api_data):
+        """
+        Transforms the raw API JSON into the format required by the Supabase uploader.
+        It specifically handles 'Brunch' by copying its items to both 'Breakfast' and 'Lunch'.
+        """
+        formatted_menu = {}
+        if "meals" not in api_data or not isinstance(api_data["meals"], list):
+            self.logger.warning("API data does not contain a 'meals' list. Skipping.")
+            return formatted_menu
+
+        for meal in api_data["meals"]:
+            meal_name = meal.get("name", "").lower()
+            
+            if "stations" not in meal or not meal["stations"]:
+                continue
+
+            # Process all items for the current meal into a temporary list
+            current_meal_items = []
+            for station in meal.get("stations", []):
+                station_name = station.get("station", "General")
+                
+                for item in station.get("menu", []):
+                    item_name = item.get("item", "").strip()
+                    
+                    if not item_name or (item_name.isupper() and len(item_name.split()) <= 4):
+                        continue
+
+                    labels = set()
+                    for pref in item.get("preferences", []):
+                        formatted_pref = pref.replace('-', ' ').title()
+                        labels.add(formatted_pref)
+                    for allergen in item.get("allergens", []):
+                        labels.add(allergen.capitalize())
+                    
+                    formatted_item = {
+                        "name": item_name,
+                        "labels": sorted(list(labels)),
+                        "image_url": "",
+                        "category": station_name,
+                        "featured": False
+                    }
+                    current_meal_items.append(formatted_item)
+
+            # If we found items, distribute them according to the new logic
+            if not current_meal_items:
+                continue
+
+            if meal_name == "brunch":
+                self.logger.info("Found 'Brunch' menu. Copying items to 'Breakfast' and 'Lunch'.")
+                # Use setdefault to safely create list if not exists, then extend
+                formatted_menu.setdefault("breakfast", []).extend(current_meal_items)
+                formatted_menu.setdefault("lunch", []).extend(current_meal_items)
+            else:
+                # For all other meals (dinner, etc.), add them normally.
+                # This also correctly handles if the API provides a separate "Breakfast" or "Lunch".
+                formatted_menu.setdefault(meal_name, []).extend(current_meal_items)
+
+        return formatted_menu
+
+    def fetch_data_from_api(self, days_to_fetch=3):
+        """Fetches menu data for all dining halls from the new API for a specified number of days."""
+        all_data = {}
+        start_date = datetime.date.today()
+
+        for i in range(days_to_fetch):
+            date = start_date + datetime.timedelta(days=i)
+            day_of_week = date.weekday()
+            
+            # Format date for the API URL
+            year = date.strftime("%Y")
+            month = date.strftime("%m")
+            day = date.strftime("%d")
+            
+            self.logger.info(f"Fetching menus from API for {date.strftime('%Y-%m-%d')}")
+
+            if day_of_week not in all_data:
+                all_data[day_of_week] = {}
+            
+            for hall in DINING_HALLS:
+                hall_id = hall["id"]
+                api_hall_name = hall["data_value"]
+                
+                # Construct the full API URL
+                url = f"{API_BASE_URL}{api_hall_name}?y={year}&m={month}&d={day}"
+                self.logger.info(f"Requesting data for {hall['name']} from {url}")
+                
+                try:
+                    response = requests.get(url, timeout=15)
+                    response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+                    
+                    api_json = response.json()
+
+                    # Transform the raw data to our internal format
+                    transformed_data = self._transform_api_data(api_json)
+                    
+                    if transformed_data:
+                         all_data[day_of_week][hall_id] = transformed_data
+                    else:
+                        self.logger.warning(f"No valid menu data returned for {hall['name']} on {date}")
+
+                except requests.exceptions.RequestException as e:
+                    self.logger.error(f"Failed to fetch data for {hall['name']} on {date}: {e}")
+                except json.JSONDecodeError:
+                    self.logger.error(f"Failed to parse JSON for {hall['name']} on {date}. Response was: {response.text}")
+                except Exception as e:
+                    self.logger.error(f"An unexpected error occurred for {hall['name']} on {date}: {e}")
+
+        return all_data
+
     def upload_to_supabase(self, data):
         """Upload menu data directly to Supabase"""
         try:
@@ -496,8 +606,11 @@ class MenuUpdater:
             self.logger.info("Starting menu update process...")
             
             # Scrape menu data
-            menu_data = self.scrape_multiple_days()
+            # menu_data = self.scrape_multiple_days()
             
+            # Fetch menu data from API
+            menu_data = self.fetch_data_from_api(days_to_fetch=7) # Fetch a full week of data
+
             if not menu_data:
                 self.logger.warning("No menu data scraped. Aborting update.")
                 return False
