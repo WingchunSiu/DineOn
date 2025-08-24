@@ -23,10 +23,13 @@ const formatLA_YYYY_MM_DD = (date: Date) =>
 
 // Get LA "today" anchored via UTC noon to avoid TZ edge cases
 const getLATodayAnchor = () => {
-  // Use current date at 12:00 UTC so it maps to the same LA calendar day
+  // Use the same logic as DayProvider to get LA today
   const now = new Date();
-  const utcNoon = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 12, 0, 0));
-  return utcNoon;
+  const laDateString = now.toLocaleDateString("en-CA", {
+    timeZone: "America/Los_Angeles"
+  });
+  // Create a new Date object from the LA date string at noon LA time
+  return new Date(`${laDateString}T12:00:00`);
 };
 
 // Generate next 7 LA days starting from LA today (all formatting forced to LA)
